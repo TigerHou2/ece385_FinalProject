@@ -120,7 +120,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign VGA_G = Green[7:4];
 	
 	//DEBUG
-	assign LEDR[8:1] = keycode;
+//	assign LEDR[8:1] = keycode;
+	logic [9:0] rngData;
+	assign LEDR = ballxsig;
 	
 	
 	finalsoc u0 (
@@ -171,7 +173,9 @@ vga_controller VGA(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 							.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
 color_mapper CMAP(	.BallX(ballxsig), .BallY(ballysig), .DrawX(drawxsig), .DrawY(drawysig),
-							.Ball_size(ballsizesig), .Red, .Green, .Blue  );
+							.Ball_size(ballsizesig), .blank, .Red, .Green, .Blue  );
+							
+PRNG rng0(	.Clk(KEY[1]), .Reset(Reset_h), .Seed(SW), .Out(rngData)	);
 
 
 endmodule

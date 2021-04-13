@@ -19,13 +19,13 @@ module ball (	input 			Reset, frame_clk,
     
 	logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
 	 
-	parameter [9:0] Ball_X_Center=320;  // Center position on the X axis
-	parameter [9:0] Ball_Y_Center=240;  // Center position on the Y axis
-	parameter [9:0] Ball_X_Min=0;       // Leftmost point on the X axis
-	parameter [9:0] Ball_X_Max=639;     // Rightmost point on the X axis
-	parameter [9:0] Ball_Y_Min=0;       // Topmost point on the Y axis
-	parameter [9:0] Ball_Y_Max=479;     // Bottommost point on the Y axis
-	parameter [9:0] Ball_V_Max=30;		// maximum ball velocity
+	parameter [9:0] Ball_X_Center=320;	// Center position on the X axis
+	parameter [9:0] Ball_Y_Center=240;	// Center position on the Y axis
+	parameter [9:0] Ball_X_Min=10;			// Leftmost point on the X axis
+	parameter [9:0] Ball_X_Max=629;		// Rightmost point on the X axis
+	parameter [9:0] Ball_Y_Min=10;			// Topmost point on the Y axis
+	parameter [9:0] Ball_Y_Max=469;		// Bottommost point on the Y axis
+	parameter [9:0] Ball_V_Max=8;		// maximum ball velocity
 	
 	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter;
 	
@@ -52,7 +52,7 @@ module ball (	input 			Reset, frame_clk,
 		begin 
 		
 			// X-motion
-			input_X_Counter <= input_X_Counter + 8'd1;
+			input_X_Counter <= input_X_Counter + 8'h01;
 			if (input_X_Counter >= input_X_Counter_Max)
 			begin
 				unique case (keycode)
@@ -65,7 +65,7 @@ module ball (	input 			Reset, frame_clk,
 			
 			
 			// Jump
-			input_Y_Counter <= input_Y_Counter + 8'd1;
+			input_Y_Counter <= input_Y_Counter + 8'h01;
 			if (input_Y_Counter >= input_Y_Counter_Max)
 			begin
 				unique case (keycode)
@@ -80,7 +80,7 @@ module ball (	input 			Reset, frame_clk,
 			
 			
 			// Gravity
-			gravCounter <= gravCounter + 8'd1;
+			gravCounter <= gravCounter + 8'h01;
 			if (gravCounter >= grav_Counter_Max)
 			begin
 				Ball_Y_Motion <= Ball_Y_Motion + 10'd1;
@@ -89,65 +89,67 @@ module ball (	input 			Reset, frame_clk,
 			
 			
 			// Terminal velocity
-//			if ( Ball_X_Motion[9] == 1'b1 )
-//				if ( (~Ball_X_Motion) > Ball_V_Max )
-//					Ball_X_Motion <= (~Ball_V_Max) + 10'b01;
-//			else
-//				if (  Ball_X_Motion > Ball_V_Max )
-//					Ball_X_Motion <=  Ball_V_Max;
-//			
-//			if ( Ball_Y_Motion[9] == 1'b1 )
-//				if ( (~Ball_Y_Motion) > Ball_V_Max )
-//					Ball_Y_Motion <= (~Ball_V_Max) + 10'b01;
-//			else
-//				if (  Ball_Y_Motion > Ball_V_Max )
-//					Ball_Y_Motion <=  Ball_V_Max;		
+			if ( Ball_X_Motion[9] == 1'b1 ) begin
+				if ( (~(Ball_X_Motion)+10'd1) >= Ball_V_Max ) begin
+					Ball_X_Motion <= (~Ball_V_Max) + 10'd1;
+				end
+			end
+			else begin
+				if (  Ball_X_Motion >= Ball_V_Max ) begin
+					Ball_X_Motion <=  Ball_V_Max;
+				end
+			end
+			
+			if ( Ball_Y_Motion[9] == 1'b1 ) begin
+				if ( (~(Ball_Y_Motion)+10'd1) >= Ball_V_Max ) begin
+					Ball_Y_Motion <= (~Ball_V_Max) + 10'd1;
+				end
+			end
+			else begin
+				if (  Ball_Y_Motion >= Ball_V_Max ) begin
+					Ball_Y_Motion <=  Ball_V_Max;
+				end
+			end
 			
 			
 			// Bouncing
-			if ( Ball_Y_Pos >= (Ball_Y_Max - Ball_Size) )  // Ball is at the bottom edge, BOUNCE!
-			begin
-				if ( Ball_Y_Motion[9] == 1'b0 )
-				begin
-					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd1);  // 2's complement.
+			if ( Ball_Y_Pos >= (Ball_Y_Max - Ball_Size) ) begin // Ball is at the bottom edge, BOUNCE!
+				if ( Ball_Y_Motion[9] == 1'b0 ) begin
+					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd0);  // 2's complement - 1
+				end
+			end
+			else if ( Ball_Y_Pos <= (Ball_Y_Min + Ball_Size) ) begin // Ball is at the top edge, BOUNCE!
+				if ( Ball_Y_Motion[9] == 1'b1 ) begin
+					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd2);  // 2's complement + 1
 				end
 			end
 			  
-			if ( Ball_Y_Pos <= (Ball_Y_Min + Ball_Size) )  // Ball is at the top edge, BOUNCE!
-			begin
-				if ( Ball_Y_Motion[9] == 1'b1 )
-				begin
-					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd1);  // 2's complement.
+			if ( Ball_X_Pos >= (Ball_X_Max - Ball_Size) ) begin // Ball is at the Right edge, BOUNCE!
+				if ( Ball_X_Motion[9] == 1'b0 ) begin
+					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd0);  // 2's complement - 1
 				end
 			end
-			  
-			if ( Ball_X_Pos >= (Ball_X_Max - Ball_Size) )  // Ball is at the Right edge, BOUNCE!
-			begin
-				if ( Ball_X_Motion[9] == 1'b0 )
-				begin
-					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd1);  // 2's complement.
-				end
-			end
-			  
-			if ( Ball_X_Pos <= (Ball_X_Min + Ball_Size) )  // Ball is at the Left edge, BOUNCE!
-			begin
-				if ( Ball_X_Motion[9] == 1'b1 )
-				begin
-					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd1);  // 2's complement.
+			else if ( Ball_X_Pos <= (Ball_X_Min + Ball_Size) ) begin // Ball is at the Left edge, BOUNCE!
+				if ( Ball_X_Motion[9] == 1'b1 ) begin
+					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd2);  // 2's complement + 1
 				end
 			end
 			
 			
 			// Ball position update
+			begin
 			Ball_Y_Pos <= (Ball_Y_Pos + Ball_Y_Motion);  // Update ball position
 			Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
+			end
 			
 			
 			// Ball position constraint
+			begin
 			if ( Ball_X_Pos[9:8] == 2'b11 )
 				Ball_X_Pos <= 10'd0;
 			if ( Ball_Y_Pos[9:8] == 2'b11 )
 				Ball_Y_Pos <= 10'd0;
+			end
 
 
 		/**************************************************************************************
