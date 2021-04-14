@@ -150,12 +150,6 @@ int main() {
 		for (int i = 0; i < 50; i++) {/* do nothing, artificial delay*/}
 		USB_Task();
 
-		// TEST CODE
-//		MAXreg_wr(0x00, 0xFF);
-//		BYTE myVar = MAXreg_rd(0x00);
-//		printf("Reading R0 register, should get 0xFF, got %X", myVar);
-
-		//usleep (500000);
 		if (GetUsbTaskState() == USB_STATE_RUNNING) {
 			if (!runningdebugflag) {
 				runningdebugflag = 1;

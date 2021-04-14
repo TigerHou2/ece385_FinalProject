@@ -122,7 +122,18 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	//DEBUG
 //	assign LEDR[8:1] = keycode;
 	logic [9:0] rngData;
-	assign LEDR = ballxsig;
+	logic [511:0] terrain_in, terrain_out;
+	logic [9:0] terrain_addr;
+	logic [8:0] terrain_height;
+	assign LEDR = {KEY[1],terrain_height};
+	
+	always_ff @ (posedge KEY[1])
+	begin
+		if (Reset_h)
+			terrain_addr <= 10'b0;
+		else
+			terrain_addr <= terrain_addr + 1'b1;
+	end
 	
 	
 	finalsoc u0 (
@@ -175,7 +186,10 @@ vga_controller VGA(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 color_mapper CMAP(	.BallX(ballxsig), .BallY(ballysig), .DrawX(drawxsig), .DrawY(drawysig),
 							.Ball_size(ballsizesig), .blank, .Red, .Green, .Blue  );
 							
-PRNG rng0(	.Clk(KEY[1]), .Reset(Reset_h), .Seed(SW), .Out(rngData)	);
+PRNG rng0(	.Clk(CLOCK_50), .Reset(Reset_h), .Seed(SW), .Out(rngData)	);
+
+terrain TERRAIN	(	.clk(CLOCK_50), .we(1'b0), .read_addr(terrain_addr), .write_addr(terrain_addr), 
+							.terrain_in, .terrain_out, .rng(rngData), .terrain_height);
 
 
 endmodule

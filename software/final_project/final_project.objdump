@@ -1494,11 +1494,7 @@ int main() {
  80007cc:	103ffa1e 	bne	r2,zero,80007b8 <__alt_data_end+0xfc0007b8>
 		USB_Task();
  80007d0:	80022680 	call	8002268 <USB_Task>
-//		MAXreg_wr(0x00, 0xFF);
-//		BYTE myVar = MAXreg_rd(0x00);
-//		printf("Reading R0 register, should get 0xFF, got %X", myVar);
 
-		//usleep (500000);
 		if (GetUsbTaskState() == USB_STATE_RUNNING) {
  80007d4:	80029d80 	call	80029d8 <GetUsbTaskState>
  80007d8:	10803fcc 	andi	r2,r2,255

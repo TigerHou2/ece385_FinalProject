@@ -15,7 +15,8 @@
 
 module ball (	input 			Reset, frame_clk,
 					input  [7:0]	keycode,
-					output [9:0]	BallX, BallY, BallS );
+					output [9:0]	BallX, BallY, BallS, 
+					output [9:0]	terrain_addr );
     
 	logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
 	 
@@ -34,6 +35,13 @@ module ball (	input 			Reset, frame_clk,
 	parameter [7:0] input_Y_Counter_Max = 16;
 
 	assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	
+	
+	
+	assign terrain_addr = 10'b0;
+	
+	
+	
 
 	always_ff @ (posedge Reset or posedge frame_clk )
 	begin: Move_Ball
@@ -150,16 +158,6 @@ module ball (	input 			Reset, frame_clk,
 			if ( Ball_Y_Pos[9:8] == 2'b11 )
 				Ball_Y_Pos <= 10'd0;
 			end
-
-
-		/**************************************************************************************
-		ATTENTION! Please answer the following quesiton in your lab report! Points will be allocated for the answers!
-		Hidden Question #2/2:
-		Note that Ball_Y_Motion in the above statement may have been changed at the same clock edge
-		that is causing the assignment of Ball_Y_pos.  Will the new value of Ball_Y_Motion be used,
-		or the old?  How will this impact behavior of the ball during a bounce, and how might that 
-		interact with a response to a keypress?  Can you fix it?  Give an answer in your Post-Lab.
-		**************************************************************************************/
 
 
 		end  
