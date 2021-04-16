@@ -3,18 +3,17 @@
 // single read/write clock
 
 module SRAM
-#(parameter DATA_WIDTH=512, parameter ADDR_WIDTH=10)
 (
-	input [(DATA_WIDTH-1):0] data,
-	input [(ADDR_WIDTH-1):0] read_addr, write_addr,
+	input [511:0] data,
+	input [9:0] read_addr, write_addr,
 	input we, clk,
-	output reg [(DATA_WIDTH-1):0] q
+	output logic [511:0] q
 );
 
 	// Declare the RAM variable
-	reg [DATA_WIDTH-1:0] ram[2**ADDR_WIDTH-1:0];
+	logic [511:0] ram[1023:0];
 
-	always @ (posedge clk)
+	always_ff @ (posedge clk)
 	begin
 		// Write
 		if (we)

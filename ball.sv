@@ -13,61 +13,119 @@
 //-------------------------------------------------------------------------
 
 
-module player (	input 			Reset, frame_clk,
+module player (	input 			clk, reset, frame_clk,
+						input  [511:0]	terrain_data,
 						input  [7:0]	keycode,
-						input				landed, bounce, 
-						output [9:0]	X, Y, S	);
+						input  [9:0]	DrawX, DrawY,
+						output [9:0]	X, Y, S, bombX, bombY, bombS,
+						output			exploded,
+						output [511:0]	terrain_out	);
     
-	logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
+	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, Size;
 	 
-	parameter [9:0] Ball_X_Center=320;	// Center position on the X axis
-	parameter [9:0] Ball_Y_Center=240;	// Center position on the Y axis
-	parameter [9:0] Ball_X_Min=10;			// Leftmost point on the X axis
-	parameter [9:0] Ball_X_Max=629;		// Rightmost point on the X axis
-	parameter [9:0] Ball_Y_Min=10;			// Topmost point on the Y axis
-	parameter [9:0] Ball_Y_Max=469;		// Bottommost point on the Y axis
-	parameter [9:0] Ball_V_Max=10;		// maximum ball velocity
+	parameter [9:0] X_Center=320;	// Center position on the X axis
+	parameter [9:0] Y_Center=200;	// Center position on the Y axis
+	parameter [9:0] X_Min=5;		// Leftmost point on the X axis
+	parameter [9:0] X_Max=634;		// Rightmost point on the X axis
+	parameter [9:0] Y_Min=5;		// Topmost point on the Y axis
+	parameter [9:0] Y_Max=474;		// Bottommost point on the Y axis
+	parameter [9:0] V_Max=10;		// maximum ball velocity
 	
-	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter;
+	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter, aim_Counter;
 	
 	parameter [7:0] grav_Counter_Max = 6;
 	parameter [7:0] input_X_Counter_Max = 6;
 	parameter [7:0] input_Y_Counter_Max = 32;
+	parameter [7:0] aim_Counter_Max = 16;
 
-	assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	
+	logic	landed, bounce, impact;
+	collider COLLIDER (	.clk, .reset, .terrain_data, 
+								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(Size), .landed, .bounce, .impact	);
+	
+	logic launch;
+	logic [3:0]	angle;
+	logic [2:0] power;
+	
+	parameter [3:0]	angle_Max = 9;
+	parameter [2:0]	power_Max = 7;
+	
+	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
+						.angle, .power, .terrain_data, .DrawX, .DrawY, 
+						.exploded, .X(bombX), .Y(bombY), .S(bombS), .terrain_out	);
+	
 
-	always_ff @ (posedge Reset or posedge frame_clk )
+	always_ff @ (posedge reset or posedge frame_clk )
 	begin: Move_Ball
-		if (Reset)  // Asynchronous Reset
+		if (reset)  // Asynchronous Reset
 		begin 
-			Ball_Y_Motion <= 10'd0;
-			Ball_X_Motion <= 10'd0;
-			Ball_Y_Pos <= Ball_Y_Center;
-			Ball_X_Pos <= Ball_X_Center;
+			Y_Vel <= 10'd0;
+			X_Vel <= 10'd0;
+			Y_Pos <= Y_Center;
+			X_Pos <= X_Center;
 			gravCounter <= 8'h00;
 			input_X_Counter <= 8'h00;
 			input_Y_Counter <= 8'h00;
+			aim_Counter <= 8'h00;
+			angle <= 4'd6;
+			power <= 3'd4;
 		end
 			  
 		else 
 		begin 
 		
 		
+			// Bomb controls
+			aim_Counter <= aim_Counter + 1'b1;
+			if (aim_Counter >= aim_Counter_Max) begin
+				unique case (keycode)
+					8'h14	:	if ( angle > 4'd0 ) begin			// Q, turn aim ccw
+									angle <= angle - 1'b1;
+									aim_Counter <= 8'h00;
+								end
+									
+					8'h08	:	if ( angle < angle_Max ) begin	// E, turn aim cw
+									angle <= angle + 1'b1;
+									aim_Counter <= 8'h00;
+								end
+									
+					8'h1E	:	if ( power > 3'd0 ) begin			// 1, decrease power
+									power <= power - 1'b1;
+									aim_Counter <= 8'h00;
+								end
+								
+					8'h20	:	if ( power < power_Max ) begin	// 3, increase power
+									power <= power + 1'b1;
+									aim_Counter <= 8'h00;
+								end
+					
+					8'h16	:	begin										// S, launch bomb
+									launch <= 1'b1;
+									aim_Counter <= 8'h00;
+								end
+									
+					default: launch <= 1'b0;
+				endcase
+			end
+				
+		
+		
 			// Gravity
 			gravCounter <= gravCounter + 8'h01;
 			if (gravCounter >= grav_Counter_Max)
 			begin
-				Ball_Y_Motion <= Ball_Y_Motion + 10'd1;
+				Y_Vel <= Y_Vel + 10'd1;
 				gravCounter <= 8'h00;
 			end
 			
 			
 			// Terrain detection
 			if (landed == 1'b1) begin
-				Ball_X_Motion <= 10'd0;
-				if ( Ball_Y_Motion[9] == 1'b0 || Ball_Y_Motion == 10'd0 )
-					Ball_Y_Motion <= 10'd0;
-				Ball_Y_Pos <= Ball_Y_Pos - 10'd2;
+				X_Vel <= 10'd0;
+				if ( Y_Vel[9] == 1'b0 || Y_Vel == 10'd0 )
+					Y_Vel <= 10'd0;
+				Y_Pos <= Y_Pos - 10'd2;
 			end
 			
 		
@@ -76,8 +134,8 @@ module player (	input 			Reset, frame_clk,
 			if (input_X_Counter >= input_X_Counter_Max)
 			begin
 				unique case (keycode)
-					8'h04 : 	Ball_X_Motion <= Ball_X_Motion - 10'd1;//A
-					8'h07 : 	Ball_X_Motion <= Ball_X_Motion + 10'd1;//D
+					8'h04 : 	X_Vel <= X_Vel - 10'd1;//A
+					8'h07 : 	X_Vel <= X_Vel + 10'd1;//D
 					default: ;
 				endcase
 				input_X_Counter <= 8'h00;
@@ -89,9 +147,9 @@ module player (	input 			Reset, frame_clk,
 			if (input_Y_Counter >= input_Y_Counter_Max)
 			begin
 				unique case (keycode)
-//					8'h16 : 	Ball_Y_Motion <= Ball_Y_Motion + 10'd1;//S
+//					8'h16 : 	Y_Vel <= Y_Vel + 10'd1;//S
 					8'h1A : 	begin
-								Ball_Y_Motion <= Ball_Y_Motion - 10'd4;//W
+								Y_Vel <= Y_Vel - 10'd4;//W
 								input_Y_Counter <= 8'h00;
 								end
 					default: ;
@@ -100,76 +158,76 @@ module player (	input 			Reset, frame_clk,
 			
 			
 			// Terminal velocity
-			if ( Ball_X_Motion[9] == 1'b1 ) begin
-				if ( (~(Ball_X_Motion)+10'd1) > Ball_V_Max ) begin
-					Ball_X_Motion <= (~Ball_V_Max) + 10'd1;
+			if ( X_Vel[9] == 1'b1 ) begin
+				if ( (~(X_Vel)+10'd1) > V_Max ) begin
+					X_Vel <= (~V_Max) + 10'd1;
 				end
 			end
 			else begin
-				if (  Ball_X_Motion > Ball_V_Max ) begin
-					Ball_X_Motion <=  Ball_V_Max;
+				if (  X_Vel > V_Max ) begin
+					X_Vel <=  V_Max;
 				end
 			end
 			
-			if ( Ball_Y_Motion[9] == 1'b1 ) begin
-				if ( (~(Ball_Y_Motion)+10'd1) > Ball_V_Max ) begin
-					Ball_Y_Motion <= (~Ball_V_Max) + 10'd1;
+			if ( Y_Vel[9] == 1'b1 ) begin
+				if ( (~(Y_Vel)+10'd1) > V_Max ) begin
+					Y_Vel <= (~V_Max) + 10'd1;
 				end
 			end
 			else begin
-				if (  Ball_Y_Motion > Ball_V_Max ) begin
-					Ball_Y_Motion <=  Ball_V_Max;
+				if (  Y_Vel > V_Max ) begin
+					Y_Vel <=  V_Max;
 				end
 			end
 			
 			
 			// Screen edge bouncing
-			if ( Ball_Y_Pos >= (Ball_Y_Max - Ball_Size)) begin // bottom edge
-				if ( Ball_Y_Motion[9] == 1'b0 ) begin
-					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd1);  // 2's complement
+			if ( Y_Pos >= (Y_Max - Size)) begin // bottom edge
+				if ( Y_Vel[9] == 1'b0 ) begin
+					Y_Vel <= (~ (Y_Vel) + 10'd1);  // 2's complement
 				end
 			end
-			else if ( Ball_Y_Pos <= (Ball_Y_Min + Ball_Size) || bounce == 1'b1) begin // top edge
-				if ( Ball_Y_Motion[9] == 1'b1 ) begin
-					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd2);  // 2's complement + 1
+			else if ( Y_Pos <= (Y_Min + Size) || bounce == 1'b1) begin // top edge
+				if ( Y_Vel[9] == 1'b1 ) begin
+					Y_Vel <= (~ (Y_Vel) + 10'd1);  // 2's complement
 				end
 			end
 			  
-			if ( Ball_X_Pos >= (Ball_X_Max - Ball_Size) ) begin // right edge
-				if ( Ball_X_Motion[9] == 1'b0 ) begin
-					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd1);  // 2's complement
+			if ( X_Pos >= (X_Max - Size) ) begin // right edge
+				if ( X_Vel[9] == 1'b0 ) begin
+					X_Vel <= (~ (X_Vel) + 10'd1);  // 2's complement
 				end
 			end
-			else if ( Ball_X_Pos <= (Ball_X_Min + Ball_Size) ) begin // left edge
-				if ( Ball_X_Motion[9] == 1'b1 ) begin
-					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd2);  // 2's complement + 1
+			else if ( X_Pos <= (X_Min + Size) ) begin // left edge
+				if ( X_Vel[9] == 1'b1 ) begin
+					X_Vel <= (~ (X_Vel) + 10'd1);  // 2's complement
 				end
 			end
 			
 			
 			// Ball position update
 			begin
-			Ball_Y_Pos <= (Ball_Y_Pos + Ball_Y_Motion);  // Update ball position
-			Ball_X_Pos <= (Ball_X_Pos + Ball_X_Motion);
+			Y_Pos <= (Y_Pos + Y_Vel);  // Update ball position
+			X_Pos <= (X_Pos + X_Vel);
 			end
 			
 			
 			// Ball position constraint
 			begin
-			if ( Ball_X_Pos[9:8] == 2'b11 )
-				Ball_X_Pos <= 10'd0;
-			if ( Ball_Y_Pos[9:8] == 2'b11 )
-				Ball_Y_Pos <= 10'd0;
+			if ( X_Pos[9:8] == 2'b11 )
+				X_Pos <= 10'd0;
+			if ( Y_Pos[9:8] == 2'b11 )
+				Y_Pos <= 10'd0;
 			end
 
 
 		end  
 	end
 
-	assign X = Ball_X_Pos;
+	assign X = X_Pos;
 
-	assign Y = Ball_Y_Pos;
+	assign Y = Y_Pos;
 
-	assign S = Ball_Size;
+	assign S = Size;
 
 endmodule

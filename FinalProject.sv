@@ -71,8 +71,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] drawxsig, drawysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
-	logic	[9:0]	P1X, P1Y, P1S;
-	logic			P1L, P1B;
+	logic	[9:0]	P1X, P1Y, P1S, B1X, B1Y, B1S;
+	logic			P1L, P1B, B1E;
 
 //=======================================================
 //  Structural coding
@@ -123,14 +123,15 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	
 	//DEBUG
 //	assign LEDR[8:1] = keycode;
-	logic [9:0] rngData;
 	logic [511:0] terrain_in, terrain_out;
 	logic [9:0] terrain_addr;
 	logic [9:0] terrain_height;
-	assign LEDR = terrain_out[185:176];
+	assign LEDR = {B1Y[9:2], 1'b0, B1E};
 	
-	assign terrain_in		= 512'd0;
-	assign terrain_addr 	= 10'b0000000011;
+	always_ff @ (negedge CLOCK_50)
+	begin
+		terrain_addr <= drawxsig;
+	end
 	
 	
 	finalsoc u0 (
@@ -174,22 +175,19 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
-player P1				(	.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), 
-								.landed(P1L), .bounce(P1B), .X(P1X), .Y(P1Y), .S(P1S)  );
-				
-collider P1C 			(	.clk(CLOCK_50), .reset(Reset_h), .terrain_data(terrain_out), 
-								.X(P1X), .Y(P1Y), .DrawX(drawxsig), .radius(P1S), .landed(P1L), .bounce(P1B)	);
+player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
+								.keycode(keycode), .DrawX(drawxsig), .DrawY(drawysig), .X(P1X), .Y(P1Y), .S(P1S), 
+								.bombX(B1X), .bombY(B1Y), .bombS(B1S), .exploded(B1E), .terrain_out(terrain_in));
 				
 vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
-color_mapper CMAP		(	.BallX(P1X), .BallY(P1Y), .DrawX(drawxsig), .DrawY(drawysig),
-								.Ball_size(P1S), .terrain_data(terrain_out), .blank, .Red, .Green, .Blue  );
-							
-PRNG rng0				(	.Clk(CLOCK_50), .Reset(Reset_h), .Seed(SW), .Out(rngData)	);
+color_mapper CMAP		(	.PX(P1X), .PY(P1Y), .PS(P1S), .DrawX(drawxsig), .DrawY(drawysig),
+								.BX(B1X), .BY(B1Y), .BS(B1S), .terrain_data(terrain_out), 
+								.blank, .Red, .Green, .Blue  );
 
 terrain TERRAIN		(	.clk(CLOCK_50), .we(1'b0), .reset(Reset_h), .read_addr(drawxsig),
-								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(rngData), .terrain_height);
+								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);
 
 
 endmodule

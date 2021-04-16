@@ -14,7 +14,7 @@ module terrain		(	input  logic	clk, we, reset,
 		logic [9:0] height;
 		assign terrain_height = height;
 		
-		parameter [9:0] default_height = 330;
+		parameter [9:0] default_height = 310;
 		parameter [9:0] floor = 479;
 		parameter [9:0] Ncolumns = 640;
 		int idx;
