@@ -11,9 +11,9 @@ module PRNG	(	input 			Clk, Reset,
 	assign seed1 = {Seed[4:0], Seed[9:5]};
 	assign seed2 = {Seed[0],Seed[1],Seed[2],Seed[3],Seed[4],Seed[5],Seed[6],Seed[7],Seed[8],Seed[9]};
 	
-	LFSR_A	LA (.Clk, .Reset, .Seed, .Out(out0));
-	LFSR_B	LB (.Clk, .Reset, .Seed, .Out(out1));
-	CASR		C0 (.Clk, .Reset, .Seed, .Out(out2));
+	LFSR_A	LA (.Clk, .Reset, .Seed(seed0), .Out(out0));
+	LFSR_B	LB (.Clk, .Reset, .Seed(seed1), .Out(out1));
+	CASR		C0 (.Clk, .Reset, .Seed(seed2), .Out(out2));
 	
 	assign Out = out0 ^ out1 ^ out2;
 					

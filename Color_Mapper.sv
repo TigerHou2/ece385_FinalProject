@@ -13,11 +13,12 @@
 //-------------------------------------------------------------------------
 
 
-module  color_mapper (	input				[9:0]	BallX, BallY, DrawX, DrawY, Ball_size,
-								input						blank,
-								output logic	[7:0]	Red, Green, Blue );
+module  color_mapper (	input				[9:0]		BallX, BallY, DrawX, DrawY, Ball_size,
+								input				[511:0]	terrain_data,
+								input							blank,
+								output logic	[7:0]		Red, Green, Blue );
     
-    logic ball_on;
+    logic ball_on, terrain_on;
 	 
  /* Old Ball: Generated square box by checking if the current pixel is within a square of length
     2*Ball_Size, centered at (BallX, BallY).  Note that this requires unsigned comparisons.
@@ -44,6 +45,14 @@ module  color_mapper (	input				[9:0]	BallX, BallY, DrawX, DrawY, Ball_size,
 			else 
 				ball_on = 1'b0;
      end 
+	  
+	  always_comb
+	  begin:Terrain_on_proc
+			if ( terrain_data[DrawY] == 1'b1 )
+				terrain_on = 1'b1;
+			else
+				terrain_on = 1'b0;
+	  end
        
     always_comb
     begin:RGB_Display
@@ -56,15 +65,21 @@ module  color_mapper (	input				[9:0]	BallX, BallY, DrawX, DrawY, Ball_size,
 				end
 			else if (ball_on == 1'b1) 
 				begin 
-					Red = 8'hff;
-					Green = 8'h55;
+					Red = 8'hcc;
+					Green = 8'h33;
 					Blue = 8'h00;
-				end       
+				end
+			else if (terrain_on == 1'b1)
+				begin 
+					Red = 8'h00;
+					Green = 8'h99;
+					Blue = 8'h33;
+				end
 			else 
 				begin 
-					Red = 8'h00; 
-					Green = 8'h00;
-					Blue = 8'haa;
+					Red = 8'h80; 
+					Green = 8'ha6;
+					Blue = 8'hff;
 				end
 			
 	end 

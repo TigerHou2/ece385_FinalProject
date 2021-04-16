@@ -68,9 +68,11 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
 	logic [1:0] signs;
 	logic [1:0] hundreds;
-	logic [9:0] drawxsig, drawysig, ballxsig, ballysig, ballsizesig;
+	logic [9:0] drawxsig, drawysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
+	logic	[9:0]	P1X, P1Y, P1S;
+	logic			P1L, P1B;
 
 //=======================================================
 //  Structural coding
@@ -124,16 +126,11 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] rngData;
 	logic [511:0] terrain_in, terrain_out;
 	logic [9:0] terrain_addr;
-	logic [8:0] terrain_height;
-	assign LEDR = {KEY[1],terrain_height};
+	logic [9:0] terrain_height;
+	assign LEDR = terrain_out[185:176];
 	
-	always_ff @ (posedge KEY[1])
-	begin
-		if (Reset_h)
-			terrain_addr <= 10'b0;
-		else
-			terrain_addr <= terrain_addr + 1'b1;
-	end
+	assign terrain_in		= 512'd0;
+	assign terrain_addr 	= 10'b0000000011;
 	
 	
 	finalsoc u0 (
@@ -177,19 +174,22 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
-ball BALL(	.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), 
-				.BallX(ballxsig), .BallY(ballysig), .BallS(ballsizesig)  );
+player P1				(	.Reset(Reset_h), .frame_clk(VGA_VS), .keycode(keycode), 
+								.landed(P1L), .bounce(P1B), .X(P1X), .Y(P1Y), .S(P1S)  );
 				
-vga_controller VGA(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
-							.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
+collider P1C 			(	.clk(CLOCK_50), .reset(Reset_h), .terrain_data(terrain_out), 
+								.X(P1X), .Y(P1Y), .DrawX(drawxsig), .radius(P1S), .landed(P1L), .bounce(P1B)	);
+				
+vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
+								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
-color_mapper CMAP(	.BallX(ballxsig), .BallY(ballysig), .DrawX(drawxsig), .DrawY(drawysig),
-							.Ball_size(ballsizesig), .blank, .Red, .Green, .Blue  );
+color_mapper CMAP		(	.BallX(P1X), .BallY(P1Y), .DrawX(drawxsig), .DrawY(drawysig),
+								.Ball_size(P1S), .terrain_data(terrain_out), .blank, .Red, .Green, .Blue  );
 							
-PRNG rng0(	.Clk(CLOCK_50), .Reset(Reset_h), .Seed(SW), .Out(rngData)	);
+PRNG rng0				(	.Clk(CLOCK_50), .Reset(Reset_h), .Seed(SW), .Out(rngData)	);
 
-terrain TERRAIN	(	.clk(CLOCK_50), .we(1'b0), .read_addr(terrain_addr), .write_addr(terrain_addr), 
-							.terrain_in, .terrain_out, .rng(rngData), .terrain_height);
+terrain TERRAIN		(	.clk(CLOCK_50), .we(1'b0), .reset(Reset_h), .read_addr(drawxsig),
+								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(rngData), .terrain_height);
 
 
 endmodule

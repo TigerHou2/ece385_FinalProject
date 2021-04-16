@@ -1,22 +1,32 @@
-module terrain		(	input		clk, we, reset,
-							input		[511:0]	terrain_in, 
-							input		[9:0]		read_addr, write_addr, rng,
-							output	[511:0]	terrain_out,
-							output	[8:0]		terrain_height);
+module terrain		(	input  logic	clk, we, reset,
+							input	 logic	[511:0]	terrain_in, 
+							input	 logic	[9:0]		read_addr, write_addr, rngSeed,
+							output logic	[511:0]	terrain_out,
+							output logic	[9:0]		terrain_height	);
 							
 		logic select;
 		
 		logic 		toSRAM_we;
-		logic [9:0] init_addr, noise, noise_last;
+		logic [9:0] init_addr;
 		logic [9:0] toSRAM_addr;
 		logic [511:0] init_terrain;
 		logic	[511:0] toSRAM_terrain;
-		logic [8:0] height;
+		logic [9:0] height;
+		assign terrain_height = height;
 		
-		parameter [8:0] default_height = 239;
-		parameter [8:0] floor = 479;
+		parameter [9:0] default_height = 330;
+		parameter [9:0] floor = 479;
+		parameter [9:0] Ncolumns = 640;
+		int idx;
 		
-		assign noise = rng;
+		
+		// Instantiate pseudo-random number generator
+		
+		logic [9:0] rng;
+		PRNG rngTerrain(	.Clk(clk), .Reset(reset), .Seed(rngSeed), .Out(rng)	);
+		
+		
+		// Combinatorial logic for mux-ing data to SRAM
 		
 		always_comb
 		begin
@@ -36,49 +46,69 @@ module terrain		(	input		clk, we, reset,
 								
 				endcase
 		end
-					
-					
-		SRAM sram0	(	.clk, .we(toSRAM_we), .read_addr, .write_addr(toSRAM_addr), 
+		
+		
+		logic [9:0] noise;
+		
+		
+		// Instatiate SRAM to store terrain data
+		
+		SRAM sram0	(	.clk(clk), .we(toSRAM_we), .read_addr(read_addr), .write_addr(toSRAM_addr), 
 							.data(toSRAM_terrain), .q(terrain_out)	);
+							
 		
 		
-		parameter [9:0] Ncolumns = 640;
+		// Control logic for generating / modifying terrain
 		
-		always_ff @ (posedge clk)
+		always_ff @ (posedge clk or posedge reset)
 		begin
 		
+				// game reset, regenerate terrain
 				if (reset) begin
-					
-					height <= default_height;
-					init_terrain[floor:default_height] <= {(floor-default_height){1'b1}};
-					init_terrain[default_height-1:0] <= {default_height{1'b0}};
-					init_addr <= 10'b0;
-					
-					noise_last <= 10'b0;
-					
-				end
-					
-					
-					
-				if ( init_addr < Ncolumns ) begin
 				
 					select <= 1'b1;
 					
-					height <= height + noise_last[4:1] + noise[6:3] - 10'd8;
-					init_terrain[height+:32] <= 32'b1;
-					init_terrain[height-:32] <= 32'b0;
-					init_addr <= init_addr + 1'b1;
+					noise <= 10'd0; // we achieve a sort of floating point precision by
+										 // storing some bits after the decimal
 					
+					height <= default_height;
+					for (idx = 0; idx <=floor; idx++)
+					begin
+						init_terrain[idx] <= (idx < height) ? 1'b0 : 1'b1;
+					end
+					init_addr <= 10'd0;
+					
+				end
+				
+				// regenerating terrain takes multiple cycles
+				else if ( init_addr <= Ncolumns ) begin
+				
+					select <= 1'b1;
+					
+					noise <= {noise[9],noise[9:1]} + {{2{noise[9]}},noise[9:2]} 
+								+ {{3{noise[9]}},noise[9:3]} + {3'd0,rng[9:3]} - 10'd53;
+					
+					height <= height + {{7{noise[9]}},noise[9:7]};
+					for (idx = 0; idx <=floor; idx++)
+					begin
+						init_terrain[idx] <= (idx < height) ? 1'b0 : 1'b1;
+					end
+					init_addr <= init_addr + 10'd1;
 				
 				end
+				
+				// terrain generation complete, do other things
 				else begin
 					
 					select <= 1'b0;
 					
+					noise <= noise;
+					
+					height <= height;
+					init_addr <= init_addr;
+					init_terrain <= init_terrain;
+					
 				end
-				
-				
-				noise_last <= noise;
 		
 		
 		end

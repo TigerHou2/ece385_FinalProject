@@ -13,10 +13,10 @@
 //-------------------------------------------------------------------------
 
 
-module ball (	input 			Reset, frame_clk,
-					input  [7:0]	keycode,
-					output [9:0]	BallX, BallY, BallS, 
-					output [9:0]	terrain_addr );
+module player (	input 			Reset, frame_clk,
+						input  [7:0]	keycode,
+						input				landed, bounce, 
+						output [9:0]	X, Y, S	);
     
 	logic [9:0] Ball_X_Pos, Ball_X_Motion, Ball_Y_Pos, Ball_Y_Motion, Ball_Size;
 	 
@@ -26,22 +26,15 @@ module ball (	input 			Reset, frame_clk,
 	parameter [9:0] Ball_X_Max=629;		// Rightmost point on the X axis
 	parameter [9:0] Ball_Y_Min=10;			// Topmost point on the Y axis
 	parameter [9:0] Ball_Y_Max=469;		// Bottommost point on the Y axis
-	parameter [9:0] Ball_V_Max=8;		// maximum ball velocity
+	parameter [9:0] Ball_V_Max=10;		// maximum ball velocity
 	
 	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter;
 	
-	parameter [7:0] grav_Counter_Max = 4;
-	parameter [7:0] input_X_Counter_Max = 4;
-	parameter [7:0] input_Y_Counter_Max = 16;
+	parameter [7:0] grav_Counter_Max = 6;
+	parameter [7:0] input_X_Counter_Max = 6;
+	parameter [7:0] input_Y_Counter_Max = 32;
 
 	assign Ball_Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
-	
-	
-	
-	assign terrain_addr = 10'b0;
-	
-	
-	
 
 	always_ff @ (posedge Reset or posedge frame_clk )
 	begin: Move_Ball
@@ -58,6 +51,25 @@ module ball (	input 			Reset, frame_clk,
 			  
 		else 
 		begin 
+		
+		
+			// Gravity
+			gravCounter <= gravCounter + 8'h01;
+			if (gravCounter >= grav_Counter_Max)
+			begin
+				Ball_Y_Motion <= Ball_Y_Motion + 10'd1;
+				gravCounter <= 8'h00;
+			end
+			
+			
+			// Terrain detection
+			if (landed == 1'b1) begin
+				Ball_X_Motion <= 10'd0;
+				if ( Ball_Y_Motion[9] == 1'b0 || Ball_Y_Motion == 10'd0 )
+					Ball_Y_Motion <= 10'd0;
+				Ball_Y_Pos <= Ball_Y_Pos - 10'd2;
+			end
+			
 		
 			// X-motion
 			input_X_Counter <= input_X_Counter + 8'h01;
@@ -87,57 +99,48 @@ module ball (	input 			Reset, frame_clk,
 			end
 			
 			
-			// Gravity
-			gravCounter <= gravCounter + 8'h01;
-			if (gravCounter >= grav_Counter_Max)
-			begin
-				Ball_Y_Motion <= Ball_Y_Motion + 10'd1;
-				gravCounter <= 8'h00;
-			end
-			
-			
 			// Terminal velocity
 			if ( Ball_X_Motion[9] == 1'b1 ) begin
-				if ( (~(Ball_X_Motion)+10'd1) >= Ball_V_Max ) begin
+				if ( (~(Ball_X_Motion)+10'd1) > Ball_V_Max ) begin
 					Ball_X_Motion <= (~Ball_V_Max) + 10'd1;
 				end
 			end
 			else begin
-				if (  Ball_X_Motion >= Ball_V_Max ) begin
+				if (  Ball_X_Motion > Ball_V_Max ) begin
 					Ball_X_Motion <=  Ball_V_Max;
 				end
 			end
 			
 			if ( Ball_Y_Motion[9] == 1'b1 ) begin
-				if ( (~(Ball_Y_Motion)+10'd1) >= Ball_V_Max ) begin
+				if ( (~(Ball_Y_Motion)+10'd1) > Ball_V_Max ) begin
 					Ball_Y_Motion <= (~Ball_V_Max) + 10'd1;
 				end
 			end
 			else begin
-				if (  Ball_Y_Motion >= Ball_V_Max ) begin
+				if (  Ball_Y_Motion > Ball_V_Max ) begin
 					Ball_Y_Motion <=  Ball_V_Max;
 				end
 			end
 			
 			
-			// Bouncing
-			if ( Ball_Y_Pos >= (Ball_Y_Max - Ball_Size) ) begin // Ball is at the bottom edge, BOUNCE!
+			// Screen edge bouncing
+			if ( Ball_Y_Pos >= (Ball_Y_Max - Ball_Size)) begin // bottom edge
 				if ( Ball_Y_Motion[9] == 1'b0 ) begin
-					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd0);  // 2's complement - 1
+					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd1);  // 2's complement
 				end
 			end
-			else if ( Ball_Y_Pos <= (Ball_Y_Min + Ball_Size) ) begin // Ball is at the top edge, BOUNCE!
+			else if ( Ball_Y_Pos <= (Ball_Y_Min + Ball_Size) || bounce == 1'b1) begin // top edge
 				if ( Ball_Y_Motion[9] == 1'b1 ) begin
 					Ball_Y_Motion <= (~ (Ball_Y_Motion) + 10'd2);  // 2's complement + 1
 				end
 			end
 			  
-			if ( Ball_X_Pos >= (Ball_X_Max - Ball_Size) ) begin // Ball is at the Right edge, BOUNCE!
+			if ( Ball_X_Pos >= (Ball_X_Max - Ball_Size) ) begin // right edge
 				if ( Ball_X_Motion[9] == 1'b0 ) begin
-					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd0);  // 2's complement - 1
+					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd1);  // 2's complement
 				end
 			end
-			else if ( Ball_X_Pos <= (Ball_X_Min + Ball_Size) ) begin // Ball is at the Left edge, BOUNCE!
+			else if ( Ball_X_Pos <= (Ball_X_Min + Ball_Size) ) begin // left edge
 				if ( Ball_X_Motion[9] == 1'b1 ) begin
 					Ball_X_Motion <= (~ (Ball_X_Motion) + 10'd2);  // 2's complement + 1
 				end
@@ -163,10 +166,10 @@ module ball (	input 			Reset, frame_clk,
 		end  
 	end
 
-	assign BallX = Ball_X_Pos;
+	assign X = Ball_X_Pos;
 
-	assign BallY = Ball_Y_Pos;
+	assign Y = Ball_Y_Pos;
 
-	assign BallS = Ball_Size;
+	assign S = Ball_Size;
 
 endmodule
