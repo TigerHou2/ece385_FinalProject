@@ -25,9 +25,9 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 
 	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	
-	logic	boom, DD, UU, impact, out_of_bounds;
+	logic	boom, DD, UU, LL, RR, out_of_bounds;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(10'd1), .DD, .UU, .impact	);
+								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(10'd1), .DD, .UU, .LL, .RR	);
 	
 	
 	logic removePixel;
@@ -184,7 +184,7 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 		
 			// Explosion detection
 			if (boom == 1'b0) begin
-				boom <= DD | UU | out_of_bounds;
+				boom <= DD | UU | LL | RR | out_of_bounds;
 			end
 			
 			if (boom == 1'b1) begin

@@ -25,11 +25,11 @@ module player (	input 			clk, reset, frame_clk,
 	 
 	parameter [9:0] X_Center=320;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
-	parameter [9:0] X_Min=5;		// Leftmost point on the X axis
-	parameter [9:0] X_Max=634;		// Rightmost point on the X axis
-	parameter [9:0] Y_Min=5;		// Topmost point on the Y axis
-	parameter [9:0] Y_Max=474;		// Bottommost point on the Y axis
-	parameter [9:0] V_Max=10;		// maximum ball velocity
+	parameter [9:0] X_Min=0;		// Leftmost point on the X axis
+	parameter [9:0] X_Max=639;		// Rightmost point on the X axis
+	parameter [9:0] Y_Min=0;		// Topmost point on the Y axis
+	parameter [9:0] Y_Max=479;		// Bottommost point on the Y axis
+	parameter [9:0] V_Max=8;		// maximum ball velocity
 	
 	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter, aim_Counter;
 	
@@ -40,9 +40,9 @@ module player (	input 			clk, reset, frame_clk,
 
 	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	
-	logic	DD, UU, impact;
+	logic	DD, UU, LL, RR;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(Size), .DD, .UU, .impact	);
+								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(Size), .DD, .UU, .LL, .RR	);
 	
 	logic launch;
 	logic [3:0]	angle;
@@ -69,7 +69,7 @@ module player (	input 			clk, reset, frame_clk,
 			input_Y_Counter <= 8'h00;
 			aim_Counter <= 8'h00;
 			angle <= 4'd6;
-			power <= 3'd4;
+			power <= 3'd2;
 		end
 			  
 		else 
@@ -108,12 +108,11 @@ module player (	input 			clk, reset, frame_clk,
 					default: launch <= 1'b0;
 				endcase
 			end
-				
 		
 		
 			// Gravity
 			gravCounter <= gravCounter + 8'h01;
-			if (gravCounter >= grav_Counter_Max)
+			if ( (DD == 1'b0) && (gravCounter >= grav_Counter_Max) )
 			begin
 				Y_Vel <= Y_Vel + 10'd1;
 				gravCounter <= 8'h00;
@@ -121,9 +120,13 @@ module player (	input 			clk, reset, frame_clk,
 			
 			
 			// Terrain detection
-			if (DD == 1'b1) begin
+			if ( (DD&UU) == 1'b1 ) begin
+				X_Vel <= (~10'd1) + X_Vel[9] + X_Vel[9];
+				Y_Vel <= (~10'd1) + Y_Vel[9] + Y_Vel[9];
+			end
+			else if (DD == 1'b1) begin
 				X_Vel <= 10'd0;
-				if ( Y_Vel[9] == 1'b0 || Y_Vel == 10'd0 )
+				if ( Y_Vel[9] == 1'b0 )
 					Y_Vel <= 10'd0;
 				Y_Pos <= Y_Pos - 10'd2;
 			end
@@ -131,11 +134,17 @@ module player (	input 			clk, reset, frame_clk,
 				Y_Vel <= 10'd1;
 			end
 			
-			if (impact == 1'b1) begin
-				X_Vel <= 10'b0;
+			if ( (LL&RR) == 1'b1 ) begin
+				X_Vel <= 10'd0;
 			end
+			else if ( LL == 1'b1 ) begin
+				X_Vel <= 10'd1;
+			end
+			else if (RR == 1'b1 ) begin
+				X_Vel <= ~(10'd0);
+			end
+				
 			
-		
 			// X-motion
 			input_X_Counter <= input_X_Counter + 8'h01;
 			if (input_X_Counter >= input_X_Counter_Max)
@@ -154,9 +163,8 @@ module player (	input 			clk, reset, frame_clk,
 			if (input_Y_Counter >= input_Y_Counter_Max)
 			begin
 				unique case (keycode)
-//					8'h16 : 	Y_Vel <= Y_Vel + 10'd1;//S
 					8'h1A : 	begin
-								Y_Vel <= Y_Vel - 10'd4;//W
+								Y_Vel <= Y_Vel - 10'd3;//W
 								input_Y_Counter <= 8'h00;
 								end
 					default: ;
@@ -196,7 +204,7 @@ module player (	input 			clk, reset, frame_clk,
 			end
 			else if ( Y_Pos <= (Y_Min + Size)) begin // top edge
 				if ( Y_Vel[9] == 1'b1 ) begin
-					Y_Vel <= (~ (Y_Vel) + 10'd1);
+					Y_Vel <= (~ (Y_Vel) + 10'd2);
 				end
 			end
 			  
@@ -207,7 +215,7 @@ module player (	input 			clk, reset, frame_clk,
 			end
 			else if ( X_Pos <= (X_Min + Size) ) begin // left edge
 				if ( X_Vel[9] == 1'b1 ) begin
-					X_Vel <= (~ (X_Vel) + 10'd1);
+					X_Vel <= (~ (X_Vel) + 10'd2);
 				end
 			end
 			
