@@ -130,7 +130,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	
 	always_ff @ (negedge CLOCK_50)
 	begin
-		terrain_addr <= drawxsig;
+		terrain_addr <= drawxsig - 1'b1;
 	end
 	
 	
@@ -186,7 +186,7 @@ color_mapper CMAP		(	.PX(P1X), .PY(P1Y), .PS(P1S), .DrawX(drawxsig), .DrawY(draw
 								.BX(B1X), .BY(B1Y), .BS(B1S), .terrain_data(terrain_out), 
 								.blank, .Red, .Green, .Blue  );
 
-terrain TERRAIN		(	.clk(CLOCK_50), .we(1'b0), .reset(Reset_h), .read_addr(drawxsig),
+terrain TERRAIN		(	.clk(CLOCK_50), .we(B1E&blank), .reset(Reset_h), .read_addr(drawxsig),
 								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);
 
 

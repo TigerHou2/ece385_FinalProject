@@ -40,15 +40,15 @@ module player (	input 			clk, reset, frame_clk,
 
 	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	
-	logic	landed, bounce, impact;
+	logic	DD, UU, impact;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(Size), .landed, .bounce, .impact	);
+								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(Size), .DD, .UU, .impact	);
 	
 	logic launch;
 	logic [3:0]	angle;
 	logic [2:0] power;
 	
-	parameter [3:0]	angle_Max = 9;
+	parameter [3:0]	angle_Max = 8;
 	parameter [2:0]	power_Max = 7;
 	
 	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
@@ -121,11 +121,18 @@ module player (	input 			clk, reset, frame_clk,
 			
 			
 			// Terrain detection
-			if (landed == 1'b1) begin
+			if (DD == 1'b1) begin
 				X_Vel <= 10'd0;
 				if ( Y_Vel[9] == 1'b0 || Y_Vel == 10'd0 )
 					Y_Vel <= 10'd0;
 				Y_Pos <= Y_Pos - 10'd2;
+			end
+			else if (UU == 1'b1) begin
+				Y_Vel <= 10'd1;
+			end
+			
+			if (impact == 1'b1) begin
+				X_Vel <= 10'b0;
 			end
 			
 		
@@ -184,23 +191,23 @@ module player (	input 			clk, reset, frame_clk,
 			// Screen edge bouncing
 			if ( Y_Pos >= (Y_Max - Size)) begin // bottom edge
 				if ( Y_Vel[9] == 1'b0 ) begin
-					Y_Vel <= (~ (Y_Vel) + 10'd1);  // 2's complement
+					Y_Vel <= (~ (Y_Vel) + 10'd1);
 				end
 			end
-			else if ( Y_Pos <= (Y_Min + Size) || bounce == 1'b1) begin // top edge
+			else if ( Y_Pos <= (Y_Min + Size)) begin // top edge
 				if ( Y_Vel[9] == 1'b1 ) begin
-					Y_Vel <= (~ (Y_Vel) + 10'd1);  // 2's complement
+					Y_Vel <= (~ (Y_Vel) + 10'd1);
 				end
 			end
 			  
 			if ( X_Pos >= (X_Max - Size) ) begin // right edge
 				if ( X_Vel[9] == 1'b0 ) begin
-					X_Vel <= (~ (X_Vel) + 10'd1);  // 2's complement
+					X_Vel <= (~ (X_Vel) + 10'd1);
 				end
 			end
 			else if ( X_Pos <= (X_Min + Size) ) begin // left edge
 				if ( X_Vel[9] == 1'b1 ) begin
-					X_Vel <= (~ (X_Vel) + 10'd1);  // 2's complement
+					X_Vel <= (~ (X_Vel) + 10'd1);
 				end
 			end
 			

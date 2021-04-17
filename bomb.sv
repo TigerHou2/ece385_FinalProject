@@ -25,14 +25,14 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 
 	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	
-	logic	boom, landed, bounce, impact, out_of_bounds;
+	logic	boom, DD, UU, impact, out_of_bounds;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(10'd1), .landed, .bounce, .impact	);
+								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(10'd1), .DD, .UU, .impact	);
 	
 	
 	logic removePixel;
 	int DistX, DistY;
-	assign boomRadius = 12;	// explosion radius
+	assign boomRadius = 14;	// explosion radius
 	assign DistX = X_Pos - DrawX;
 	assign DistY = Y_Pos - DrawY;
 	
@@ -144,6 +144,15 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 		endcase		
 	end
 	
+	
+	// Delete projectile, deform terrain
+	always_ff @ (posedge clk)
+	begin
+		terrain_out <= terrain_data;
+		if ( (boom == 1'b1) && (removePixel==1'b1) )
+			terrain_out[DrawY] <= 1'b0;
+	end
+	
 
 	always_ff @ (posedge reset or posedge frame_clk )
 	begin: Move_Ball
@@ -175,17 +184,12 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 		
 			// Explosion detection
 			if (boom == 1'b0) begin
-				boom <= landed | bounce | out_of_bounds;
+				boom <= DD | UU | out_of_bounds;
 			end
 			
-			
-			// Delete projectile, modify terrain
-			terrain_out <= terrain_data;
 			if (boom == 1'b1) begin
 				X_Vel <= 10'd0;
 				Y_Vel <= 10'd0;
-				if (removePixel==1'b1)
-					terrain_out[DrawY] <= 1'b0;
 			end
 		
 		
