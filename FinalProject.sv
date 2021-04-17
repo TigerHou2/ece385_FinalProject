@@ -184,7 +184,7 @@ vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 
 color_mapper CMAP		(	.PX(P1X), .PY(P1Y), .PS(P1S), .DrawX(drawxsig), .DrawY(drawysig),
 								.BX(B1X), .BY(B1Y), .BS(B1S), .terrain_data(terrain_out), 
-								.blank, .Red, .Green, .Blue  );
+								.blank, .exploded(B1E), .Red, .Green, .Blue  );
 
 terrain TERRAIN		(	.clk(CLOCK_50), .we(B1E&blank), .reset(Reset_h), .read_addr(drawxsig),
 								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);

@@ -17,7 +17,7 @@ module  color_mapper (	input				[9:0]		PX, PY, PS,
 								input				[9:0]		DrawX, DrawY,
 								input				[9:0]		BX, BY, BS, 
 								input				[511:0]	terrain_data,
-								input							blank,
+								input							blank, exploded,
 								output logic	[7:0]		Red, Green, Blue );
     
 		logic player_on, bomb_on, terrain_on;
@@ -56,7 +56,9 @@ module  color_mapper (	input				[9:0]		PX, PY, PS,
 		
 		always_comb
 		begin:bomb_on_proc
-			if ( ( Dist_BX*Dist_BX + Dist_BY*Dist_BY) <= (BSize * BSize) ) 
+			if ( exploded == 1'b1 )
+				bomb_on = 1'b0;
+			else if ( ( Dist_BX*Dist_BX + Dist_BY*Dist_BY) <= (BSize * BSize) ) 
 				bomb_on = 1'b1;
 			else 
 				bomb_on = 1'b0;

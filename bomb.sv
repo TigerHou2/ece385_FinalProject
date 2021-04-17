@@ -11,8 +11,8 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, Size, boomRadius;
 	logic [9:0] X_Vel_init, Y_Vel_init;
 	 
-	parameter [9:0] X_Default=320;	// Default position on the X axis
-	parameter [9:0] Y_Default=120;	// Default position on the Y axis
+	parameter [9:0] X_Default=700;	// Default position on the X axis
+	parameter [9:0] Y_Default=500;	// Default position on the Y axis
 	parameter [9:0] X_Min=5;			// Leftmost point on the X axis
 	parameter [9:0] X_Max=634;			// Rightmost point on the X axis
 	parameter [9:0] Y_Min=5;			// Topmost point on the Y axis

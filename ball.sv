@@ -25,18 +25,18 @@ module player (	input 			clk, reset, frame_clk,
 	 
 	parameter [9:0] X_Center=320;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
-	parameter [9:0] X_Min=0;		// Leftmost point on the X axis
-	parameter [9:0] X_Max=639;		// Rightmost point on the X axis
-	parameter [9:0] Y_Min=0;		// Topmost point on the Y axis
-	parameter [9:0] Y_Max=479;		// Bottommost point on the Y axis
-	parameter [9:0] V_Max=8;		// maximum ball velocity
+	parameter [9:0] X_Min=5;		// Leftmost point on the X axis
+	parameter [9:0] X_Max=634;		// Rightmost point on the X axis
+	parameter [9:0] Y_Min=5;		// Topmost point on the Y axis
+	parameter [9:0] Y_Max=474;		// Bottommost point on the Y axis
+	parameter [9:0] V_Max=7;		// maximum ball velocity
 	
 	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter, aim_Counter;
 	
 	parameter [7:0] grav_Counter_Max = 6;
 	parameter [7:0] input_X_Counter_Max = 6;
 	parameter [7:0] input_Y_Counter_Max = 32;
-	parameter [7:0] aim_Counter_Max = 16;
+	parameter [7:0] aim_Counter_Max = 12;
 
 	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
 	
@@ -164,7 +164,7 @@ module player (	input 			clk, reset, frame_clk,
 			begin
 				unique case (keycode)
 					8'h1A : 	begin
-								Y_Vel <= Y_Vel - 10'd3;//W
+								Y_Vel <= Y_Vel - 10'd4;//W
 								input_Y_Counter <= 8'h00;
 								end
 					default: ;
@@ -197,25 +197,29 @@ module player (	input 			clk, reset, frame_clk,
 			
 			
 			// Screen edge bouncing
-			if ( Y_Pos >= (Y_Max - Size)) begin // bottom edge
+			if ( Y_Pos > (Y_Max - Size)) begin // bottom edge
 				if ( Y_Vel[9] == 1'b0 ) begin
-					Y_Vel <= (~ (Y_Vel) + 10'd1);
+					Y_Pos <= Y_Max;
+					Y_Vel <= ~(10'd0);
 				end
 			end
-			else if ( Y_Pos <= (Y_Min + Size)) begin // top edge
+			else if ( Y_Pos < (Y_Min + Size)) begin // top edge
 				if ( Y_Vel[9] == 1'b1 ) begin
-					Y_Vel <= (~ (Y_Vel) + 10'd2);
+					Y_Pos <= Y_Min;
+					Y_Vel <= 10'd1;
 				end
 			end
 			  
-			if ( X_Pos >= (X_Max - Size) ) begin // right edge
+			if ( X_Pos > (X_Max - Size) ) begin // right edge
 				if ( X_Vel[9] == 1'b0 ) begin
-					X_Vel <= (~ (X_Vel) + 10'd1);
+					X_Pos <= X_Max;
+					X_Vel <= ~(10'd0);
 				end
 			end
-			else if ( X_Pos <= (X_Min + Size) ) begin // left edge
+			else if ( X_Pos < (X_Min + Size) ) begin // left edge
 				if ( X_Vel[9] == 1'b1 ) begin
-					X_Vel <= (~ (X_Vel) + 10'd2);
+					X_Pos <= X_Min;
+					X_Vel <= 10'd1;
 				end
 			end
 			

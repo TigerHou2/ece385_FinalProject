@@ -85,10 +85,13 @@ module terrain		(	input  logic	clk, we, reset,
 				
 					select <= 1'b1;
 					
+					// two terrain options:
+					// -10'd53, rng[9:3], noise[9:7]  --  flatter
+					// -10'd58, rng[9:3], noise[9:6]  --  exaggerated
 					noise <= {noise[9],noise[9:1]} + {{2{noise[9]}},noise[9:2]} 
-								+ {{3{noise[9]}},noise[9:3]} + {3'd0,rng[9:3]} - 10'd53;
+								+ {{3{noise[9]}},noise[9:3]} + {3'd0,rng[9:3]} - 10'd58;
 					
-					height <= height + {{7{noise[9]}},noise[9:7]};
+					height <= height + {{6{noise[9]}},noise[9:6]};
 					for (idx = 0; idx <=floor; idx++)
 					begin
 						init_terrain[idx] <= (idx < height) ? 1'b0 : 1'b1;
