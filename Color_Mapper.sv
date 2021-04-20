@@ -35,8 +35,7 @@ module  color_mapper (	input							clk,
 		logic [17:0] 	read_address;
 		logic [4:0]		palette;
 
-		spriteRAM ram0 (	.clk, .we(1'b0), .write_address(18'd0), .data_in(5'd0), 
-													  .read_address, .data_out(palette)	);
+		spriteROM ram0 (	.clock(clk), .address(read_address), .q(palette)	);
   
 		// map palette index to RGB
 		logic [23:0]	RGB;
