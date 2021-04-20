@@ -1,9 +1,11 @@
 close all
 clear;clc
 
-imgName = 'map2_orig';
+imgName = 'map3';
 
-im = imread([imgName '.png']);
+im = imread([imgName '_orig.png']);
+
+im = imresize(im,0.5);
 
 [X_dither,map] = rgb2ind(im,6,'dither');
 imshow(X_dither,map)

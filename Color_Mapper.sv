@@ -75,6 +75,7 @@ module  color_mapper (	input							clk,
 				8'd29	:	RGB = 24'hEB1A27;
 				8'd30	:	RGB = 24'hF1EB30;
 				8'd31	:	RGB = 24'hFBAF3A;
+				default:	RGB = 24'h00FF00;
 			endcase
 		end
 		

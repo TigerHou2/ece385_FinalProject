@@ -273,6 +273,6 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 			drawBomb = 1'b0;
 	end
 	
-	assign addrBomb = width * (DrawY - U_edge) + (DrawX - L_edge);
+	assign addrBomb = width * (DrawY - U_edge[10:0]) + (DrawX - L_edge[10:0]);
 					
 endmodule

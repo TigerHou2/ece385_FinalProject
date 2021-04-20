@@ -269,6 +269,6 @@ module player (	input 			clk, reset, frame_clk,
 			drawPlayer = 1'b0;
 	end
 	
-	assign addrPlayer = width * (DrawY - U_edge) + (DrawX - L_edge) + spriteOffset;
+	assign addrPlayer = width * (DrawY - U_edge[10:0]) + (DrawX - L_edge[10:0]) + spriteOffset;
 
 endmodule

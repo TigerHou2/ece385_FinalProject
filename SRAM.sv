@@ -4,14 +4,14 @@
 
 module SRAM
 (
-	input [511:0] data,
+	input [479:0] data,
 	input [9:0] read_addr, write_addr,
 	input we, clk,
-	output logic [511:0] q
+	output logic [479:0] q
 );
 
 	// Declare the RAM variable
-	logic [511:0] ram[1023:0];
+	logic [479:0] ram[639:0];
 
 	always_ff @ (posedge clk)
 	begin

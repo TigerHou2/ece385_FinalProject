@@ -1,7 +1,7 @@
 module terrain		(	input  logic	clk, we, reset,
-							input	 logic	[511:0]	terrain_in, 
+							input	 logic	[479:0]	terrain_in, 
 							input	 logic	[9:0]		read_addr, write_addr, rngSeed,
-							output logic	[511:0]	terrain_out,
+							output logic	[479:0]	terrain_out,
 							output logic	[9:0]		terrain_height	);
 							
 		logic select;
@@ -9,8 +9,8 @@ module terrain		(	input  logic	clk, we, reset,
 		logic 		toSRAM_we;
 		logic [9:0] init_addr;
 		logic [9:0] toSRAM_addr;
-		logic [511:0] init_terrain;
-		logic	[511:0] toSRAM_terrain;
+		logic [479:0] init_terrain;
+		logic	[479:0] toSRAM_terrain;
 		logic [9:0] height;
 		assign terrain_height = height;
 		

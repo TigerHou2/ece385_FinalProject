@@ -66,8 +66,6 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //=======================================================
 	logic SPI0_CS_N, SPI0_SCLK, SPI0_MISO, SPI0_MOSI, USB_GPX, USB_IRQ, USB_RST;
 	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
-	logic [1:0] signs;
-	logic [1:0] hundreds;
 	logic [9:0] drawxsig, drawysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
@@ -108,10 +106,6 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	HexDriver hex_driver0 (hex_num_0, HEX0[6:0]);
 	assign HEX0[7] = 1'b1;
 	
-	//fill in the hundreds digit as well as the negative sign
-	assign HEX5 = {1'b1, ~signs[1], 3'b111, ~hundreds[1], ~hundreds[1], 1'b1};
-	assign HEX2 = {1'b1, ~signs[0], 3'b111, ~hundreds[0], ~hundreds[0], 1'b1};
-	
 	
 	//Assign one button to reset
 	assign {Reset_h}=~ (KEY[0]);
@@ -123,7 +117,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	
 	//DEBUG
 //	assign LEDR[8:1] = keycode;
-	logic [511:0] terrain_in, terrain_out;
+	logic [479:0] terrain_in, terrain_out;
 	logic [9:0] terrain_addr;
 	logic [9:0] terrain_height;
 	assign LEDR = P1A[9:0];
