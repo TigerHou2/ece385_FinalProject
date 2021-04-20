@@ -11,5 +11,5 @@ im = imresize(im,0.5);
 imshow(X_dither,map)
 rgb2hex(map)
 
-% imwrite(X_dither,map,[imgName '.png'])
-% imwrite(X_dither,map,[imgName '.jpg'])
+imwrite(X_dither,map,[imgName '.png'])
+imwrite(X_dither,map,[imgName '.jpg'])

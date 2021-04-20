@@ -2,11 +2,11 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 					input		[9:0]	launchX, launchY,
 					input		[3:0]	angle,
 					input		[2:0]	power,
-					input	 [511:0]	terrain_data,
+					input	 [479:0]	terrain_data,
 					input		[9:0]	DrawX, DrawY,
 					output			drawBomb,
-					output  [10:0]	addrBomb,
-					output [511:0]	terrain_out	);
+					output  [17:0]	addrBomb,
+					output [479:0]	terrain_out	);
     
 	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, boomRadius;
 	logic [9:0] X_Vel_init, Y_Vel_init;
@@ -273,6 +273,6 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 			drawBomb = 1'b0;
 	end
 	
-	assign addrBomb = width * (DrawY - U_edge[10:0]) + (DrawX - L_edge[10:0]);
+	assign addrBomb = {8'd0,width}*({8'd0,DrawY}-U_edge[17:0])+({8'd0,DrawX}-L_edge[17:0]);
 					
 endmodule

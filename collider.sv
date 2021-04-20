@@ -1,5 +1,5 @@
 module collider	(	input				clk, reset,
-							input	[511:0]	terrain_data, 
+							input	[479:0]	terrain_data, 
 							input [9:0]		X, Y, DrawX, 
 							input	[9:0]		D, U, L, R,
 							output			DD, UU, LL, RR	);

@@ -14,15 +14,15 @@
 
 
 module player (	input 			clk, reset, frame_clk,
-						input  [511:0]	terrain_data,
+						input  [479:0]	terrain_data,
 						input  [7:0]	keycode,
 						input  [9:0]	DrawX, DrawY,
 						output			drawPlayer, drawBomb,
-						output [10:0]	addrPlayer, addrBomb,
-						output [511:0]	terrain_out	);
+						output [17:0]	addrPlayer, addrBomb,
+						output [479:0]	terrain_out	);
     
 	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY;
-	logic [10:0] spriteOffset;
+	logic [17:0] spriteOffset;
 	 
 	parameter [9:0] X_Center=320;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
@@ -247,9 +247,9 @@ module player (	input 			clk, reset, frame_clk,
 			
 			begin
 			if ( X_Vel[9] == 1'b1 )
-				spriteOffset <= 11'd579;
+				spriteOffset <= 18'd579;
 			else
-				spriteOffset <= 11'd204;
+				spriteOffset <= 18'd204;
 			end
 
 
@@ -269,6 +269,6 @@ module player (	input 			clk, reset, frame_clk,
 			drawPlayer = 1'b0;
 	end
 	
-	assign addrPlayer = width * (DrawY - U_edge[10:0]) + (DrawX - L_edge[10:0]) + spriteOffset;
+	assign addrPlayer = {8'd0,width}*({8'd0,DrawY}-U_edge[17:0])+({8'd0,DrawX}-L_edge[17:0])+spriteOffset;
 
 endmodule

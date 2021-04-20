@@ -16,9 +16,9 @@ def rgb_to_hex(num):
 
 filename = input("What's the image name? ")
 new_w, new_h = map(int, input("What's the new width x height? Like 28 28. ").split(' '))
-palette_hex = ['0x23405B', '0xBB7182', '0xF8B293', '0x515474', '0xF9CE96', '0xF0737F',  # map 1 colors
-               '0x035550', '0x2FBDA1', '0x93E2C0', '0x06837E', '0x62D8B6', '0xDFECCF',  # map 2 colors
-               '0x252033', '0x5F4F71', '0x9E738F', '0x342845', '0x7A5E7E', '0x453D5E',  # map 3 colors
+palette_hex = ['0x24415D', '0xBC7284', '0xF8B293', '0x525575', '0xF9CD95', '0xEF7580',  # map 1 colors
+               '0x035852', '0x2FBDA1', '0x9BE0BE', '0x06847F', '0x62D7B6', '0xDDECCF',  # map 2 colors
+               '0x252033', '0x5F4F71', '0x9D728F', '0x342845', '0x7A5E7E', '0x443D5D',  # map 3 colors
                '0x000000', '0x555555', '0xBBBBBB', '0xFFFFFF', '0x844731', '0x987632',  # common colors
                '0x0055AA', '0x4E89C4', '0xBA3420', '0xEF5953',  # team colors
                '0x231F20', '0xEB1A27', '0xF1EB30', '0xFBAF3A'   # bomb colors
@@ -46,12 +46,12 @@ for y in range(im.size[1]):
         print(pixel)
         if pixel[3] < 200:
             outImg.putpixel((x, y), palette_rgb[0])
-            outFile.write("%x\n" % 0)
+            outFile.write("%s\n" % bin(0)[2:].zfill(5))
             print(i)
         else:
             index = pixel_tree.query(pixel[:3])[1]
             outImg.putpixel((x, y), palette_rgb[index])
-            outFile.write("%x\n" % index)
+            outFile.write("%s\n" % bin(index)[2:].zfill(5))
         i += 1
 outFile.close()
 outImg.save("../sprite_converted/" + filename + ".png")

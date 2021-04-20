@@ -23,10 +23,10 @@ module FinalProject (
       ///////// HEX /////////
       output   [ 7: 0]   HEX0,
       output   [ 7: 0]   HEX1,
-      output   [ 7: 0]   HEX2,
+//      output   [ 7: 0]   HEX2,
       output   [ 7: 0]   HEX3,
       output   [ 7: 0]   HEX4,
-      output   [ 7: 0]   HEX5,
+//      output   [ 7: 0]   HEX5,
 
       ///////// SDRAM /////////
       output             DRAM_CLK,
@@ -69,8 +69,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] drawxsig, drawysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
-	logic [10:0]P1A, B1A;
+	logic [17:0]P1A, B1A;
 	logic			P1D, B1D;
+	logic [17:0]addrBG;
+	logic 		drawBG;
 
 //=======================================================
 //  Structural coding
@@ -178,11 +180,13 @@ vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
 color_mapper CMAP		(	.clk(CLOCK_50), .DrawY(drawysig), .terrain_data(terrain_out), 
-								.addrPlayer(P1A), .addrBomb(B1A), .drawPlayer(P1D), .drawBomb(B1D),
+								.addrPlayer(P1A), .addrBomb(B1A), .addrBG,
+								.drawPlayer(P1D), .drawBomb(B1D), .drawBG,
 								.blank, .Red, .Green, .Blue  );
 
 terrain TERRAIN		(	.clk(CLOCK_50), .we(~B1D&blank), .reset(Reset_h), .read_addr(drawxsig),
 								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);
 
+background BACKGROUND(	.mapSelect(2'b00), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
 
 endmodule

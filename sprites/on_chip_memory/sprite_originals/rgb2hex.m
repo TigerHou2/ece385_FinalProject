@@ -51,6 +51,6 @@ else
     rgb = round(rgb); 
 end
 %% Convert (Thanks to Stephen Cobeldick for this clever, efficient solution):
-hex(:,2:7) = reshape(sprintf('%02X',rgb.'),6,[]).'; 
-hex(:,1) = '#';
+hex(:,3:8) = reshape(sprintf('%02X',rgb.'),6,[]).'; 
+hex(:,1:2) = repmat('0x',6,1);
 end
