@@ -4,11 +4,11 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 					input		[2:0]	power,
 					input	 [511:0]	terrain_data,
 					input		[9:0]	DrawX, DrawY,
-					output			exploded,
-					output	[9:0]	X, Y, S, 
+					output			drawBomb,
+					output  [10:0]	addrBomb,
 					output [511:0]	terrain_out	);
     
-	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, Size, boomRadius;
+	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, boomRadius;
 	logic [9:0] X_Vel_init, Y_Vel_init;
 	 
 	parameter [9:0] X_Default=700;	// Default position on the X axis
@@ -23,16 +23,22 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 	
 	parameter [7:0] grav_Counter_Max = 6;
 
-	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	assign width 	= 12;
+	assign height	= 17;
+	assign centerX	= 5;
+	assign centerY	= 9;
+	
 	
 	logic	boom, DD, UU, LL, RR, out_of_bounds;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(10'd1), .DD, .UU, .LL, .RR	);
+								.X(X_Pos), .Y(Y_Pos), .DrawX, 
+								.D(10'd1), .U(10'd1), .L(10'd1), .R(10'd1),
+								.DD, .UU, .LL, .RR	);
 	
 	
 	logic removePixel;
 	int DistX, DistY;
-	assign boomRadius = 14;	// explosion radius
+	assign boomRadius = 20;	// explosion radius
 	assign DistX = X_Pos - DrawX;
 	assign DistY = Y_Pos - DrawY;
 	
@@ -227,17 +233,17 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 			
 			
 			// Screen edge detection
-			if ( Y_Pos >= (Y_Max - Size)) begin // bottom edge
+			if ( Y_Pos >= (Y_Max - height + centerY)) begin // bottom edge
 				out_of_bounds <= 1'b1;
 			end
-			else if ( Y_Pos <= (Y_Min + Size)) begin // top edge
+			else if ( Y_Pos <= (Y_Min + centerY)) begin // top edge
 				out_of_bounds <= 1'b1;
 			end
 			  
-			if ( X_Pos >= (X_Max - Size) ) begin // right edge
+			if ( X_Pos >= (X_Max - width + centerX) ) begin // right edge
 				out_of_bounds <= 1'b1;
 			end
-			else if ( X_Pos <= (X_Min + Size) ) begin // left edge
+			else if ( X_Pos <= (X_Min + centerX) ) begin // left edge
 				out_of_bounds <= 1'b1;
 			end
 			
@@ -251,13 +257,22 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 
 		end  
 	end
-
-	assign X = X_Pos;
-
-	assign Y = Y_Pos;
-
-	assign S = Size;
 	
-	assign exploded = boom;
+	int L_edge, U_edge;
+	assign L_edge = X_Pos - centerX;
+	assign U_edge = Y_Pos - centerY;
+	
+	always_comb
+	begin
+		if ( boom == 1'b1 )
+			drawBomb = 1'b0;
+		else if ( 	DrawX >= L_edge && DrawX <= L_edge + width &&
+						DrawY >= U_edge && DrawY <= U_edge + height	)
+			drawBomb = 1'b1;
+		else 
+			drawBomb = 1'b0;
+	end
+	
+	assign addrBomb = width * (DrawY - U_edge) + (DrawX - L_edge);
 					
 endmodule

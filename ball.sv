@@ -17,11 +17,12 @@ module player (	input 			clk, reset, frame_clk,
 						input  [511:0]	terrain_data,
 						input  [7:0]	keycode,
 						input  [9:0]	DrawX, DrawY,
-						output [9:0]	X, Y, S, bombX, bombY, bombS,
-						output			exploded,
+						output			drawPlayer, drawBomb,
+						output [10:0]	addrPlayer, addrBomb,
 						output [511:0]	terrain_out	);
     
-	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, Size;
+	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY;
+	logic [10:0] spriteOffset;
 	 
 	parameter [9:0] X_Center=320;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
@@ -38,11 +39,16 @@ module player (	input 			clk, reset, frame_clk,
 	parameter [7:0] input_Y_Counter_Max = 32;
 	parameter [7:0] aim_Counter_Max = 12;
 
-	assign Size = 4;  // assigns the value 4 as a 10-digit binary number, ie "0000000100"
+	assign width 	= 15;
+	assign height	= 25;
+	assign centerX	= 8;
+	assign centerY	= 13;
 	
 	logic	DD, UU, LL, RR;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, .radius(Size), .DD, .UU, .LL, .RR	);
+								.X(X_Pos), .Y(Y_Pos), .DrawX, 
+								.D(height-centerY), .U(centerY), .L(centerX), .R(width-centerX),
+								.DD, .UU, .LL, .RR	);
 	
 	logic launch;
 	logic [3:0]	angle;
@@ -52,8 +58,8 @@ module player (	input 			clk, reset, frame_clk,
 	parameter [2:0]	power_Max = 7;
 	
 	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
-						.angle, .power, .terrain_data, .DrawX, .DrawY, 
-						.exploded, .X(bombX), .Y(bombY), .S(bombS), .terrain_out	);
+						.angle, .power, .terrain_data, .DrawX, .DrawY, .drawBomb, .addrBomb,
+						.terrain_out	);
 	
 
 	always_ff @ (posedge reset or posedge frame_clk )
@@ -197,26 +203,26 @@ module player (	input 			clk, reset, frame_clk,
 			
 			
 			// Screen edge bouncing
-			if ( Y_Pos > (Y_Max - Size)) begin // bottom edge
+			if ( Y_Pos > (Y_Max - height + centerY) ) begin // bottom edge
 				if ( Y_Vel[9] == 1'b0 ) begin
 					Y_Pos <= Y_Max;
 					Y_Vel <= ~(10'd0);
 				end
 			end
-			else if ( Y_Pos < (Y_Min + Size)) begin // top edge
+			else if ( Y_Pos < (Y_Min + centerY) ) begin // top edge
 				if ( Y_Vel[9] == 1'b1 ) begin
 					Y_Pos <= Y_Min;
 					Y_Vel <= 10'd1;
 				end
 			end
 			  
-			if ( X_Pos > (X_Max - Size) ) begin // right edge
+			if ( X_Pos > (X_Max - width + centerX) ) begin // right edge
 				if ( X_Vel[9] == 1'b0 ) begin
 					X_Pos <= X_Max;
 					X_Vel <= ~(10'd0);
 				end
 			end
-			else if ( X_Pos < (X_Min + Size) ) begin // left edge
+			else if ( X_Pos < (X_Min + centerX) ) begin // left edge
 				if ( X_Vel[9] == 1'b1 ) begin
 					X_Pos <= X_Min;
 					X_Vel <= 10'd1;
@@ -238,15 +244,31 @@ module player (	input 			clk, reset, frame_clk,
 			if ( Y_Pos[9:8] == 2'b11 )
 				Y_Pos <= 10'd0;
 			end
+			
+			begin
+			if ( X_Vel[9] == 1'b1 )
+				spriteOffset <= 11'd579;
+			else
+				spriteOffset <= 11'd204;
+			end
 
 
 		end  
 	end
-
-	assign X = X_Pos;
-
-	assign Y = Y_Pos;
-
-	assign S = Size;
+	
+	int L_edge, U_edge;
+	assign L_edge = X_Pos - centerX;
+	assign U_edge = Y_Pos - centerY;
+	
+	always_comb
+	begin
+		if ( 	DrawX >= L_edge && DrawX <= L_edge + width &&
+				DrawY >= U_edge && DrawY <= U_edge + height	)
+			drawPlayer = 1'b1;
+		else 
+			drawPlayer = 1'b0;
+	end
+	
+	assign addrPlayer = width * (DrawY - U_edge) + (DrawX - L_edge) + spriteOffset;
 
 endmodule

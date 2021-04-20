@@ -1,6 +1,7 @@
 module collider	(	input				clk, reset,
 							input	[511:0]	terrain_data, 
-							input [9:0]		X, Y, DrawX, radius,
+							input [9:0]		X, Y, DrawX, 
+							input	[9:0]		D, U, L, R,
 							output			DD, UU, LL, RR	);
 							
 		always_ff @ (posedge clk)
@@ -18,16 +19,16 @@ module collider	(	input				clk, reset,
 			begin
 				if ( X == DrawX )
 				begin
-					DD <= terrain_data[Y+radius];
-					UU <= terrain_data[Y-radius];
+					DD <= terrain_data[Y+D];
+					UU <= terrain_data[Y-U];
 				end
 			
-				if ( (X-radius) == DrawX )
+				if ( (X-L) == DrawX )
 				begin
 					LL <= terrain_data[Y];
 				end
 			
-				if ( (X+radius) == DrawX )
+				if ( (X+R) == DrawX )
 				begin
 					RR <= terrain_data[Y];
 				end

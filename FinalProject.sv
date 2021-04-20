@@ -71,8 +71,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0] drawxsig, drawysig;
 	logic [7:0] Red, Blue, Green;
 	logic [7:0] keycode;
-	logic	[9:0]	P1X, P1Y, P1S, B1X, B1Y, B1S;
-	logic			P1L, P1B, B1E;
+	logic [10:0]P1A, B1A;
+	logic			P1D, B1D;
 
 //=======================================================
 //  Structural coding
@@ -126,7 +126,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [511:0] terrain_in, terrain_out;
 	logic [9:0] terrain_addr;
 	logic [9:0] terrain_height;
-	assign LEDR = {B1Y[9:2], 1'b0, B1E};
+	assign LEDR = P1A[9:0];
 	
 	always_ff @ (negedge CLOCK_50)
 	begin
@@ -176,17 +176,18 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
-								.keycode(keycode), .DrawX(drawxsig), .DrawY(drawysig), .X(P1X), .Y(P1Y), .S(P1S), 
-								.bombX(B1X), .bombY(B1Y), .bombS(B1S), .exploded(B1E), .terrain_out(terrain_in));
+								.keycode(keycode), .DrawX(drawxsig), .DrawY(drawysig), 
+								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
+								.terrain_out(terrain_in));
 				
 vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
-color_mapper CMAP		(	.PX(P1X), .PY(P1Y), .PS(P1S), .DrawX(drawxsig), .DrawY(drawysig),
-								.BX(B1X), .BY(B1Y), .BS(B1S), .terrain_data(terrain_out), 
-								.blank, .exploded(B1E), .Red, .Green, .Blue  );
+color_mapper CMAP		(	.clk(CLOCK_50), .DrawY(drawysig), .terrain_data(terrain_out), 
+								.addrPlayer(P1A), .addrBomb(B1A), .drawPlayer(P1D), .drawBomb(B1D),
+								.blank, .Red, .Green, .Blue  );
 
-terrain TERRAIN		(	.clk(CLOCK_50), .we(B1E&blank), .reset(Reset_h), .read_addr(drawxsig),
+terrain TERRAIN		(	.clk(CLOCK_50), .we(~B1D&blank), .reset(Reset_h), .read_addr(drawxsig),
 								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);
 
 
