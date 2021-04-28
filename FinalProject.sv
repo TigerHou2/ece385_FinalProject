@@ -172,7 +172,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
-								.keycode(keycode), .DrawX(drawxsig), .DrawY(drawysig), 
+								.keycode(keycode), .DrawX(drawxsig), .DrawY(drawysig), .ID(SW[9]),
 								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
 								.terrain_out(terrain_in));
 				
@@ -187,6 +187,6 @@ color_mapper CMAP		(	.clk(CLOCK_50), .DrawY(drawysig), .terrain_data(terrain_out
 terrain TERRAIN		(	.clk(CLOCK_50), .we(~B1D&blank), .reset(Reset_h), .read_addr(drawxsig),
 								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);
 
-background BACKGROUND(	.mapSelect(2'b00), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
+background BACKGROUND(	.mapSelect(SW[8]), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
 
 endmodule

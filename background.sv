@@ -1,4 +1,4 @@
-module background	(	input		[1:0]		mapSelect,
+module background	(	input					mapSelect,
 							input		[9:0]		DrawX, DrawY,
 							output				drawBG,
 							output	[17:0]	addrBG	);
@@ -11,9 +11,8 @@ module background	(	input		[1:0]		mapSelect,
 		always_comb
 		begin
 			unique case (mapSelect)
-				2'b00:	spriteOffset = 18'd1707;
-				2'b01:	spriteOffset = 18'd78507;
-				default:	spriteOffset = 18'd1707;
+				1'b0:	spriteOffset = 18'd1707;
+				1'b1:	spriteOffset = 18'd78507;
 			endcase
 		end
 		

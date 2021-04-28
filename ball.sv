@@ -17,12 +17,13 @@ module player (	input 			clk, reset, frame_clk,
 						input  [479:0]	terrain_data,
 						input  [7:0]	keycode,
 						input  [9:0]	DrawX, DrawY,
+						input				ID,
 						output			drawPlayer, drawBomb,
 						output [17:0]	addrPlayer, addrBomb,
 						output [479:0]	terrain_out	);
     
 	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY;
-	logic [17:0] spriteOffset;
+	logic [17:0] facingOffset;
 	 
 	parameter [9:0] X_Center=320;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
@@ -53,12 +54,13 @@ module player (	input 			clk, reset, frame_clk,
 	logic launch;
 	logic [3:0]	angle;
 	logic [2:0] power;
+	logic			drawBombNaive;
 	
 	parameter [3:0]	angle_Max = 8;
 	parameter [2:0]	power_Max = 7;
 	
 	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
-						.angle, .power, .terrain_data, .DrawX, .DrawY, .drawBomb, .addrBomb,
+						.angle, .power, .terrain_data, .DrawX, .DrawY, .drawBomb(drawBombNaive), .addrBomb,
 						.terrain_out	);
 	
 
@@ -246,29 +248,54 @@ module player (	input 			clk, reset, frame_clk,
 			end
 			
 			begin
-			if ( X_Vel[9] == 1'b1 )
-				spriteOffset <= 18'd579;
-			else
-				spriteOffset <= 18'd204;
+			if ( keycode == 8'h04 ) // A
+				facingOffset <= 18'd579;
+			else if ( keycode == 8'h07 ) // D
+				facingOffset <= 18'd204;
 			end
 
 
 		end  
 	end
 	
+	
+	// Check electron beam position to determine whether sprite pixel is drawn
+	
 	int L_edge, U_edge;
 	assign L_edge = X_Pos - centerX;
 	assign U_edge = Y_Pos - centerY;
 	
+	// Check transparency mask to determine whether sprite pixel is drawn
+	
+	logic [17:0]	addrMaskPlayer;
+	logic				letDrawPlayer, letDrawBomb;
+	assign addrMaskPlayer = {8'd0,width}*({8'd0,DrawY}-U_edge[17:0])+({8'd0,DrawX}-L_edge[17:0])+facingOffset;
+	maskROM mask (	.clk(~clk), .addr1(addrMaskPlayer[9:0]), .out1(letDrawPlayer),
+										.addr2(addrBomb[9:0]), .out2(letDrawBomb));
+										
+	assign drawBomb = drawBombNaive & letDrawBomb;
+	
 	always_comb
 	begin
-		if ( 	DrawX >= L_edge && DrawX <= L_edge + width &&
-				DrawY >= U_edge && DrawY <= U_edge + height	)
-			drawPlayer = 1'b1;
+		if ( 	DrawX >= L_edge && DrawX < L_edge + width &&
+				DrawY >= U_edge && DrawY < U_edge + height	)
+			drawPlayer = letDrawPlayer;
 		else 
 			drawPlayer = 1'b0;
 	end
 	
-	assign addrPlayer = {8'd0,width}*({8'd0,DrawY}-U_edge[17:0])+({8'd0,DrawX}-L_edge[17:0])+spriteOffset;
-
+	// Switch player color depending on team
+	
+	logic [17:0]	colorOffset;
+	
+	assign addrPlayer = addrMaskPlayer + colorOffset;
+	
+	always_comb
+	begin
+		unique case (ID)
+			1'b0:	colorOffset = 18'd0;
+			1'b1:	colorOffset = 18'd750;
+		endcase
+	end
+	
 endmodule

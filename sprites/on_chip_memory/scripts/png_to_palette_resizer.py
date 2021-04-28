@@ -23,6 +23,7 @@ palette_hex = ['0x24415D', '0xBC7284', '0xF8B293', '0x525575', '0xF9CD95', '0xEF
                '0x0055AA', '0x4E89C4', '0xBA3420', '0xEF5953',  # team colors
                '0x231F20', '0xEB1A27', '0xF1EB30', '0xFBAF3A'   # bomb colors
                ]
+# palette_hex = ['0x000000', '0xFFFFFF']
 palette_rgb = [hex_to_rgb(color) for color in palette_hex]
 
 pixel_tree = KDTree(palette_rgb)
