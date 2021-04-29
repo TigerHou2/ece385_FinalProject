@@ -194,13 +194,13 @@ int main() {
 				 *
 				 */
 
-				k1 = strpbrk(allKeycodes, p1_bytes);
+				k1 = strpbrk(p1_bytes, allKeycodes);
 				if ( k1 != 0 ) {
 					p1_key = *k1;
 				} else {
 					p1_key = 0x00;
 				}
-				k2 = strpbrk(allKeycodes, p2_bytes);
+				k2 = strpbrk(p2_bytes, allKeycodes);
 				if ( k2 != 0 ) {
 					p2_key = *k2;
 				} else {

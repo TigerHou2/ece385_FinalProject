@@ -18,12 +18,23 @@ module player (	input 			clk, reset, frame_clk,
 						input  [7:0]	keycode,
 						input  [9:0]	DrawX, DrawY,
 						input				ID,
+						input  [63:0]	controls,
 						output			drawPlayer, drawBomb,
 						output [17:0]	addrPlayer, addrBomb,
 						output [479:0]	terrain_out	);
     
 	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY;
 	logic [17:0] facingOffset;
+	
+	logic [7:0] Jump, Shoot, Left, Right, AimL, AimR, PowDn, PowUp;
+	assign Jump		= controls[63:56];
+	assign Shoot	= controls[55:48];
+	assign Left		= controls[47:40];
+	assign Right	= controls[39:32];
+	assign AimL		= controls[31:24];
+	assign AimR		= controls[23:16];
+	assign PowDn	= controls[15:8];
+	assign PowUp	= controls[7:0];
 	 
 	parameter [9:0] X_Center=320;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
@@ -88,27 +99,27 @@ module player (	input 			clk, reset, frame_clk,
 			aim_Counter <= aim_Counter + 1'b1;
 			if (aim_Counter >= aim_Counter_Max) begin
 				unique case (keycode)
-					8'h14	:	if ( angle > 4'd0 ) begin			// Q, turn aim ccw
+					AimL	:	if ( angle > 4'd0 ) begin			// Q, turn aim ccw
 									angle <= angle - 1'b1;
 									aim_Counter <= 8'h00;
 								end
 									
-					8'h08	:	if ( angle < angle_Max ) begin	// E, turn aim cw
+					AimR	:	if ( angle < angle_Max ) begin	// E, turn aim cw
 									angle <= angle + 1'b1;
 									aim_Counter <= 8'h00;
 								end
 									
-					8'h1E	:	if ( power > 3'd0 ) begin			// 1, decrease power
+					PowDn	:	if ( power > 3'd0 ) begin			// 1, decrease power
 									power <= power - 1'b1;
 									aim_Counter <= 8'h00;
 								end
 								
-					8'h20	:	if ( power < power_Max ) begin	// 3, increase power
+					PowUp	:	if ( power < power_Max ) begin	// 3, increase power
 									power <= power + 1'b1;
 									aim_Counter <= 8'h00;
 								end
 					
-					8'h16	:	begin										// S, launch bomb
+					Shoot	:	begin										// S, launch bomb
 									launch <= 1'b1;
 									aim_Counter <= 8'h00;
 								end
@@ -158,8 +169,8 @@ module player (	input 			clk, reset, frame_clk,
 			if (input_X_Counter >= input_X_Counter_Max)
 			begin
 				unique case (keycode)
-					8'h04 : 	X_Vel <= X_Vel - 10'd1;//A
-					8'h07 : 	X_Vel <= X_Vel + 10'd1;//D
+					Left	: 	X_Vel <= X_Vel - 10'd1;//A
+					Right	: 	X_Vel <= X_Vel + 10'd1;//D
 					default: ;
 				endcase
 				input_X_Counter <= 8'h00;
@@ -171,7 +182,7 @@ module player (	input 			clk, reset, frame_clk,
 			if (input_Y_Counter >= input_Y_Counter_Max)
 			begin
 				unique case (keycode)
-					8'h1A : 	begin
+					Jump : 	begin
 								Y_Vel <= Y_Vel - 10'd4;//W
 								input_Y_Counter <= 8'h00;
 								end
@@ -248,9 +259,9 @@ module player (	input 			clk, reset, frame_clk,
 			end
 			
 			begin
-			if ( keycode == 8'h04 ) // A
+			if ( keycode == Left ) // A
 				facingOffset <= 18'd579;
-			else if ( keycode == 8'h07 ) // D
+			else if ( keycode == Right ) // D
 				facingOffset <= 18'd204;
 			end
 

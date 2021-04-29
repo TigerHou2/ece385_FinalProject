@@ -16,8 +16,8 @@
 module  color_mapper (	input							clk,
 								input				[9:0]		DrawY,
 								input				[479:0]	terrain_data,
-								input				[17:0]	addrPlayer, addrBomb, addrBG,
-								input							drawPlayer, drawBomb, drawBG, blank,
+								input				[17:0]	P1A, P2A, B1A, B2A, addrBG,
+								input							P1D, P2D, B1D, B2D, drawBG, blank,
 								output logic	[7:0]		Red, Green, Blue );
     
 		// Terrain drawing logic
@@ -89,11 +89,17 @@ module  color_mapper (	input							clk,
 			if (blank == 1'b0)
 				read_address = 18'd1706;
 				
-			else if (drawBomb == 1'b1) 
-				read_address = addrBomb;
+			else if (B1D == 1'b1) 
+				read_address = B1A;
 				
-			else if (drawPlayer == 1'b1) 
-				read_address = addrPlayer;
+			else if (P1D == 1'b1) 
+				read_address = P1A;
+				
+			else if (B2D == 1'b1) 
+				read_address = B2A;
+				
+			else if (P2D == 1'b1) 
+				read_address = P2A;
 				
 			else if (terrain_on == 1'b1)
 				read_address = 18'd1705;

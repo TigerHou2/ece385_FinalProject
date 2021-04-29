@@ -1600,10 +1600,10 @@ int main() {
 				 *
 				 */
 
-				k1 = strpbrk(allKeycodes, p1_bytes);
+				k1 = strpbrk(p1_bytes, allKeycodes);
  80008e4:	e0bffa04 	addi	r2,fp,-24
- 80008e8:	d1600044 	addi	r5,gp,-32767
- 80008ec:	1009883a 	mov	r4,r2
+ 80008e8:	100b883a 	mov	r5,r2
+ 80008ec:	d1200044 	addi	r4,gp,-32767
  80008f0:	8002f300 	call	8002f30 <strpbrk>
  80008f4:	e0bff815 	stw	r2,-32(fp)
 				if ( k1 != 0 ) {
@@ -1618,10 +1618,10 @@ int main() {
 					p1_key = 0x00;
  8000910:	e03ff205 	stb	zero,-56(fp)
 				}
-				k2 = strpbrk(allKeycodes, p2_bytes);
+				k2 = strpbrk(p2_bytes, allKeycodes);
  8000914:	e0bffa04 	addi	r2,fp,-24
- 8000918:	d1600244 	addi	r5,gp,-32759
- 800091c:	1009883a 	mov	r4,r2
+ 8000918:	100b883a 	mov	r5,r2
+ 800091c:	d1200244 	addi	r4,gp,-32759
  8000920:	8002f300 	call	8002f30 <strpbrk>
  8000924:	e0bff915 	stw	r2,-28(fp)
 				if ( k2 != 0 ) {

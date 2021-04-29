@@ -70,8 +70,9 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [7:0]		Red, Blue, Green;
 	logic [15:0]	keycode;
 	logic [7:0]		key_p1, key_p2;
-	logic [17:0]	P1A, B1A;
-	logic				P1D, B1D;
+	logic [17:0]	P1A, P2A, B1A, B2A;
+	logic				P1D, P2D, B1D, B2D;
+	logic	[63:0]	P1C, P2C;
 	logic [17:0]	addrBG;
 	logic				drawBG;
 
@@ -119,7 +120,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign VGA_G = Green[7:4];
 	
 	// Terrain data assignments
-	logic [479:0] terrain_in, terrain_out;
+	logic [479:0] T1O, T2O, terrain_out;
 	logic [9:0] terrain_addr;
 	logic [9:0] terrain_height;
 	
@@ -131,6 +132,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	// Player keycode assignments
 	assign key_p1 = keycode[15:8];
 	assign key_p2 = keycode[7:0];
+	
+	// Player controls
+	assign P1C = {8'd26, 8'd22, 8'd04, 8'd07, 8'd20, 8'd08, 8'd30, 8'd32}; // W,S,A,D,Q,E,1,3
+	assign P2C = {8'd12, 8'd14, 8'd13, 8'd15, 8'd24, 8'd18, 8'd37, 8'd38}; // I,K,J,L,U,O,8,9
 	
 	// Debug
 	assign LEDR = P1A[9:0];
@@ -178,21 +183,26 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
-								.keycode(key_p1), .DrawX(drawxsig), .DrawY(drawysig), .ID(SW[9]),
+								.keycode(key_p1), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b0), .controls(P1C),
 								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
-								.terrain_out(terrain_in));
+								.terrain_out(T1O));
+								
+player P2				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
+								.keycode(key_p2), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b1), .controls(P2C),
+								.drawPlayer(P2D), .drawBomb(B2D), .addrPlayer(P2A), .addrBomb(B2A),
+								.terrain_out(T2O));
 				
 vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
 color_mapper CMAP		(	.clk(CLOCK_50), .DrawY(drawysig), .terrain_data(terrain_out), 
-								.addrPlayer(P1A), .addrBomb(B1A), .addrBG,
-								.drawPlayer(P1D), .drawBomb(B1D), .drawBG,
+								.P1A, .P2A, .B1A, .B2A, .addrBG,
+								.P1D, .P2D, .B1D, .B2D, .drawBG,
 								.blank, .Red, .Green, .Blue  );
 
-terrain TERRAIN		(	.clk(CLOCK_50), .we(~B1D&blank), .reset(Reset_h), .read_addr(drawxsig),
-								.write_addr(terrain_addr), .terrain_in, .terrain_out, .rngSeed(SW), .terrain_height);
+terrain TERRAIN		(	.clk(CLOCK_50), .we((~B1D)&(~B2D)&blank), .reset(Reset_h), .read_addr(drawxsig),
+								.write_addr(terrain_addr), .terrain_in(T1O&T2O), .terrain_out, .rngSeed(SW), .terrain_height);
 
-background BACKGROUND(	.mapSelect(SW[8]), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
+background BACKGROUND(	.mapSelect(SW[9]), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
 
 endmodule
