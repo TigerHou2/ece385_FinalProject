@@ -27,7 +27,7 @@ module finalsoc (
 	input		clk_50_clk;
 	output	[15:0]	hex_digits_export;
 	input	[1:0]	key_external_connection_export;
-	output	[7:0]	keycode_export;
+	output	[15:0]	keycode_export;
 	output	[13:0]	leds_export;
 	input		reset_50_reset_n;
 	output		sdram_clk_clk;

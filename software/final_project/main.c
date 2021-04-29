@@ -22,6 +22,9 @@ extern HID_DEVICE hid_device;
 static BYTE addr = 1; 				//hard-wired USB address
 const char* const devclasses[] = { " Uninitialized", " HID Keyboard", " HID Mouse", " Mass storage" };
 
+static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8, 30, 32}; // W,S,A,D,Q,E,1,3
+static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18, 37, 38}; // I,K,J,L,U,O,8,9
+
 BYTE GetDriverandReport() {
 	BYTE i;
 	BYTE rcode;
@@ -132,6 +135,11 @@ void setKeycode(WORD keycode)
 }
 int main() {
 	BYTE rcode;
+	BYTE allKeycodes[] = "ABCDEF";
+	BYTE p1_key;
+	BYTE p2_key;
+	BYTE * k1;
+	BYTE * k2;
 	BOOT_MOUSE_REPORT buf;		//USB mouse report
 	BOOT_KBD_REPORT kbdbuf;
 
@@ -168,11 +176,41 @@ int main() {
 				printf("keycodes: ");
 				for (int i = 0; i < 6; i++) {
 					printf("%x ", kbdbuf.keycode[i]);
+					*(allKeycodes+i) = kbdbuf.keycode[i];
 				}
-				setKeycode(kbdbuf.keycode[0]);
 
-				printSignedHex0(kbdbuf.keycode[0]);
-				printSignedHex1(kbdbuf.keycode[1]);
+				/* send in two keycodes (concatenated together)
+				 * specifically, check all six keycodes for viable inputs
+				 * for players P1 and P2, place the first viable one for
+				 * each respective player into the output
+				 *
+				 * P1 viable codes:
+				 * W (0x1A), S (0x16), A (0x04), D (0x07)
+				 * Q (0x14), E (0x08), 1 (0x1E), 3 (0x20)
+				 *
+				 * P2 viable codes:
+				 * I (0x0C), K (0x0E), J (0x0D), L (0x0F)
+				 * U (0x18), O (0x12), 8 (0x26), 9 (0x26)
+				 *
+				 */
+
+				k1 = strpbrk(allKeycodes, p1_bytes);
+				if ( k1 != 0 ) {
+					p1_key = *k1;
+				} else {
+					p1_key = 0x00;
+				}
+				k2 = strpbrk(allKeycodes, p2_bytes);
+				if ( k2 != 0 ) {
+					p2_key = *k2;
+				} else {
+					p2_key = 0x00;
+				}
+
+				setKeycode( (p1_key << 8) + p2_key );
+
+				printSignedHex0(p1_key);
+				printSignedHex1(p2_key);
 				printf("\n");
 			}
 

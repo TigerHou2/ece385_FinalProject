@@ -65,14 +65,15 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //  REG/WIRE declarations
 //=======================================================
 	logic SPI0_CS_N, SPI0_SCLK, SPI0_MISO, SPI0_MOSI, USB_GPX, USB_IRQ, USB_RST;
-	logic [3:0] hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
-	logic [9:0] drawxsig, drawysig;
-	logic [7:0] Red, Blue, Green;
-	logic [7:0] keycode;
-	logic [17:0]P1A, B1A;
-	logic			P1D, B1D;
-	logic [17:0]addrBG;
-	logic 		drawBG;
+	logic [3:0]		hex_num_4, hex_num_3, hex_num_1, hex_num_0; //4 bit input hex digits
+	logic [9:0]		drawxsig, drawysig;
+	logic [7:0]		Red, Blue, Green;
+	logic [15:0]	keycode;
+	logic [7:0]		key_p1, key_p2;
+	logic [17:0]	P1A, B1A;
+	logic				P1D, B1D;
+	logic [17:0]	addrBG;
+	logic				drawBG;
 
 //=======================================================
 //  Structural coding
@@ -117,17 +118,22 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign VGA_B = Blue[7:4];
 	assign VGA_G = Green[7:4];
 	
-	//DEBUG
-//	assign LEDR[8:1] = keycode;
+	// Terrain data assignments
 	logic [479:0] terrain_in, terrain_out;
 	logic [9:0] terrain_addr;
 	logic [9:0] terrain_height;
-	assign LEDR = P1A[9:0];
 	
 	always_ff @ (negedge CLOCK_50)
 	begin
 		terrain_addr <= drawxsig - 1'b1;
 	end
+	
+	// Player keycode assignments
+	assign key_p1 = keycode[15:8];
+	assign key_p2 = keycode[7:0];
+	
+	// Debug
+	assign LEDR = P1A[9:0];
 	
 	
 	finalsoc u0 (
@@ -172,7 +178,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 //instantiate a vga_controller, ball, and color_mapper here with the ports.
 
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
-								.keycode(keycode), .DrawX(drawxsig), .DrawY(drawysig), .ID(SW[9]),
+								.keycode(key_p1), .DrawX(drawxsig), .DrawY(drawysig), .ID(SW[9]),
 								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
 								.terrain_out(terrain_in));
 				
