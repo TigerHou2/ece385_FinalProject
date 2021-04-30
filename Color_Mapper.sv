@@ -14,22 +14,9 @@
 
 
 module  color_mapper (	input							clk,
-								input				[9:0]		DrawY,
-								input				[479:0]	terrain_data,
-								input				[17:0]	P1A, P2A, B1A, B2A, addrBG,
-								input							P1D, P2D, B1D, B2D, drawBG, blank,
+								input				[17:0]	P1A, P2A, B1A, B2A, addrBG, addrTerrain,
+								input							P1D, P2D, B1D, B2D, drawBG, drawTerrain, blank,
 								output logic	[7:0]		Red, Green, Blue );
-    
-		// Terrain drawing logic
-		logic terrain_on;
-		
-		always_comb
-		begin:Terrain_on_proc
-			if ( terrain_data[DrawY] == 1'b1 )
-				terrain_on = 1'b1;
-			else
-				terrain_on = 1'b0;
-		end
 		
 		// read sprite from SRAM
 		logic [17:0] 	read_address;
@@ -101,8 +88,8 @@ module  color_mapper (	input							clk,
 			else if (P2D == 1'b1) 
 				read_address = P2A;
 				
-			else if (terrain_on == 1'b1)
-				read_address = 18'd1705;
+			else if (drawTerrain == 1'b1)
+				read_address = addrTerrain;
 				
 			else if (drawBG == 1'b1)
 				read_address = addrBG;

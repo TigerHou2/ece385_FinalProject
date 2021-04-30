@@ -120,9 +120,11 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign VGA_G = Green[7:4];
 	
 	// Terrain data assignments
-	logic [479:0] T1O, T2O, terrain_out;
-	logic [9:0] terrain_addr;
-	logic [9:0] terrain_height;
+	logic [479:0]	T1O, T2O, terrain_out;
+	logic [9:0]		terrain_addr;
+	logic [9:0]		terrain_height;
+	logic [17:0]	addrTerrain;
+	logic				drawTerrain;
 	
 	always_ff @ (negedge CLOCK_50)
 	begin
@@ -195,13 +197,15 @@ player P2				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_dat
 vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
-color_mapper CMAP		(	.clk(CLOCK_50), .DrawY(drawysig), .terrain_data(terrain_out), 
-								.P1A, .P2A, .B1A, .B2A, .addrBG,
-								.P1D, .P2D, .B1D, .B2D, .drawBG,
+color_mapper CMAP		(	.clk(CLOCK_50), 
+								.P1A, .P2A, .B1A, .B2A, .addrBG, .addrTerrain,
+								.P1D, .P2D, .B1D, .B2D, .drawBG, .drawTerrain,
 								.blank, .Red, .Green, .Blue  );
 
-terrain TERRAIN		(	.clk(CLOCK_50), .we((~B1D)&(~B2D)&blank), .reset(Reset_h), .read_addr(drawxsig),
-								.write_addr(terrain_addr), .terrain_in(T1O&T2O), .terrain_out, .rngSeed(SW), .terrain_height);
+terrain TERRAIN		(	.clk(CLOCK_50), .we((~B1D)&(~B2D)&blank), .reset(Reset_h), 
+								.DrawX(drawxsig), .DrawY(drawysig), .terrain_in(T1O&T2O), 
+								.read_addr(drawxsig), .write_addr(terrain_addr), .rngSeed(SW), 
+								.terrain_out, .terrain_height, .addrTerrain, .drawTerrain);
 
 background BACKGROUND(	.mapSelect(SW[9]), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
 

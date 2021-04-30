@@ -235,7 +235,6 @@ set_global_assignment -name SYSTEMVERILOG_FILE SRAM.sv
 set_global_assignment -name SYSTEMVERILOG_FILE divider.sv
 set_global_assignment -name SYSTEMVERILOG_FILE collider.sv
 set_global_assignment -name SYSTEMVERILOG_FILE terrain.sv
-set_global_assignment -name SYSTEMVERILOG_FILE terrain_testbench.sv
 set_global_assignment -name SYSTEMVERILOG_FILE bomb.sv
 set_global_assignment -name SYSTEMVERILOG_FILE background.sv
 set_global_assignment -name QIP_FILE spriteROM.qip

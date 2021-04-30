@@ -6,15 +6,14 @@
 
 module spriteRAM
 (
-		input [4:0] data_in,
-		input [17:0] write_address, read_address,
-		input we, clk,
+		input [17:0] address,
+		input clock,
 
-		output logic [4:0] data_out
+		output logic [4:0] q
 );
 
-// mem has width of 5 bits (32 colors) and a total of 232107 addresses
-logic [4:0] mem [0:155306];
+// mem has width of 5 bits (32 colors) and a total of 156331 addresses
+logic [4:0] mem [0:156330];
 
 initial
 begin
@@ -28,14 +27,13 @@ begin
 	 $readmemb("sprites/on_chip_memory/sprite_bytes/blanking.txt", mem, 1706, 1706);
 	 $readmemb("sprites/on_chip_memory/sprite_bytes/map1.txt", mem, 1707, 78506);
 	 $readmemb("sprites/on_chip_memory/sprite_bytes/map2.txt", mem, 78507, 155306);
+	 $readmemb("sprites/on_chip_memory/sprite_bytes/tile_stone.txt", mem, 155307, 156330);
 //	 $readmemb("sprites/on_chip_memory/sprite_bytes/map3.txt", mem, 155307, 232106);
 end
 
 
-always_ff @ (posedge clk) begin
-	if (we)
-		mem[write_address] <= data_in;
-	data_out<= mem[read_address];
+always_ff @ (posedge clock) begin
+	q <= mem[address];
 end
 
 endmodule

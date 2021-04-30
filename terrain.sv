@@ -1,8 +1,11 @@
-module terrain		(	input  logic	clk, we, reset,
+module terrain		(	input  logic				clk, we, reset,
+							input	 logic	[9:0]		DrawX, DrawY,
 							input	 logic	[479:0]	terrain_in, 
 							input	 logic	[9:0]		read_addr, write_addr, rngSeed,
 							output logic	[479:0]	terrain_out,
-							output logic	[9:0]		terrain_height	);
+							output logic	[9:0]		terrain_height,
+							output logic	[17:0]	addrTerrain,
+							output logic				drawTerrain	);
 							
 		logic select;
 		
@@ -56,7 +59,9 @@ module terrain		(	input  logic	clk, we, reset,
 		SRAM sram0	(	.clk(clk), .we(toSRAM_we), .read_addr(read_addr), .write_addr(toSRAM_addr), 
 							.data(toSRAM_terrain), .q(terrain_out)	);
 							
-		
+		// Terrain draw logic
+		assign drawTerrain = terrain_out[DrawY];
+		assign addrTerrain = 18'd155307 + {13'd0,DrawY[4:0]}*18'd32 + {13'd0,DrawX[4:0]};
 		
 		// Control logic for generating / modifying terrain
 		
