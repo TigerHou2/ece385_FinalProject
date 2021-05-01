@@ -14,8 +14,8 @@
 
 
 module  color_mapper (	input							clk,
-								input				[17:0]	P1A, P2A, B1A, B2A, addrBG, addrTerrain,
-								input							P1D, P2D, B1D, B2D, drawBG, drawTerrain, blank,
+								input				[17:0]	P1A, P2A, B1A, B2A, addrBG, addrTerrain, addrScore,
+								input							P1D, P2D, B1D, B2D, drawBG, drawTerrain, drawScore, blank,
 								output logic	[7:0]		Red, Green, Blue );
 		
 		// read sprite from SRAM
@@ -75,6 +75,9 @@ module  color_mapper (	input							clk,
 			
 			if (blank == 1'b0)
 				read_address = 18'd1706;
+				
+			else if (drawScore == 1'b1)
+				read_address = addrScore;
 				
 			else if (B1D == 1'b1) 
 				read_address = B1A;

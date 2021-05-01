@@ -12,8 +12,8 @@ module spriteRAM
 		output logic [4:0] q
 );
 
-// mem has width of 5 bits (32 colors) and a total of 156331 addresses
-logic [4:0] mem [0:156330];
+// mem has width of 5 bits (32 colors) and a total of 156334 addresses
+logic [4:0] mem [0:156333];
 
 initial
 begin
@@ -28,6 +28,9 @@ begin
 	 $readmemb("sprites/on_chip_memory/sprite_bytes/map1.txt", mem, 1707, 78506);
 	 $readmemb("sprites/on_chip_memory/sprite_bytes/map2.txt", mem, 78507, 155306);
 	 $readmemb("sprites/on_chip_memory/sprite_bytes/tile_stone.txt", mem, 155307, 156330);
+	 $readmemb("sprites/on_chip_memory/sprite_bytes/health.txt", mem, 156331, 156331);
+	 $readmemb("sprites/on_chip_memory/sprite_bytes/health_padded.txt", mem, 156332, 156332);
+	 $readmemb("sprites/on_chip_memory/sprite_bytes/health_border.txt", mem, 156333, 156333);
 //	 $readmemb("sprites/on_chip_memory/sprite_bytes/map3.txt", mem, 155307, 232106);
 end
 

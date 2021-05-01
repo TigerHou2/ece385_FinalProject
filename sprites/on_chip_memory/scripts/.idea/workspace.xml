@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="a5f2183f-9a08-48b1-ba73-fdcaf8bec75f" name="Default Changelist" comment="" />
+    <list default="true" id="a5f2183f-9a08-48b1-ba73-fdcaf8bec75f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../../FinalProject.qws" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../FinalProject.sv" beforeDir="false" afterPath="$PROJECT_DIR$/../../../FinalProject.sv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../ball.sv" beforeDir="false" afterPath="$PROJECT_DIR$/../../../ball.sv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../../bomb.sv" beforeDir="false" afterPath="$PROJECT_DIR$/../../../bomb.sv" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -12,10 +17,10 @@
     <session id="-201572194">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="4" />
+          <entry key="project.closed" value="5" />
           <entry key="project.open.time.3" value="1" />
-          <entry key="project.open.time.4" value="3" />
-          <entry key="project.opened" value="4" />
+          <entry key="project.open.time.4" value="4" />
+          <entry key="project.opened" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -46,8 +51,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/png_to_palette_resizer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="53" column="55" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
+            <state relative-caret-position="855">
+              <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
               <folding>
                 <element signature="e#0#21#0" expanded="true" />
               </folding>
@@ -175,8 +180,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/png_to_palette_resizer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="53" column="55" selection-start-line="53" selection-start-column="55" selection-end-line="53" selection-end-column="55" />
+        <state relative-caret-position="855">
+          <caret line="45" column="35" lean-forward="true" selection-start-line="45" selection-start-column="35" selection-end-line="45" selection-end-column="35" />
           <folding>
             <element signature="e#0#21#0" expanded="true" />
           </folding>

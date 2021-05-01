@@ -72,7 +72,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [7:0]		key_p1, key_p2;
 	logic [17:0]	P1A, P2A, B1A, B2A;
 	logic				P1D, P2D, B1D, B2D;
+	logic				BB1, BB2;
 	logic	[63:0]	P1C, P2C;
+	logic [9:0]		B1X, B1Y, B2X, B2Y;
+	logic [9:0]		HP1, HPP1, HP2, HPP2;
 	logic [17:0]	addrBG;
 	logic				drawBG;
 
@@ -139,8 +142,12 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign P1C = {8'd26, 8'd22, 8'd04, 8'd07, 8'd20, 8'd08, 8'd30, 8'd32}; // W,S,A,D,Q,E,1,3
 	assign P2C = {8'd12, 8'd14, 8'd13, 8'd15, 8'd24, 8'd18, 8'd37, 8'd38}; // I,K,J,L,U,O,8,9
 	
+	// Scoring
+	logic				drawScore;
+	logic [17:0]	addrScore;
+	
 	// Debug
-	assign LEDR = P1A[9:0];
+	assign LEDR = HPP1;
 	
 	
 	finalsoc u0 (
@@ -186,11 +193,13 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
 								.keycode(key_p1), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b0), .controls(P1C),
+								.DX(B2X), .DY(B2Y), .Dboomed(BB2), .BX(B1X), .BY(B1Y), .boomed(BB1), .HP(HP1), .HPP(HPP1),
 								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
 								.terrain_out(T1O));
 								
 player P2				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
 								.keycode(key_p2), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b1), .controls(P2C),
+								.DX(B1X), .DY(B1Y), .Dboomed(BB1), .BX(B2X), .BY(B2Y), .boomed(BB2), .HP(HP2), .HPP(HPP2),
 								.drawPlayer(P2D), .drawBomb(B2D), .addrPlayer(P2A), .addrBomb(B2A),
 								.terrain_out(T2O));
 				
@@ -198,8 +207,8 @@ vga_controller VGA	(	.Clk(CLOCK_50), .Reset(Reset_h), .hs(VGA_HS), .vs(VGA_VS),
 								.pixel_clk(VGA_Clk), .blank, .sync, .DrawX(drawxsig), .DrawY(drawysig)  );
 
 color_mapper CMAP		(	.clk(CLOCK_50), 
-								.P1A, .P2A, .B1A, .B2A, .addrBG, .addrTerrain,
-								.P1D, .P2D, .B1D, .B2D, .drawBG, .drawTerrain,
+								.P1A, .P2A, .B1A, .B2A, .addrBG, .addrTerrain, .addrScore,
+								.P1D, .P2D, .B1D, .B2D, .drawBG, .drawTerrain, .drawScore,
 								.blank, .Red, .Green, .Blue  );
 
 terrain TERRAIN		(	.clk(CLOCK_50), .we((~B1D)&(~B2D)&blank), .reset(Reset_h), 
@@ -208,5 +217,7 @@ terrain TERRAIN		(	.clk(CLOCK_50), .we((~B1D)&(~B2D)&blank), .reset(Reset_h),
 								.terrain_out, .terrain_height, .addrTerrain, .drawTerrain);
 
 background BACKGROUND(	.mapSelect(SW[9]), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
+
+scoreboard SCOREBOARD(	.DrawX(drawxsig), .DrawY(drawysig), .HP1, .HPP1, .HP2, .HPP2, .drawScore, .addrScore);
 
 endmodule

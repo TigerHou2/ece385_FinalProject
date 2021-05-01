@@ -4,12 +4,18 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 					input		[2:0]	power,
 					input	 [479:0]	terrain_data,
 					input		[9:0]	DrawX, DrawY,
+					input		[9:0] boomRadius,
+					output	[9:0]	X, Y,
+					output			boomed,
 					output			drawBomb,
 					output  [17:0]	addrBomb,
 					output [479:0]	terrain_out	);
     
-	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, boomRadius;
+	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY;
 	logic [9:0] X_Vel_init, Y_Vel_init;
+	
+	assign X = X_Pos;
+	assign Y = Y_Pos;
 	 
 	parameter [9:0] X_Default=700;	// Default position on the X axis
 	parameter [9:0] Y_Default=500;	// Default position on the Y axis
@@ -30,15 +36,15 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 	
 	
 	logic	boom, DD, UU, LL, RR, out_of_bounds;
+	assign boomed = boom;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
 								.X(X_Pos), .Y(Y_Pos), .DrawX, 
-								.D(10'd1), .U(10'd1), .L(10'd1), .R(10'd1),
+								.D(10'd2), .U(10'd2), .L(10'd2), .R(10'd2),
 								.DD, .UU, .LL, .RR	);
 	
 	
 	logic removePixel;
 	int DistX, DistY;
-	assign boomRadius = 20;	// explosion radius
 	assign DistX = X_Pos - DrawX;
 	assign DistY = Y_Pos - DrawY;
 	
@@ -249,9 +255,12 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 			
 			
 			// Bomb position update
-			begin
-			Y_Pos <= (Y_Pos + Y_Vel);  // Update ball position
-			X_Pos <= (X_Pos + X_Vel);
+			if (boom == 1'b0) begin
+				Y_Pos <= (Y_Pos + Y_Vel);  // Update ball position
+				X_Pos <= (X_Pos + X_Vel);
+			end else begin
+				X_Pos <= X_Default;
+				Y_Pos <= Y_Default;
 			end
 
 

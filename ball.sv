@@ -19,12 +19,20 @@ module player (	input 			clk, reset, frame_clk,
 						input  [9:0]	DrawX, DrawY,
 						input				ID,
 						input  [63:0]	controls,
+						input  [9:0]	DX, DY,
+						input				Dboomed,
+						output [9:0]	BX, BY,
+						output			boomed,
+						output [9:0]	HP, HPP,
 						output			drawPlayer, drawBomb,
 						output [17:0]	addrPlayer, addrBomb,
 						output [479:0]	terrain_out	);
     
-	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY;
+	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, health, health_padded, boomRadius;
 	logic [17:0] facingOffset;
+	
+	assign HP	= health;
+	assign HPP	= health_padded;
 	
 	logic [7:0] Jump, Shoot, Left, Right, AimL, AimR, PowDn, PowUp;
 	assign Jump		= controls[63:56];
@@ -36,20 +44,24 @@ module player (	input 			clk, reset, frame_clk,
 	assign PowDn	= controls[15:8];
 	assign PowUp	= controls[7:0];
 	 
-	parameter [9:0] X_Center=320;	// Center position on the X axis
+	parameter [9:0] X_Center=128;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
 	parameter [9:0] X_Min=5;		// Leftmost point on the X axis
 	parameter [9:0] X_Max=634;		// Rightmost point on the X axis
 	parameter [9:0] Y_Min=5;		// Topmost point on the Y axis
 	parameter [9:0] Y_Max=474;		// Bottommost point on the Y axis
 	parameter [9:0] V_Max=7;		// maximum ball velocity
+	parameter [9:0] health_Max = 100; // starting health
+	assign boomRadius = 10'd30; // explosion radius
 	
-	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter, aim_Counter;
+	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter, aim_Counter, health_Counter, dmg_Counter;
 	
 	parameter [7:0] grav_Counter_Max = 6;
 	parameter [7:0] input_X_Counter_Max = 6;
 	parameter [7:0] input_Y_Counter_Max = 32;
 	parameter [7:0] aim_Counter_Max = 12;
+	parameter [7:0] health_Counter_Max = 16;
+	parameter [7:0] dmg_Counter_Max = 16;
 
 	assign width 	= 15;
 	assign height	= 25;
@@ -71,8 +83,30 @@ module player (	input 			clk, reset, frame_clk,
 	parameter [2:0]	power_Max = 7;
 	
 	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
-						.angle, .power, .terrain_data, .DrawX, .DrawY, .drawBomb(drawBombNaive), .addrBomb,
-						.terrain_out	);
+						.angle, .power, .terrain_data, .DrawX, .DrawY, .boomRadius, .X(BX), .Y(BY), .boomed,
+						.drawBomb(drawBombNaive), .addrBomb, .terrain_out	);
+						
+						
+	int boomX, boomY;
+	always_comb
+	begin
+		boomX = X_Pos - DX;
+		boomY = Y_Pos - DY;
+	end
+	
+	logic [9:0] dmgX, dmgY, dmgTot;
+	always_comb
+	begin
+		if (X_Pos >= DX)
+			dmgX = X_Pos - DX;
+		else
+			dmgX = DX - X_Pos;
+		if (Y_Pos >= DY)
+			dmgY = Y_Pos - DY;
+		else
+			dmgY = DY - Y_Pos;
+		dmgTot = 10'd55 - dmgX - dmgY;
+	end
 	
 
 	always_ff @ (posedge reset or posedge frame_clk )
@@ -82,17 +116,46 @@ module player (	input 			clk, reset, frame_clk,
 			Y_Vel <= 10'd0;
 			X_Vel <= 10'd0;
 			Y_Pos <= Y_Center;
-			X_Pos <= X_Center;
+			X_Pos <= X_Center + {1'b0,{2{ID}},7'd0}; // set the two players apart
 			gravCounter <= 8'h00;
 			input_X_Counter <= 8'h00;
 			input_Y_Counter <= 8'h00;
 			aim_Counter <= 8'h00;
+			health_Counter <= 8'h00;
+			dmg_Counter <= 8'h00;
 			angle <= 4'd6;
 			power <= 3'd2;
+			health <= health_Max;
+			health_padded <= health_Max;
 		end
 			  
 		else 
-		begin 
+		begin
+		
+			// Damage detection
+			dmg_Counter <= dmg_Counter + 1'b1;
+			if ( ( ( boomX*boomX + boomY*boomY ) <= boomRadius*boomRadius )
+					&& ( Dboomed )
+					&& ( dmg_Counter >= dmg_Counter_Max ) ) begin
+				health <= health - dmgTot;
+				health_padded <= health - {1'b0,dmgTot[9:1]};
+				dmg_Counter <= 8'h00;
+			end
+			
+			// Health limits
+			if (health[9] == 1'b1) begin
+				health <= 10'd0;
+				health_padded <= 10'd0;
+			end
+			
+			
+			// Health recovery
+			health_Counter <= health_Counter + 1'b1;
+			if (health_Counter >= health_Counter_Max) begin
+				if (health < health_padded)
+					health <= health + 1'b1;
+				health_Counter <= 8'h00;
+			end
 		
 		
 			// Bomb controls
