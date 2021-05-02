@@ -22,8 +22,8 @@ extern HID_DEVICE hid_device;
 static BYTE addr = 1; 				//hard-wired USB address
 const char* const devclasses[] = { " Uninitialized", " HID Keyboard", " HID Mouse", " Mass storage" };
 
-static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8, 30, 32}; // W,S,A,D,Q,E,1,3
-static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18, 37, 38}; // I,K,J,L,U,O,8,9
+static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8}; // W,S,A,D,Q,E
+static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18}; // I,K,J,L,U,O
 
 BYTE GetDriverandReport() {
 	BYTE i;
@@ -186,11 +186,11 @@ int main() {
 				 *
 				 * P1 viable codes:
 				 * W (0x1A), S (0x16), A (0x04), D (0x07)
-				 * Q (0x14), E (0x08), 1 (0x1E), 3 (0x20)
+				 * Q (0x14), E (0x08)
 				 *
 				 * P2 viable codes:
 				 * I (0x0C), K (0x0E), J (0x0D), L (0x0F)
-				 * U (0x18), O (0x12), 8 (0x26), 9 (0x26)
+				 * U (0x18), O (0x12)
 				 *
 				 */
 

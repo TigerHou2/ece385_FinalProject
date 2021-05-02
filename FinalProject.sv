@@ -73,7 +73,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [17:0]	P1A, P2A, B1A, B2A;
 	logic				P1D, P2D, B1D, B2D;
 	logic				BB1, BB2;
-	logic	[63:0]	P1C, P2C;
+	logic	[47:0]	P1C, P2C;
 	logic [9:0]		B1X, B1Y, B2X, B2Y;
 	logic [9:0]		HP1, HPP1, HP2, HPP2;
 	logic [17:0]	addrBG;
@@ -139,8 +139,8 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign key_p2 = keycode[7:0];
 	
 	// Player controls
-	assign P1C = {8'd26, 8'd22, 8'd04, 8'd07, 8'd20, 8'd08, 8'd30, 8'd32}; // W,S,A,D,Q,E,1,3
-	assign P2C = {8'd12, 8'd14, 8'd13, 8'd15, 8'd24, 8'd18, 8'd37, 8'd38}; // I,K,J,L,U,O,8,9
+	assign P1C = {8'd26, 8'd22, 8'd04, 8'd07, 8'd20, 8'd08}; // W,S,A,D,Q,E
+	assign P2C = {8'd12, 8'd14, 8'd13, 8'd15, 8'd24, 8'd18}; // I,K,J,L,U,O
 	
 	// Scoring
 	logic				drawScore;

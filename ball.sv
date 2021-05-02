@@ -18,7 +18,7 @@ module player (	input 			clk, reset, frame_clk,
 						input  [7:0]	keycode,
 						input  [9:0]	DrawX, DrawY,
 						input				ID,
-						input  [63:0]	controls,
+						input  [47:0]	controls,
 						input  [9:0]	DX, DY,
 						input				Dboomed,
 						output [9:0]	BX, BY,
@@ -28,21 +28,21 @@ module player (	input 			clk, reset, frame_clk,
 						output [17:0]	addrPlayer, addrBomb,
 						output [479:0]	terrain_out	);
     
-	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, health, health_padded, boomRadius;
+	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, health, health_padded;
 	logic [17:0] facingOffset;
 	
 	assign HP	= health;
 	assign HPP	= health_padded;
 	
-	logic [7:0] Jump, Shoot, Left, Right, AimL, AimR, PowDn, PowUp;
-	assign Jump		= controls[63:56];
-	assign Shoot	= controls[55:48];
-	assign Left		= controls[47:40];
-	assign Right	= controls[39:32];
-	assign AimL		= controls[31:24];
-	assign AimR		= controls[23:16];
-	assign PowDn	= controls[15:8];
-	assign PowUp	= controls[7:0];
+	logic [7:0] Jump, Shoot, Left, Right, AimL, AimR;
+	assign Jump		= controls[47:40];
+	assign Shoot	= controls[39:32];
+	assign Left		= controls[31:24];
+	assign Right	= controls[23:16];
+	assign AimL		= controls[15:8];
+	assign AimR		= controls[7:0];
+	
+	logic PowLast, PowThis;
 	 
 	parameter [9:0] X_Center=128;	// Center position on the X axis
 	parameter [9:0] Y_Center=200;	// Center position on the Y axis
@@ -52,7 +52,10 @@ module player (	input 			clk, reset, frame_clk,
 	parameter [9:0] Y_Max=474;		// Bottommost point on the Y axis
 	parameter [9:0] V_Max=7;		// maximum ball velocity
 	parameter [9:0] health_Max = 100; // starting health
-	assign boomRadius = 10'd30; // explosion radius
+	
+	logic [9:0] boomRadius, dmgRadius;
+	assign boomRadius = 10'd19; // explosion radius
+	assign  dmgRadius = 10'd30; // damage radius
 	
 	logic [7:0] gravCounter, input_X_Counter, input_Y_Counter, aim_Counter, health_Counter, dmg_Counter;
 	
@@ -60,7 +63,7 @@ module player (	input 			clk, reset, frame_clk,
 	parameter [7:0] input_X_Counter_Max = 6;
 	parameter [7:0] input_Y_Counter_Max = 32;
 	parameter [7:0] aim_Counter_Max = 12;
-	parameter [7:0] health_Counter_Max = 16;
+	parameter [7:0] health_Counter_Max = 24;
 	parameter [7:0] dmg_Counter_Max = 16;
 
 	assign width 	= 15;
@@ -124,7 +127,9 @@ module player (	input 			clk, reset, frame_clk,
 			health_Counter <= 8'h00;
 			dmg_Counter <= 8'h00;
 			angle <= 4'd6;
-			power <= 3'd2;
+			power <= 3'd7;
+			PowLast = 1'b0;
+			PowThis = 1'b0;
 			health <= health_Max;
 			health_padded <= health_Max;
 		end
@@ -134,7 +139,7 @@ module player (	input 			clk, reset, frame_clk,
 		
 			// Damage detection
 			dmg_Counter <= dmg_Counter + 1'b1;
-			if ( ( ( boomX*boomX + boomY*boomY ) <= boomRadius*boomRadius )
+			if ( ( ( boomX*boomX + boomY*boomY ) <= dmgRadius*dmgRadius )
 					&& ( Dboomed )
 					&& ( dmg_Counter >= dmg_Counter_Max ) ) begin
 				health <= health - dmgTot;
@@ -161,6 +166,9 @@ module player (	input 			clk, reset, frame_clk,
 			// Bomb controls
 			aim_Counter <= aim_Counter + 1'b1;
 			if (aim_Counter >= aim_Counter_Max) begin
+			
+				PowThis = 1'b0;
+			
 				unique case (keycode)
 					AimL	:	if ( angle > 4'd0 ) begin			// Q, turn aim ccw
 									angle <= angle - 1'b1;
@@ -171,24 +179,23 @@ module player (	input 			clk, reset, frame_clk,
 									angle <= angle + 1'b1;
 									aim_Counter <= 8'h00;
 								end
-									
-					PowDn	:	if ( power > 3'd0 ) begin			// 1, decrease power
-									power <= power - 1'b1;
-									aim_Counter <= 8'h00;
-								end
-								
-					PowUp	:	if ( power < power_Max ) begin	// 3, increase power
-									power <= power + 1'b1;
-									aim_Counter <= 8'h00;
-								end
 					
 					Shoot	:	begin										// S, launch bomb
-									launch <= 1'b1;
 									aim_Counter <= 8'h00;
+									PowThis = 1'b1;
+									power <= power + 1'b1;
 								end
 									
 					default: launch <= 1'b0;
 				endcase
+				
+				if ( PowThis == 1'b0 && PowLast == 1'b1 )
+					launch <= 1'b1;
+				else if ( PowThis == 1'b0 && PowLast == 1'b0 )
+					power <= 3'd7;
+					
+				PowLast = PowThis;
+				
 			end
 		
 		
@@ -333,6 +340,25 @@ module player (	input 			clk, reset, frame_clk,
 	end
 	
 	
+	// Draw power bar under health bar
+	
+	parameter [9:0] chargeL = 15; // length of one charge bar (8 total)
+	parameter [9:0] chargeH = 7;  // width of one charge bar
+	parameter [9:0] chargeG = 3;  // gap between charge bars
+	parameter [9:0] charge_P1 = 32;  // starting X position of P1 charge bar
+	parameter [9:0] charge_P2 = 416; // starting X position of P2 charge bar
+	parameter [9:0] chargeY = 43; // Y position of charge bars
+	
+	logic [9:0] chargeX;
+	
+	always_comb
+	begin
+		if ( ID == 1'b0 )
+			chargeX = charge_P1;
+		else
+			chargeX = charge_P2;
+	end
+	
 	// Check electron beam position to determine whether sprite pixel is drawn
 	
 	int L_edge, U_edge;
@@ -348,21 +374,11 @@ module player (	input 			clk, reset, frame_clk,
 										.addr2(addrBomb[9:0]), .out2(letDrawBomb));
 										
 	assign drawBomb = drawBombNaive & letDrawBomb;
-	
-	always_comb
-	begin
-		if ( 	DrawX >= L_edge && DrawX < L_edge + width &&
-				DrawY >= U_edge && DrawY < U_edge + height	)
-			drawPlayer = letDrawPlayer;
-		else 
-			drawPlayer = 1'b0;
-	end
+
 	
 	// Switch player color depending on team
 	
 	logic [17:0]	colorOffset;
-	
-	assign addrPlayer = addrMaskPlayer + colorOffset;
 	
 	always_comb
 	begin
@@ -370,6 +386,32 @@ module player (	input 			clk, reset, frame_clk,
 			1'b0:	colorOffset = 18'd0;
 			1'b1:	colorOffset = 18'd750;
 		endcase
+	end
+	
+	// Combine above logic to set player color address and draw enable
+	
+	always_comb
+	begin
+		if (	DrawY >= chargeY && DrawY < chargeY+chargeH	) begin
+		
+			addrPlayer = 18'd1706;
+			
+			if ( 	DrawX >= chargeX && DrawX < chargeX+{3'b0,power,4'b0} && DrawX[3:2] != 2'b00 )
+				drawPlayer = 1'b1;
+			else
+				drawPlayer = 1'b0;
+		
+		end else begin
+		
+			if ( 	DrawX >= L_edge && DrawX < L_edge + width &&
+					DrawY >= U_edge && DrawY < U_edge + height	)
+				drawPlayer = letDrawPlayer;
+			else 
+				drawPlayer = 1'b0;
+		
+			addrPlayer = addrMaskPlayer + colorOffset;
+			
+		end
 	end
 	
 endmodule

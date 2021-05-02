@@ -10,9 +10,9 @@ Program Header:
          filesz 0x00000020 memsz 0x00000020 flags r-x
     LOAD off    0x00001020 vaddr 0x08000020 paddr 0x08000020 align 2**12
          filesz 0x00012db8 memsz 0x00012db8 flags r-x
-    LOAD off    0x00013dd8 vaddr 0x08012dd8 paddr 0x08014914 align 2**12
-         filesz 0x00001b3c memsz 0x00001b3c flags rw-
-    LOAD off    0x00016450 vaddr 0x08016450 paddr 0x08016450 align 2**12
+    LOAD off    0x00013dd8 vaddr 0x08012dd8 paddr 0x08014910 align 2**12
+         filesz 0x00001b38 memsz 0x00001b38 flags rw-
+    LOAD off    0x00016448 vaddr 0x08016448 paddr 0x08016448 align 2**12
          filesz 0x00000000 memsz 0x000002e8 flags rw-
 
 Sections:
@@ -25,61 +25,61 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
   3 .rodata       00000624  080127b4  080127b4  000137b4  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  4 .rwdata       00001b3c  08012dd8  08014914  00013dd8  2**2
+  4 .rwdata       00001b38  08012dd8  08014910  00013dd8  2**2
                   CONTENTS, ALLOC, LOAD, DATA, SMALL_DATA
-  5 .bss          000002e8  08016450  08016450  00016450  2**2
+  5 .bss          000002e8  08016448  08016448  00016448  2**2
                   ALLOC, SMALL_DATA
-  6 .onchip_memory2_0 00000000  00000000  00000000  00015914  2**0
+  6 .onchip_memory2_0 00000000  00000000  00000000  00015910  2**0
                   CONTENTS
-  7 .sdram        00000000  08016738  08016738  00015914  2**0
+  7 .sdram        00000000  08016730  08016730  00015910  2**0
                   CONTENTS
-  8 .comment      00000023  00000000  00000000  00015914  2**0
+  8 .comment      00000023  00000000  00000000  00015910  2**0
                   CONTENTS, READONLY
   9 .debug_aranges 00000fe8  00000000  00000000  00015938  2**3
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_info   0002677c  00000000  00000000  00016920  2**0
+ 10 .debug_info   0002676c  00000000  00000000  00016920  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_abbrev 00009c34  00000000  00000000  0003d09c  2**0
+ 11 .debug_abbrev 00009c34  00000000  00000000  0003d08c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_line   0000c2af  00000000  00000000  00046cd0  2**0
+ 12 .debug_line   0000c2af  00000000  00000000  00046cc0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_frame  00002870  00000000  00000000  00052f80  2**2
+ 13 .debug_frame  00002870  00000000  00000000  00052f70  2**2
                   CONTENTS, READONLY, DEBUGGING
- 14 .debug_str    00004318  00000000  00000000  000557f0  2**0
+ 14 .debug_str    00004318  00000000  00000000  000557e0  2**0
                   CONTENTS, READONLY, DEBUGGING
- 15 .debug_loc    00017baf  00000000  00000000  00059b08  2**0
+ 15 .debug_loc    00017baf  00000000  00000000  00059af8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 16 .debug_alt_sim_info 00000040  00000000  00000000  000716b8  2**2
+ 16 .debug_alt_sim_info 00000040  00000000  00000000  000716a8  2**2
                   CONTENTS, READONLY, DEBUGGING
- 17 .debug_ranges 00001958  00000000  00000000  000716f8  2**3
+ 17 .debug_ranges 00001958  00000000  00000000  000716e8  2**3
                   CONTENTS, READONLY, DEBUGGING
- 18 .thread_model 00000003  00000000  00000000  000769a2  2**0
+ 18 .thread_model 00000003  00000000  00000000  00076992  2**0
                   CONTENTS, READONLY
- 19 .cpu          0000000c  00000000  00000000  000769a5  2**0
+ 19 .cpu          0000000c  00000000  00000000  00076995  2**0
                   CONTENTS, READONLY
- 20 .qsys         00000001  00000000  00000000  000769b1  2**0
+ 20 .qsys         00000001  00000000  00000000  000769a1  2**0
                   CONTENTS, READONLY
- 21 .simulation_enabled 00000001  00000000  00000000  000769b2  2**0
+ 21 .simulation_enabled 00000001  00000000  00000000  000769a2  2**0
                   CONTENTS, READONLY
- 22 .sysid_hash   00000004  00000000  00000000  000769b3  2**0
+ 22 .sysid_hash   00000004  00000000  00000000  000769a3  2**0
                   CONTENTS, READONLY
- 23 .sysid_base   00000004  00000000  00000000  000769b7  2**0
+ 23 .sysid_base   00000004  00000000  00000000  000769a7  2**0
                   CONTENTS, READONLY
- 24 .sysid_time   00000004  00000000  00000000  000769bb  2**0
+ 24 .sysid_time   00000004  00000000  00000000  000769ab  2**0
                   CONTENTS, READONLY
- 25 .stderr_dev   0000000b  00000000  00000000  000769bf  2**0
+ 25 .stderr_dev   0000000b  00000000  00000000  000769af  2**0
                   CONTENTS, READONLY
- 26 .stdin_dev    0000000b  00000000  00000000  000769ca  2**0
+ 26 .stdin_dev    0000000b  00000000  00000000  000769ba  2**0
                   CONTENTS, READONLY
- 27 .stdout_dev   0000000b  00000000  00000000  000769d5  2**0
+ 27 .stdout_dev   0000000b  00000000  00000000  000769c5  2**0
                   CONTENTS, READONLY
- 28 .sopc_system_name 00000008  00000000  00000000  000769e0  2**0
+ 28 .sopc_system_name 00000008  00000000  00000000  000769d0  2**0
                   CONTENTS, READONLY
- 29 .quartus_project_dir 00000026  00000000  00000000  000769e8  2**0
+ 29 .quartus_project_dir 00000026  00000000  00000000  000769d8  2**0
                   CONTENTS, READONLY
- 30 .jdi          00004f23  00000000  00000000  00076a0e  2**0
+ 30 .jdi          00004f23  00000000  00000000  000769fe  2**0
                   CONTENTS, READONLY
- 31 .sopcinfo     00083ae2  00000000  00000000  0007b931  2**0
+ 31 .sopcinfo     00083ae2  00000000  00000000  0007b921  2**0
                   CONTENTS, READONLY
 SYMBOL TABLE:
 08000000 l    d  .entry	00000000 .entry
@@ -87,9 +87,9 @@ SYMBOL TABLE:
 08000230 l    d  .text	00000000 .text
 080127b4 l    d  .rodata	00000000 .rodata
 08012dd8 l    d  .rwdata	00000000 .rwdata
-08016450 l    d  .bss	00000000 .bss
+08016448 l    d  .bss	00000000 .bss
 00000000 l    d  .onchip_memory2_0	00000000 .onchip_memory2_0
-08016738 l    d  .sdram	00000000 .sdram
+08016730 l    d  .sdram	00000000 .sdram
 00000000 l    d  .comment	00000000 .comment
 00000000 l    d  .debug_aranges	00000000 .debug_aranges
 00000000 l    d  .debug_info	00000000 .debug_info
@@ -106,13 +106,13 @@ SYMBOL TABLE:
 00000000 l    df *ABS*	00000000 alt_instruction_exception_entry.c
 00000000 l    df *ABS*	00000000 main.c
 080148b4 l     O .rwdata	00000001 addr
-080148b5 l     O .rwdata	00000008 p1_bytes
-080148bd l     O .rwdata	00000008 p2_bytes
+080148b5 l     O .rwdata	00000006 p1_bytes
+080148bb l     O .rwdata	00000006 p2_bytes
 00000000 l    df *ABS*	00000000 HID.c
 00000000 l    df *ABS*	00000000 MAX3421E.c
 00000000 l    df *ABS*	00000000 transfer.c
-08016460 l     O .bss	00000004 usb_delay.2608
-08016464 l     O .bss	00000001 tmp_addr.2609
+08016458 l     O .bss	00000004 usb_delay.2608
+0801645c l     O .bss	00000001 tmp_addr.2609
 00000000 l    df *ABS*	00000000 lib2-divmod.c
 00000000 l    df *ABS*	00000000 lib2-mul.c
 00000000 l    df *ABS*	00000000 printf.c
@@ -206,7 +206,7 @@ SYMBOL TABLE:
 08010270 l     F .text	0000003c alt_get_errno
 00000000 l    df *ABS*	00000000 alt_release_fd.c
 00000000 l    df *ABS*	00000000 alt_sbrk.c
-08014904 l     O .rwdata	00000004 heap_end
+08014900 l     O .rwdata	00000004 heap_end
 00000000 l    df *ABS*	00000000 alt_tick.c
 00000000 l    df *ABS*	00000000 alt_usleep.c
 00000000 l    df *ABS*	00000000 alt_write.c
@@ -250,21 +250,21 @@ SYMBOL TABLE:
 00000000 l    df *ABS*	00000000 __atexit.c
 00000000 l    df *ABS*	00000000 __call_atexit.c
 00000000 l    df *ABS*	00000000 alt_exit.c
-0801649c g     O .bss	00000004 alt_instruction_exception_handler
+08016494 g     O .bss	00000004 alt_instruction_exception_handler
 08002dac g     F .text	00000018 putchar
 08009cc0 g     F .text	00000074 _mprec_log10
 08009dac g     F .text	0000008c __any_on
 0800c52c g     F .text	00000054 _isatty_r
 08012b6c g     O .rodata	00000028 __mprec_tinytens
 080101ac g     F .text	0000007c alt_main
-080148c8 g     O .rwdata	00000008 ctrl_xfers
+080148c4 g     O .rwdata	00000008 ctrl_xfers
 08002dc4 g     F .text	000000c0 _puts_r
-08016638 g     O .bss	00000100 alt_irq
+08016630 g     O .bss	00000100 alt_irq
 0800c580 g     F .text	00000060 _lseek_r
 08002310 g     F .text	00000644 USB_Task
-08014914 g       *ABS*	00000000 __flash_rwdata_start
+08014910 g       *ABS*	00000000 __flash_rwdata_start
 0800e664 g     F .text	00000088 .hidden __eqdf2
-08016738 g       *ABS*	00000000 __alt_heap_start
+08016730 g       *ABS*	00000000 __alt_heap_start
 08002d68 g     F .text	0000003c printf
 0800c640 g     F .text	0000009c _wcrtomb_r
 08001498 g     F .text	000000a8 kbdPoll
@@ -286,11 +286,11 @@ SYMBOL TABLE:
 08000000 g     F .entry	0000000c __reset
 08001e10 g     F .text	000000e8 XferCtrlData
 08000020 g       *ABS*	00000000 __flash_exceptions_start
-080164a0 g     O .bss	00000010 hid_ep
+08016498 g     O .bss	00000010 hid_ep
 0800c4d0 g     F .text	0000005c _fstat_r
-08016480 g     O .bss	00000004 errno
+08016478 g     O .bss	00000004 errno
 0800a620 g     F .text	00000008 __seofread
-08016488 g     O .bss	00000004 alt_argv
+08016480 g     O .bss	00000004 alt_argv
 0801c8b4 g       *ABS*	00000000 _gp
 08010688 g     F .text	00000030 usleep
 08001750 g     F .text	00000084 MAXreg_rd
@@ -316,9 +316,9 @@ SYMBOL TABLE:
 0800fefc g     F .text	000000ac isatty
 08012bbc g     O .rodata	000000c8 __mprec_tens
 08007ea8 g     F .text	0000000c __locale_charset
-0801647c g     O .bss	00000004 __malloc_top_pad
-080148d0 g     O .rwdata	00000001 usb_task_state
-080148dc g     O .rwdata	00000004 __mb_cur_max
+08016474 g     O .bss	00000004 __malloc_top_pad
+080148cc g     O .rwdata	00000001 usb_task_state
+080148d8 g     O .rwdata	00000004 __mb_cur_max
 08007ed8 g     F .text	0000000c _localeconv_r
 080091b4 g     F .text	0000003c __i2b
 080077dc g     F .text	000004c8 __sfvwrite_r
@@ -326,17 +326,17 @@ SYMBOL TABLE:
 0800c5e0 g     F .text	00000060 _read_r
 08001acc g     F .text	00000094 MAX3421E_init
 08000738 g     F .text	00000034 setKeycode
-080148fc g     O .rwdata	00000004 alt_max_fd
+080148f8 g     O .rwdata	00000004 alt_max_fd
 0800c1c4 g     F .text	000000f0 _fclose_r
 08006fc8 g     F .text	00000030 fflush
-08016478 g     O .bss	00000004 __malloc_max_sbrked_mem
+08016470 g     O .bss	00000004 __malloc_max_sbrked_mem
 0800d3e8 g     F .text	000008ac .hidden __adddf3
 080099c4 g     F .text	0000010c __b2d
 0800ce24 g     F .text	000005c4 .hidden __umoddi3
 080100d0 g     F .text	000000dc lseek
-080148d4 g     O .rwdata	00000004 _global_impure_ptr
+080148d0 g     O .rwdata	00000004 _global_impure_ptr
 08009fa0 g     F .text	00000564 _realloc_r
-08016738 g       *ABS*	00000000 __bss_end
+08016730 g       *ABS*	00000000 __bss_end
 08011c30 g     F .text	000000f0 alt_iic_isr_register
 08010580 g     F .text	00000108 alt_tick
 0800c828 g     F .text	000005fc .hidden __udivdi3
@@ -348,7 +348,7 @@ SYMBOL TABLE:
 08007378 g     F .text	00000018 __fp_lock_all
 08011be4 g     F .text	0000004c alt_ic_irq_enabled
 080104e4 g     F .text	0000009c alt_alarm_stop
-08016498 g     O .bss	00000004 alt_irq_active
+08016490 g     O .bss	00000004 alt_irq_active
 08002a1c g     F .text	0000002c DummyProbe
 080000fc g     F .exceptions	000000d4 alt_irq_handler
 080136ac g     O .rwdata	00000028 alt_dev_null
@@ -357,19 +357,19 @@ SYMBOL TABLE:
 080118a0 g     F .text	00000020 alt_dcache_flush_all
 0800909c g     F .text	00000068 __hi0bits
 0800fa24 g     F .text	00000080 .hidden __fixdfsi
-08014914 g       *ABS*	00000000 __ram_rwdata_end
-080148f4 g     O .rwdata	00000008 alt_dev_list
+08014910 g       *ABS*	00000000 __ram_rwdata_end
+080148f0 g     O .rwdata	00000008 alt_dev_list
 080106f4 g     F .text	00000100 write
 08009e38 g     F .text	000000a0 _putc_r
 08012dd8 g       *ABS*	00000000 __ram_rodata_end
-08016465 g     O .bss	00000001 usb_error
+0801645d g     O .bss	00000001 usb_error
 0800fe08 g     F .text	000000b8 fstat
 0800e7c8 g     F .text	000000f4 .hidden __ledf2
 0800947c g     F .text	00000140 __pow5mult
 0800a8f8 g     F .text	0000150c ___vfiprintf_internal_r
-08016470 g     O .bss	00000004 __nlocale_changed
+08016468 g     O .bss	00000004 __nlocale_changed
 08002cb8 g     F .text	00000058 .hidden __umodsi3
-08016738 g       *ABS*	00000000 end
+08016730 g       *ABS*	00000000 end
 08010a28 g     F .text	000000c0 altera_avalon_jtag_uart_init
 080001d0 g     F .exceptions	00000060 alt_instruction_exception_entry
 08001f6c g     F .text	0000017c XferDispatchPkt
@@ -385,31 +385,31 @@ SYMBOL TABLE:
 080074cc g     F .text	00000310 _free_r
 08007eb4 g     F .text	00000010 __locale_mb_cur_max
 08012600 g     F .text	00000180 __call_exitprocs
-0801646c g     O .bss	00000004 __mlocale_changed
-080148e0 g     O .rwdata	00000004 __malloc_sbrk_base
+08016464 g     O .bss	00000004 __mlocale_changed
+080148dc g     O .rwdata	00000004 __malloc_sbrk_base
 08000230 g     F .text	0000003c _start
-08016490 g     O .bss	00000004 _alt_tick_rate
+08016488 g     O .bss	00000004 _alt_tick_rate
 080017d4 g     F .text	000000ac MAXbytes_rd
 080095bc g     F .text	00000148 __lshift
 0801132c g     F .text	000001fc alt_avalon_spi_command
-08016494 g     O .bss	00000004 _alt_nticks
+0801648c g     O .bss	00000004 _alt_nticks
 080102ac g     F .text	00000104 read
 08010860 g     F .text	00000064 alt_sys_init
-080165f0 g     O .bss	00000048 devtable
+080165e8 g     O .bss	00000048 devtable
 080124e8 g     F .text	00000118 __register_exitproc
 08000fc8 g     F .text	00000408 HIDKProbe
-080164b0 g     O .bss	00000018 msd_ep
+080164a8 g     O .bss	00000018 msd_ep
 080091f0 g     F .text	0000028c __multiply
 08010d94 g     F .text	00000068 altera_avalon_jtag_uart_close
 08002278 g     F .text	00000098 USB_init
 08002d10 g     F .text	00000028 .hidden __mulsi3
-080164f0 g     O .bss	00000100 bigbuf
+080164e8 g     O .bss	00000100 bigbuf
 08012dd8 g       *ABS*	00000000 __ram_rwdata_start
 080127b4 g       *ABS*	00000000 __ram_rodata_start
-080164c8 g     O .bss	00000028 __malloc_current_mallinfo
-0801645c g     O .bss	00000001 last_usb_task_state
+080164c0 g     O .bss	00000028 __malloc_current_mallinfo
+08016454 g     O .bss	00000001 last_usb_task_state
 08009ad0 g     F .text	0000014c __d2b
-08016454 g     O .bss	00000008 dev0ep
+0801644c g     O .bss	00000008 dev0ep
 080004a0 g     F .text	00000048 clearLED
 080108c4 g     F .text	00000060 altera_avalon_jtag_uart_read_fd
 080122c0 g     F .text	000000c4 alt_get_fd
@@ -418,7 +418,7 @@ SYMBOL TABLE:
 0800c094 g     F .text	00000054 _close_r
 0801246c g     F .text	0000007c memcmp
 08010984 g     F .text	00000050 altera_avalon_jtag_uart_close_fd
-08016738 g       *ABS*	00000000 __alt_stack_base
+08016730 g       *ABS*	00000000 __alt_stack_base
 080109d4 g     F .text	00000054 altera_avalon_jtag_uart_ioctl_fd
 0800534c g     F .text	00000154 __swsetup_r
 0800dc94 g     F .text	000009d0 .hidden __divdf3
@@ -436,14 +436,14 @@ SYMBOL TABLE:
 08010434 g     F .text	000000b0 sbrk
 08006f6c g     F .text	0000005c _fflush_r
 0800c0e8 g     F .text	000000dc _calloc_r
-08016450 g       *ABS*	00000000 __bss_start
+08016448 g       *ABS*	00000000 __bss_start
 08001944 g     F .text	00000188 MAX_busprobe
-08016450 g     O .bss	00000002 hid_device
+08016448 g     O .bss	00000002 hid_device
 08008c58 g     F .text	00000128 memset
 0800076c g     F .text	00000454 main
 08001b60 g     F .text	00000064 MAX3421E_Task
-0801648c g     O .bss	00000004 alt_envp
-08016474 g     O .bss	00000004 __malloc_max_total_mem
+08016484 g     O .bss	00000004 alt_envp
+0801646c g     O .bss	00000004 __malloc_max_total_mem
 08010924 g     F .text	00000060 altera_avalon_jtag_uart_write_fd
 0800c01c g     F .text	00000018 __swbuf
 08002ad8 g     F .text	00000084 ConvUTF8ToStr
@@ -453,7 +453,7 @@ SYMBOL TABLE:
 080056c8 g     F .text	00001688 _dtoa_r
 080080c4 g     F .text	0000080c _malloc_r
 0800c79c g     F .text	00000030 __ascii_wctomb
-08014900 g     O .rwdata	00000004 alt_errno
+080148fc g     O .rwdata	00000004 alt_errno
 08007ca4 g     F .text	000000c4 _fwalk
 08009ed8 g     F .text	000000c8 putc
 08002b5c g     F .text	00000084 .hidden __divsi3
@@ -471,12 +471,12 @@ SYMBOL TABLE:
 08010828 g     F .text	00000038 alt_irq_init
 080103b0 g     F .text	00000084 alt_release_fd
 08012ca4 g     O .rodata	00000100 .hidden __clz_tab
-08016468 g     O .bss	00000004 _PathLocale
+08016460 g     O .bss	00000004 _PathLocale
 08012420 g     F .text	00000014 atexit
 0800c034 g     F .text	00000060 _write_r
 08007ee4 g     F .text	00000018 setlocale
-080148d8 g     O .rwdata	00000004 _impure_ptr
-08016484 g     O .bss	00000004 alt_argc
+080148d4 g     O .rwdata	00000004 _impure_ptr
+0801647c g     O .bss	00000004 alt_argc
 08006d50 g     F .text	0000021c __sflush_r
 08011a00 g     F .text	00000060 _do_dtors
 08007ed0 g     F .text	00000008 __locale_cjk_lang
@@ -484,7 +484,7 @@ SYMBOL TABLE:
 08000020 g       .exceptions	00000000 alt_irq_entry
 08009960 g     F .text	00000064 __ulp
 08007390 g     F .text	00000018 __fp_unlock_all
-080148ec g     O .rwdata	00000008 alt_fs_list
+080148e8 g     O .rwdata	00000008 alt_fs_list
 080029b8 g     F .text	0000002c CDCProbe
 08000020 g       *ABS*	00000000 __ram_exceptions_start
 08007efc g     F .text	0000000c localeconv
@@ -492,9 +492,9 @@ SYMBOL TABLE:
 08002a80 g     F .text	00000020 GetUsbTaskState
 08011a80 g     F .text	00000050 alt_ic_isr_register
 080127f0 g     O .rodata	00000010 devclasses
-08014914 g       *ABS*	00000000 _edata
+08014910 g       *ABS*	00000000 _edata
 08001578 g     F .text	00000038 HIDKEventHandler
-08016738 g       *ABS*	00000000 _end
+08016730 g       *ABS*	00000000 _end
 08001bc4 g     F .text	000000cc MaxIntHandler
 0800c2c8 g     F .text	00000164 __fputwc
 08000230 g       *ABS*	00000000 __ram_exceptions_end
@@ -502,7 +502,7 @@ SYMBOL TABLE:
 080015b0 g     F .text	00000034 SPI_init
 08011b58 g     F .text	0000008c alt_ic_irq_disable
 0800a628 g     F .text	0000007c __swrite
-080148e4 g     O .rwdata	00000004 __malloc_trim_threshold
+080148e0 g     O .rwdata	00000004 __malloc_trim_threshold
 08007ec4 g     F .text	0000000c __locale_msgcharset
 08012434 g     F .text	00000038 exit
 08007d68 g     F .text	000000c4 _fwalk_reent
@@ -520,10 +520,10 @@ SYMBOL TABLE:
 08002e98 g     F .text	00000098 strlen
 08011fa8 g     F .text	0000015c open
 0800e6ec g     F .text	000000dc .hidden __gedf2
-080148e8 g     O .rwdata	00000004 __wctomb
+080148e4 g     O .rwdata	00000004 __wctomb
 0800a8e0 g     F .text	00000018 __sprint_r
 08011a60 g     F .text	00000020 alt_icache_flush_all
-08014910 g     O .rwdata	00000004 alt_priority_mask
+0801490c g     O .rwdata	00000004 alt_priority_mask
 08011ad0 g     F .text	00000088 alt_ic_irq_enable
 08005274 g     F .text	0000001c __vfprintf_internal
 08000bc0 g     F .text	00000408 HIDMProbe
@@ -531,7 +531,7 @@ SYMBOL TABLE:
 080015e4 g     F .text	00000028 SPI_wr
 0800f128 g     F .text	000008fc .hidden __subdf3
 08009104 g     F .text	000000b0 __lo0bits
-08014908 g     O .rwdata	00000008 alt_alarm_list
+08014904 g     O .rwdata	00000008 alt_alarm_list
 080119a0 g     F .text	00000060 _do_ctors
 0800c6dc g     F .text	000000c0 wcrtomb
 0800fcc8 g     F .text	000000d8 close
@@ -810,13 +810,13 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_irq_pending (void)
 #ifdef ALT_ENHANCED_INTERRUPT_API_PRESENT
         alt_irq[i].handler(alt_irq[i].context); 
  800013c:	00820074 	movhi	r2,2049
- 8000140:	10998e04 	addi	r2,r2,26168
+ 8000140:	10998c04 	addi	r2,r2,26160
  8000144:	e0fffd17 	ldw	r3,-12(fp)
  8000148:	180690fa 	slli	r3,r3,3
  800014c:	10c5883a 	add	r2,r2,r3
  8000150:	10c00017 	ldw	r3,0(r2)
  8000154:	00820074 	movhi	r2,2049
- 8000158:	10998e04 	addi	r2,r2,26168
+ 8000158:	10998c04 	addi	r2,r2,26160
  800015c:	e13ffd17 	ldw	r4,-12(fp)
  8000160:	200890fa 	slli	r4,r4,3
  8000164:	1105883a 	add	r2,r2,r4
@@ -900,7 +900,7 @@ alt_instruction_exception_entry (alt_u32 exception_pc)
 #endif /* NIOS2_HAS_EXTRA_EXCEPTION_INFO */
 
   if(alt_instruction_exception_handler) {
- 80001f0:	d0a6fa17 	ldw	r2,-25624(gp)
+ 80001f0:	d0a6f817 	ldw	r2,-25632(gp)
  80001f4:	10000726 	beq	r2,zero,8000214 <alt_instruction_exception_entry+0x44>
      * Call handler. Its return value indicates whether the exception-causing
      * instruction should be re-issued. The code that called us,
@@ -908,7 +908,7 @@ alt_instruction_exception_entry (alt_u32 exception_pc)
      * register as necessary
      */
     return alt_instruction_exception_handler(cause, exception_pc, badaddr);
- 80001f8:	d0a6fa17 	ldw	r2,-25624(gp)
+ 80001f8:	d0a6f817 	ldw	r2,-25632(gp)
  80001fc:	e0fffd17 	ldw	r3,-12(fp)
  8000200:	e1bffe17 	ldw	r6,-8(fp)
  8000204:	e17fff17 	ldw	r5,-4(fp)
@@ -960,12 +960,12 @@ Disassembly of section .text:
     movhi r2, %hi(__bss_start)
  8000240:	00820074 	movhi	r2,2049
     ori r2, r2, %lo(__bss_start)
- 8000244:	10991414 	ori	r2,r2,25680
+ 8000244:	10991214 	ori	r2,r2,25672
 
     movhi r3, %hi(__bss_end)
  8000248:	00c20074 	movhi	r3,2049
     ori r3, r3, %lo(__bss_end)
- 800024c:	18d9ce14 	ori	r3,r3,26424
+ 800024c:	18d9cc14 	ori	r3,r3,26416
 
     beq r2, r3, 1f
  8000250:	10c00326 	beq	r2,r3,8000260 <_start+0x30>
@@ -1002,8 +1002,8 @@ alt_after_alt_main:
 0800026c <GetDriverandReport>:
 const char* const devclasses[] = { " Uninitialized", " HID Keyboard", " HID Mouse", " Mass storage" };
 
-static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8, 30, 32}; // W,S,A,D,Q,E,1,3
-static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18, 37, 38}; // I,K,J,L,U,O,8,9
+static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8}; // W,S,A,D,Q,E
+static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18}; // I,K,J,L,U,O
 
 BYTE GetDriverandReport() {
  800026c:	defff604 	addi	sp,sp,-40
@@ -1079,7 +1079,7 @@ BYTE GetDriverandReport() {
 	rcode = XferGetIdle(addr, 0, hid_device.interface, 0, &tmpbyte);
  8000324:	d0a00003 	ldbu	r2,-32768(gp)
  8000328:	11003fcc 	andi	r4,r2,255
- 800032c:	d0a6e743 	ldbu	r2,-25699(gp)
+ 800032c:	d0a6e543 	ldbu	r2,-25707(gp)
  8000330:	10803fcc 	andi	r2,r2,255
  8000334:	e0ffff44 	addi	r3,fp,-3
  8000338:	d8c00415 	stw	r3,16(sp)
@@ -1127,7 +1127,7 @@ BYTE GetDriverandReport() {
 	rcode = XferGetProto(addr, 0, hid_device.interface, &tmpbyte);
  80003c0:	d0a00003 	ldbu	r2,-32768(gp)
  80003c4:	11003fcc 	andi	r4,r2,255
- 80003c8:	d0a6e743 	ldbu	r2,-25699(gp)
+ 80003c8:	d0a6e543 	ldbu	r2,-25707(gp)
  80003cc:	10803fcc 	andi	r2,r2,255
  80003d0:	e0ffff44 	addi	r3,fp,-3
  80003d4:	d8c00415 	stw	r3,16(sp)
@@ -1596,7 +1596,7 @@ int main() {
  80008dc:	10800190 	cmplti	r2,r2,6
  80008e0:	103fe91e 	bne	r2,zero,8000888 <__alt_data_end+0xfc000888>
 				 * I (0x0C), K (0x0E), J (0x0D), L (0x0F)
-				 * U (0x18), O (0x12), 8 (0x26), 9 (0x26)
+				 * U (0x18), O (0x12)
 				 *
 				 */
 
@@ -1621,7 +1621,7 @@ int main() {
 				k2 = strpbrk(p2_bytes, allKeycodes);
  8000914:	e0bffa04 	addi	r2,fp,-24
  8000918:	100b883a 	mov	r5,r2
- 800091c:	d1200244 	addi	r4,gp,-32759
+ 800091c:	d12001c4 	addi	r4,gp,-32761
  8000920:	8002f300 	call	8002f30 <strpbrk>
  8000924:	e0bff915 	stw	r2,-28(fp)
 				if ( k2 != 0 ) {
@@ -1894,16 +1894,16 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 	WORD total_length;
 	USB_DESCR* data_ptr = (USB_DESCR *) &bigbuf;
  8000bdc:	00820074 	movhi	r2,2049
- 8000be0:	10993c04 	addi	r2,r2,25840
+ 8000be0:	10993a04 	addi	r2,r2,25832
  8000be4:	e0bffa15 	stw	r2,-24(fp)
 	BYTE* byte_ptr = bigbuf;
  8000be8:	00820074 	movhi	r2,2049
- 8000bec:	10993c04 	addi	r2,r2,25840
+ 8000bec:	10993a04 	addi	r2,r2,25832
  8000bf0:	e0bffb15 	stw	r2,-20(fp)
 	rcode = XferGetConfDescr(addr, 0, CONF_DESCR_LEN, 0, bigbuf); //get configuration descriptor
  8000bf4:	e0fffe03 	ldbu	r3,-8(fp)
  8000bf8:	00820074 	movhi	r2,2049
- 8000bfc:	10993c04 	addi	r2,r2,25840
+ 8000bfc:	10993a04 	addi	r2,r2,25832
  8000c00:	d8800415 	stw	r2,16(sp)
  8000c04:	00800244 	movi	r2,9
  8000c08:	d8800315 	stw	r2,12(sp)
@@ -1945,7 +1945,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
  8000c70:	e13ffe03 	ldbu	r4,-8(fp)
  8000c74:	e0fff90b 	ldhu	r3,-28(fp)
  8000c78:	00820074 	movhi	r2,2049
- 8000c7c:	10993c04 	addi	r2,r2,25840
+ 8000c7c:	10993a04 	addi	r2,r2,25832
  8000c80:	d8800415 	stw	r2,16(sp)
  8000c84:	d8c00315 	stw	r3,12(sp)
  8000c88:	d8000215 	stw	zero,8(sp)
@@ -2027,7 +2027,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 				devtable[addr].devclass = HID_M;                  //device class
  8000d4c:	e0fffe03 	ldbu	r3,-8(fp)
  8000d50:	00820074 	movhi	r2,2049
- 8000d54:	10997c04 	addi	r2,r2,26096
+ 8000d54:	10997a04 	addi	r2,r2,26088
  8000d58:	180690fa 	slli	r3,r3,3
  8000d5c:	10c5883a 	add	r2,r2,r3
  8000d60:	10800104 	addi	r2,r2,4
@@ -2036,7 +2036,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 				tmpbyte = devtable[addr].epinfo->MaxPktSize;
  8000d6c:	e0fffe03 	ldbu	r3,-8(fp)
  8000d70:	00820074 	movhi	r2,2049
- 8000d74:	10997c04 	addi	r2,r2,26096
+ 8000d74:	10997a04 	addi	r2,r2,26088
  8000d78:	180690fa 	slli	r3,r3,3
  8000d7c:	10c5883a 	add	r2,r2,r3
  8000d80:	10800017 	ldw	r2,0(r2)
@@ -2047,16 +2047,16 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 				devtable[addr].epinfo = hid_ep; //switch endpoint information structure
  8000d90:	e0fffe03 	ldbu	r3,-8(fp)
  8000d94:	00820074 	movhi	r2,2049
- 8000d98:	10997c04 	addi	r2,r2,26096
+ 8000d98:	10997a04 	addi	r2,r2,26088
  8000d9c:	180690fa 	slli	r3,r3,3
  8000da0:	10c7883a 	add	r3,r2,r3
  8000da4:	00820074 	movhi	r2,2049
- 8000da8:	10992804 	addi	r2,r2,25760
+ 8000da8:	10992604 	addi	r2,r2,25752
  8000dac:	18800015 	stw	r2,0(r3)
 				devtable[addr].epinfo[0].MaxPktSize = tmpbyte;
  8000db0:	e0fffe03 	ldbu	r3,-8(fp)
  8000db4:	00820074 	movhi	r2,2049
- 8000db8:	10997c04 	addi	r2,r2,26096
+ 8000db8:	10997a04 	addi	r2,r2,26088
  8000dbc:	180690fa 	slli	r3,r3,3
  8000dc0:	10c5883a 	add	r2,r2,r3
  8000dc4:	10800017 	ldw	r2,0(r2)
@@ -2072,11 +2072,11 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 				devtable[addr].epinfo = hid_ep; //switch endpoint information structure
 				devtable[addr].epinfo[0].MaxPktSize = tmpbyte;
 				hid_device.interface =
- 8000dd8:	d0a6e745 	stb	r2,-25699(gp)
+ 8000dd8:	d0a6e545 	stb	r2,-25707(gp)
 						data_ptr->descr.interface.bInterfaceNumber;
 				hid_device.addr = addr;
  8000ddc:	e0bffe03 	ldbu	r2,-8(fp)
- 8000de0:	d0a6e705 	stb	r2,-25700(gp)
+ 8000de0:	d0a6e505 	stb	r2,-25708(gp)
 				byte_ptr = byte_ptr + data_ptr->descr.config.bLength;
  8000de4:	e0bffa17 	ldw	r2,-24(fp)
  8000de8:	10800003 	ldbu	r2,0(r2)
@@ -2112,7 +2112,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].epAddr =
  8000e40:	e0fffe03 	ldbu	r3,-8(fp)
  8000e44:	00820074 	movhi	r2,2049
- 8000e48:	10997c04 	addi	r2,r2,26096
+ 8000e48:	10997a04 	addi	r2,r2,26088
  8000e4c:	180690fa 	slli	r3,r3,3
  8000e50:	10c5883a 	add	r2,r2,r3
  8000e54:	10800017 	ldw	r2,0(r2)
@@ -2131,7 +2131,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].Attr =
  8000e68:	e0fffe03 	ldbu	r3,-8(fp)
  8000e6c:	00820074 	movhi	r2,2049
- 8000e70:	10997c04 	addi	r2,r2,26096
+ 8000e70:	10997a04 	addi	r2,r2,26088
  8000e74:	180690fa 	slli	r3,r3,3
  8000e78:	10c5883a 	add	r2,r2,r3
  8000e7c:	10800017 	ldw	r2,0(r2)
@@ -2150,7 +2150,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].MaxPktSize =
  8000e90:	e0fffe03 	ldbu	r3,-8(fp)
  8000e94:	00820074 	movhi	r2,2049
- 8000e98:	10997c04 	addi	r2,r2,26096
+ 8000e98:	10997a04 	addi	r2,r2,26088
  8000e9c:	180690fa 	slli	r3,r3,3
  8000ea0:	10c5883a 	add	r2,r2,r3
  8000ea4:	10800017 	ldw	r2,0(r2)
@@ -2169,7 +2169,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].Interval =
  8000eb8:	e0fffe03 	ldbu	r3,-8(fp)
  8000ebc:	00820074 	movhi	r2,2049
- 8000ec0:	10997c04 	addi	r2,r2,26096
+ 8000ec0:	10997a04 	addi	r2,r2,26088
  8000ec4:	180690fa 	slli	r3,r3,3
  8000ec8:	10c5883a 	add	r2,r2,r3
  8000ecc:	10800017 	ldw	r2,0(r2)
@@ -2210,7 +2210,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 						}
 						rcode = XferSetProto(addr, 0, hid_device.interface,
  8000f24:	e0fffe03 	ldbu	r3,-8(fp)
- 8000f28:	d0a6e743 	ldbu	r2,-25699(gp)
+ 8000f28:	d0a6e543 	ldbu	r2,-25707(gp)
  8000f2c:	10803fcc 	andi	r2,r2,255
  8000f30:	d8000415 	stw	zero,16(sp)
  8000f34:	d8000315 	stw	zero,12(sp)
@@ -2242,7 +2242,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 				while (byte_ptr < bigbuf + total_length) {
  8000f74:	e0fff90b 	ldhu	r3,-28(fp)
  8000f78:	00820074 	movhi	r2,2049
- 8000f7c:	10993c04 	addi	r2,r2,25840
+ 8000f7c:	10993a04 	addi	r2,r2,25832
  8000f80:	1885883a 	add	r2,r3,r2
  8000f84:	e0fffb17 	ldw	r3,-20(fp)
  8000f88:	18bf9f36 	bltu	r3,r2,8000e08 <__alt_data_end+0xfc000e08>
@@ -2269,7 +2269,7 @@ BOOL HIDMProbe(BYTE addr, DWORD flags) {
 	while (byte_ptr < bigbuf + total_length) {
  8000f98:	e0fff90b 	ldhu	r3,-28(fp)
  8000f9c:	00820074 	movhi	r2,2049
- 8000fa0:	10993c04 	addi	r2,r2,25840
+ 8000fa0:	10993a04 	addi	r2,r2,25832
  8000fa4:	1885883a 	add	r2,r3,r2
  8000fa8:	e0fffb17 	ldw	r3,-20(fp)
  8000fac:	18bf4736 	bltu	r3,r2,8000ccc <__alt_data_end+0xfc000ccc>
@@ -2307,16 +2307,16 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 	WORD total_length;
 	USB_DESCR* data_ptr = (USB_DESCR *) &bigbuf;
  8000fe4:	00820074 	movhi	r2,2049
- 8000fe8:	10993c04 	addi	r2,r2,25840
+ 8000fe8:	10993a04 	addi	r2,r2,25832
  8000fec:	e0bffa15 	stw	r2,-24(fp)
 	BYTE* byte_ptr = bigbuf;
  8000ff0:	00820074 	movhi	r2,2049
- 8000ff4:	10993c04 	addi	r2,r2,25840
+ 8000ff4:	10993a04 	addi	r2,r2,25832
  8000ff8:	e0bffb15 	stw	r2,-20(fp)
 	rcode = XferGetConfDescr(addr, 0, CONF_DESCR_LEN, 0, bigbuf); //get configuration descriptor
  8000ffc:	e0fffe03 	ldbu	r3,-8(fp)
  8001000:	00820074 	movhi	r2,2049
- 8001004:	10993c04 	addi	r2,r2,25840
+ 8001004:	10993a04 	addi	r2,r2,25832
  8001008:	d8800415 	stw	r2,16(sp)
  800100c:	00800244 	movi	r2,9
  8001010:	d8800315 	stw	r2,12(sp)
@@ -2357,7 +2357,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
  8001078:	e13ffe03 	ldbu	r4,-8(fp)
  800107c:	e0fff90b 	ldhu	r3,-28(fp)
  8001080:	00820074 	movhi	r2,2049
- 8001084:	10993c04 	addi	r2,r2,25840
+ 8001084:	10993a04 	addi	r2,r2,25832
  8001088:	d8800415 	stw	r2,16(sp)
  800108c:	d8c00315 	stw	r3,12(sp)
  8001090:	d8000215 	stw	zero,8(sp)
@@ -2433,7 +2433,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 				devtable[addr].devclass = HID_K;             //fill device class
  8001154:	e0fffe03 	ldbu	r3,-8(fp)
  8001158:	00820074 	movhi	r2,2049
- 800115c:	10997c04 	addi	r2,r2,26096
+ 800115c:	10997a04 	addi	r2,r2,26088
  8001160:	180690fa 	slli	r3,r3,3
  8001164:	10c5883a 	add	r2,r2,r3
  8001168:	10800104 	addi	r2,r2,4
@@ -2442,7 +2442,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 				tmpbyte = devtable[addr].epinfo->MaxPktSize; //save max.packet size
  8001174:	e0fffe03 	ldbu	r3,-8(fp)
  8001178:	00820074 	movhi	r2,2049
- 800117c:	10997c04 	addi	r2,r2,26096
+ 800117c:	10997a04 	addi	r2,r2,26088
  8001180:	180690fa 	slli	r3,r3,3
  8001184:	10c5883a 	add	r2,r2,r3
  8001188:	10800017 	ldw	r2,0(r2)
@@ -2453,16 +2453,16 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 				devtable[addr].epinfo = hid_ep; //switch endpoint information structure
  8001198:	e0fffe03 	ldbu	r3,-8(fp)
  800119c:	00820074 	movhi	r2,2049
- 80011a0:	10997c04 	addi	r2,r2,26096
+ 80011a0:	10997a04 	addi	r2,r2,26088
  80011a4:	180690fa 	slli	r3,r3,3
  80011a8:	10c7883a 	add	r3,r2,r3
  80011ac:	00820074 	movhi	r2,2049
- 80011b0:	10992804 	addi	r2,r2,25760
+ 80011b0:	10992604 	addi	r2,r2,25752
  80011b4:	18800015 	stw	r2,0(r3)
 				devtable[addr].epinfo[0].MaxPktSize = tmpbyte; //fill in max.packet size
  80011b8:	e0fffe03 	ldbu	r3,-8(fp)
  80011bc:	00820074 	movhi	r2,2049
- 80011c0:	10997c04 	addi	r2,r2,26096
+ 80011c0:	10997a04 	addi	r2,r2,26088
  80011c4:	180690fa 	slli	r3,r3,3
  80011c8:	10c5883a 	add	r2,r2,r3
  80011cc:	10800017 	ldw	r2,0(r2)
@@ -2478,11 +2478,11 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 				devtable[addr].epinfo = hid_ep; //switch endpoint information structure
 				devtable[addr].epinfo[0].MaxPktSize = tmpbyte; //fill in max.packet size
 				hid_device.interface =
- 80011e0:	d0a6e745 	stb	r2,-25699(gp)
+ 80011e0:	d0a6e545 	stb	r2,-25707(gp)
 						data_ptr->descr.interface.bInterfaceNumber; //fill in interface number to be used in HID requests
 				hid_device.addr = addr;                        //fill in address
  80011e4:	e0bffe03 	ldbu	r2,-8(fp)
- 80011e8:	d0a6e705 	stb	r2,-25700(gp)
+ 80011e8:	d0a6e505 	stb	r2,-25708(gp)
 				byte_ptr = byte_ptr + data_ptr->descr.config.bLength; //skip to the next descriptor
  80011ec:	e0bffa17 	ldw	r2,-24(fp)
  80011f0:	10800003 	ldbu	r2,0(r2)
@@ -2518,7 +2518,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].epAddr =
  8001248:	e0fffe03 	ldbu	r3,-8(fp)
  800124c:	00820074 	movhi	r2,2049
- 8001250:	10997c04 	addi	r2,r2,26096
+ 8001250:	10997a04 	addi	r2,r2,26088
  8001254:	180690fa 	slli	r3,r3,3
  8001258:	10c5883a 	add	r2,r2,r3
  800125c:	10800017 	ldw	r2,0(r2)
@@ -2537,7 +2537,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].Attr =
  8001270:	e0fffe03 	ldbu	r3,-8(fp)
  8001274:	00820074 	movhi	r2,2049
- 8001278:	10997c04 	addi	r2,r2,26096
+ 8001278:	10997a04 	addi	r2,r2,26088
  800127c:	180690fa 	slli	r3,r3,3
  8001280:	10c5883a 	add	r2,r2,r3
  8001284:	10800017 	ldw	r2,0(r2)
@@ -2556,7 +2556,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].MaxPktSize =
  8001298:	e0fffe03 	ldbu	r3,-8(fp)
  800129c:	00820074 	movhi	r2,2049
- 80012a0:	10997c04 	addi	r2,r2,26096
+ 80012a0:	10997a04 	addi	r2,r2,26088
  80012a4:	180690fa 	slli	r3,r3,3
  80012a8:	10c5883a 	add	r2,r2,r3
  80012ac:	10800017 	ldw	r2,0(r2)
@@ -2575,7 +2575,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 						devtable[addr].epinfo[1].Interval =
  80012c0:	e0fffe03 	ldbu	r3,-8(fp)
  80012c4:	00820074 	movhi	r2,2049
- 80012c8:	10997c04 	addi	r2,r2,26096
+ 80012c8:	10997a04 	addi	r2,r2,26088
  80012cc:	180690fa 	slli	r3,r3,3
  80012d0:	10c5883a 	add	r2,r2,r3
  80012d4:	10800017 	ldw	r2,0(r2)
@@ -2615,7 +2615,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 						}
 						rcode = XferSetProto(addr, 0, hid_device.interface,
  800132c:	e0fffe03 	ldbu	r3,-8(fp)
- 8001330:	d0a6e743 	ldbu	r2,-25699(gp)
+ 8001330:	d0a6e543 	ldbu	r2,-25707(gp)
  8001334:	10803fcc 	andi	r2,r2,255
  8001338:	d8000415 	stw	zero,16(sp)
  800133c:	d8000315 	stw	zero,12(sp)
@@ -2647,7 +2647,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 				while (byte_ptr < bigbuf + total_length) {
  800137c:	e0fff90b 	ldhu	r3,-28(fp)
  8001380:	00820074 	movhi	r2,2049
- 8001384:	10993c04 	addi	r2,r2,25840
+ 8001384:	10993a04 	addi	r2,r2,25832
  8001388:	1885883a 	add	r2,r3,r2
  800138c:	e0fffb17 	ldw	r3,-20(fp)
  8001390:	18bf9f36 	bltu	r3,r2,8001210 <__alt_data_end+0xfc001210>
@@ -2674,7 +2674,7 @@ BOOL HIDKProbe(BYTE addr, DWORD flags) {
 	while (byte_ptr < bigbuf + total_length) {             //parse configuration
  80013a0:	e0fff90b 	ldhu	r3,-28(fp)
  80013a4:	00820074 	movhi	r2,2049
- 80013a8:	10993c04 	addi	r2,r2,25840
+ 80013a8:	10993a04 	addi	r2,r2,25832
  80013ac:	1885883a 	add	r2,r3,r2
  80013b0:	e0fffb17 	ldw	r3,-20(fp)
  80013b4:	18bf4736 	bltu	r3,r2,80010d4 <__alt_data_end+0xfc0010d4>
@@ -2700,12 +2700,12 @@ void HID_init(void) {
  80013d8:	d839883a 	mov	fp,sp
 	hid_ep[1].sndToggle = bmSNDTOG0;
  80013dc:	00820074 	movhi	r2,2049
- 80013e0:	10992804 	addi	r2,r2,25760
+ 80013e0:	10992604 	addi	r2,r2,25752
  80013e4:	00c01004 	movi	r3,64
  80013e8:	10c00345 	stb	r3,13(r2)
 	hid_ep[1].rcvToggle = bmRCVTOG0;
  80013ec:	00820074 	movhi	r2,2049
- 80013f0:	10992804 	addi	r2,r2,25760
+ 80013f0:	10992604 	addi	r2,r2,25752
  80013f4:	00c00404 	movi	r3,16
  80013f8:	10c00385 	stb	r3,14(r2)
 }
@@ -2725,19 +2725,19 @@ BYTE mousePoll(BOOT_MOUSE_REPORT* buf) {
  8001420:	e13fff15 	stw	r4,-4(fp)
 	BYTE rcode;
 	MAXreg_wr( rPERADDR, hid_device.addr);    //set peripheral address
- 8001424:	d0a6e703 	ldbu	r2,-25700(gp)
+ 8001424:	d0a6e503 	ldbu	r2,-25708(gp)
  8001428:	10803fcc 	andi	r2,r2,255
  800142c:	100b883a 	mov	r5,r2
  8001430:	01003804 	movi	r4,224
  8001434:	800160c0 	call	800160c <MAXreg_wr>
 	rcode = XferInTransfer(hid_device.addr, 1, 8, (BYTE*) buf,
- 8001438:	d0a6e703 	ldbu	r2,-25700(gp)
+ 8001438:	d0a6e503 	ldbu	r2,-25708(gp)
  800143c:	11003fcc 	andi	r4,r2,255
 			devtable[hid_device.addr].epinfo[1].MaxPktSize);
- 8001440:	d0a6e703 	ldbu	r2,-25700(gp)
+ 8001440:	d0a6e503 	ldbu	r2,-25708(gp)
  8001444:	10c03fcc 	andi	r3,r2,255
  8001448:	00820074 	movhi	r2,2049
- 800144c:	10997c04 	addi	r2,r2,26096
+ 800144c:	10997a04 	addi	r2,r2,26088
  8001450:	180690fa 	slli	r3,r3,3
  8001454:	10c5883a 	add	r2,r2,r3
  8001458:	10800017 	ldw	r2,0(r2)
@@ -2776,7 +2776,7 @@ BYTE kbdPoll(BOOT_KBD_REPORT* buf) {
  80014a8:	e13fff15 	stw	r4,-4(fp)
 	BYTE rcode;
 	MAXreg_wr( rPERADDR, hid_device.addr);    //set peripheral address
- 80014ac:	d0a6e703 	ldbu	r2,-25700(gp)
+ 80014ac:	d0a6e503 	ldbu	r2,-25708(gp)
  80014b0:	10803fcc 	andi	r2,r2,255
  80014b4:	100b883a 	mov	r5,r2
  80014b8:	01003804 	movi	r4,224
@@ -2791,13 +2791,13 @@ BYTE kbdPoll(BOOT_KBD_REPORT* buf) {
  80014d8:	10800c90 	cmplti	r2,r2,50
  80014dc:	103ffa1e 	bne	r2,zero,80014c8 <__alt_data_end+0xfc0014c8>
 	rcode = XferInTransfer(hid_device.addr, 1, 8, (BYTE*) buf,
- 80014e0:	d0a6e703 	ldbu	r2,-25700(gp)
+ 80014e0:	d0a6e503 	ldbu	r2,-25708(gp)
  80014e4:	11003fcc 	andi	r4,r2,255
 			devtable[hid_device.addr].epinfo[1].MaxPktSize);
- 80014e8:	d0a6e703 	ldbu	r2,-25700(gp)
+ 80014e8:	d0a6e503 	ldbu	r2,-25708(gp)
  80014ec:	10c03fcc 	andi	r3,r2,255
  80014f0:	00820074 	movhi	r2,2049
- 80014f4:	10997c04 	addi	r2,r2,26096
+ 80014f4:	10997a04 	addi	r2,r2,26088
  80014f8:	180690fa 	slli	r3,r3,3
  80014fc:	10c5883a 	add	r2,r2,r3
  8001500:	10800017 	ldw	r2,0(r2)
@@ -3310,7 +3310,7 @@ void MAX_busprobe(void) {
 	case ( bmJSTATUS):
 		/*kludgy*/
 		if (usb_task_state != USB_ATTACHED_SUBSTATE_WAIT_RESET_COMPLETE) { //bus reset causes connection detect interrupt
- 80019a0:	d0a00703 	ldbu	r2,-32740(gp)
+ 80019a0:	d0a00603 	ldbu	r2,-32744(gp)
  80019a4:	10803fcc 	andi	r2,r2,255
  80019a8:	108004e0 	cmpeqi	r2,r2,19
  80019ac:	10003e1e 	bne	r2,zero,8001aa8 <MAX_busprobe+0x164>
@@ -3341,13 +3341,13 @@ void MAX_busprobe(void) {
 			}
 			usb_task_state = ( USB_STATE_ATTACHED); //signal usb state machine to start attachment sequence
  80019f8:	00800404 	movi	r2,16
- 80019fc:	d0a00705 	stb	r2,-32740(gp)
+ 80019fc:	d0a00605 	stb	r2,-32744(gp)
 		}
 		break;
  8001a00:	00002906 	br	8001aa8 <MAX_busprobe+0x164>
 	case ( bmKSTATUS):
 		if (usb_task_state != USB_ATTACHED_SUBSTATE_WAIT_RESET_COMPLETE) { //bus reset causes connection detect interrupt
- 8001a04:	d0a00703 	ldbu	r2,-32740(gp)
+ 8001a04:	d0a00603 	ldbu	r2,-32744(gp)
  8001a08:	10803fcc 	andi	r2,r2,255
  8001a0c:	108004e0 	cmpeqi	r2,r2,19
  8001a10:	1000271e 	bne	r2,zero,8001ab0 <MAX_busprobe+0x16c>
@@ -3378,25 +3378,25 @@ void MAX_busprobe(void) {
 			}
 			usb_task_state = ( USB_STATE_ATTACHED); //signal usb state machine to start attachment sequence
  8001a5c:	00800404 	movi	r2,16
- 8001a60:	d0a00705 	stb	r2,-32740(gp)
+ 8001a60:	d0a00605 	stb	r2,-32744(gp)
 		}
 		break;
  8001a64:	00001206 	br	8001ab0 <MAX_busprobe+0x16c>
 	case ( bmSE1):              //illegal state
 		usb_task_state = ( USB_DETACHED_SUBSTATE_ILLEGAL);
  8001a68:	00800104 	movi	r2,4
- 8001a6c:	d0a00705 	stb	r2,-32740(gp)
+ 8001a6c:	d0a00605 	stb	r2,-32744(gp)
 		break;
  8001a70:	00001006 	br	8001ab4 <MAX_busprobe+0x170>
 	case ( bmSE0):              //disconnected state
 		if (!((usb_task_state & USB_STATE_MASK) == USB_STATE_DETACHED)) //if we came here from other than detached state
- 8001a74:	d0a00703 	ldbu	r2,-32740(gp)
+ 8001a74:	d0a00603 	ldbu	r2,-32744(gp)
  8001a78:	10803fcc 	andi	r2,r2,255
  8001a7c:	10803c0c 	andi	r2,r2,240
  8001a80:	10000326 	beq	r2,zero,8001a90 <MAX_busprobe+0x14c>
 			usb_task_state = ( USB_DETACHED_SUBSTATE_INITIALIZE); //clear device data structures
  8001a84:	00800044 	movi	r2,1
- 8001a88:	d0a00705 	stb	r2,-32740(gp)
+ 8001a88:	d0a00605 	stb	r2,-32744(gp)
 		else {
 			MAXreg_wr( rMODE, MODE_FS_HOST); //start full-speed host
 			usb_task_state = ( USB_DETACHED_SUBSTATE_WAIT_FOR_DEVICE);
@@ -3414,7 +3414,7 @@ void MAX_busprobe(void) {
  8001a98:	800160c0 	call	800160c <MAXreg_wr>
 			usb_task_state = ( USB_DETACHED_SUBSTATE_WAIT_FOR_DEVICE);
  8001a9c:	008000c4 	movi	r2,3
- 8001aa0:	d0a00705 	stb	r2,-32740(gp)
+ 8001aa0:	d0a00605 	stb	r2,-32744(gp)
 		}
 		break;
  8001aa4:	00000306 	br	8001ab4 <MAX_busprobe+0x170>
@@ -3599,9 +3599,9 @@ void MaxIntHandler(void) {
  8001c48:	1080004c 	andi	r2,r2,1
  8001c4c:	10000626 	beq	r2,zero,8001c68 <MaxIntHandler+0xa4>
 		usb_task_state++;                       //advance USB task state machine
- 8001c50:	d0a00703 	ldbu	r2,-32740(gp)
+ 8001c50:	d0a00603 	ldbu	r2,-32744(gp)
  8001c54:	10800044 	addi	r2,r2,1
- 8001c58:	d0a00705 	stb	r2,-32740(gp)
+ 8001c58:	d0a00605 	stb	r2,-32744(gp)
 		HIRQ_sendback |= bmBUSEVENTIRQ;
  8001c5c:	e0bfff03 	ldbu	r2,-4(fp)
  8001c60:	10800054 	ori	r2,r2,1
@@ -3739,7 +3739,7 @@ BYTE XferCtrlReq( BYTE addr, BYTE ep, BYTE bmReqType, BYTE bRequest, BYTE wValLo
  8001dc0:	e0bff503 	ldbu	r2,-44(fp)
  8001dc4:	1085883a 	add	r2,r2,r2
  8001dc8:	1087883a 	add	r3,r2,r2
- 8001dcc:	d0a00504 	addi	r2,gp,-32748
+ 8001dcc:	d0a00404 	addi	r2,gp,-32752
  8001dd0:	1885883a 	add	r2,r3,r2
  8001dd4:	10800017 	ldw	r2,0(r2)
  8001dd8:	e13ff803 	ldbu	r4,-32(fp)
@@ -3782,7 +3782,7 @@ BYTE XferCtrlData( BYTE addr, BYTE ep, WORD nbytes, BYTE* dataptr, BOOL directio
         devtable[ addr ].epinfo[ ep ].rcvToggle = bmRCVTOG1;
  8001e40:	e0fffc03 	ldbu	r3,-16(fp)
  8001e44:	00820074 	movhi	r2,2049
- 8001e48:	10997c04 	addi	r2,r2,26096
+ 8001e48:	10997a04 	addi	r2,r2,26088
  8001e4c:	180690fa 	slli	r3,r3,3
  8001e50:	10c5883a 	add	r2,r2,r3
  8001e54:	10c00017 	ldw	r3,0(r2)
@@ -3797,7 +3797,7 @@ BYTE XferCtrlData( BYTE addr, BYTE ep, WORD nbytes, BYTE* dataptr, BOOL directio
  8001e74:	e1bffe0b 	ldhu	r6,-8(fp)
  8001e78:	e0fffc03 	ldbu	r3,-16(fp)
  8001e7c:	00820074 	movhi	r2,2049
- 8001e80:	10997c04 	addi	r2,r2,26096
+ 8001e80:	10997a04 	addi	r2,r2,26088
  8001e84:	180690fa 	slli	r3,r3,3
  8001e88:	10c5883a 	add	r2,r2,r3
  8001e8c:	10c00017 	ldw	r3,0(r2)
@@ -3902,7 +3902,7 @@ BYTE XferDispatchPkt( BYTE token, BYTE ep )
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 {
   return _alt_nticks;
- 8001f8c:	d0a6f817 	ldw	r2,-25632(gp)
+ 8001f8c:	d0a6f617 	ldw	r2,-25640(gp)
  DWORD timeout = (alt_nticks()*1000)/alt_ticks_per_second() + USB_XFER_TIMEOUT;
  8001f90:	0140fa04 	movi	r5,1000
  8001f94:	1009883a 	mov	r4,r2
@@ -3914,7 +3914,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 {
   return _alt_tick_rate;
- 8001fa0:	d0a6f717 	ldw	r2,-25636(gp)
+ 8001fa0:	d0a6f517 	ldw	r2,-25644(gp)
  8001fa4:	100b883a 	mov	r5,r2
  8001fa8:	1809883a 	mov	r4,r3
  8001fac:	8002c540 	call	8002c54 <__udivsi3>
@@ -3965,7 +3965,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 {
   return _alt_nticks;
- 800201c:	d0a6f817 	ldw	r2,-25632(gp)
+ 800201c:	d0a6f617 	ldw	r2,-25640(gp)
  BYTE nak_count = 0;
 
     while( 1 ) {
@@ -3982,7 +3982,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 {
   return _alt_tick_rate;
- 8002030:	d0a6f717 	ldw	r2,-25636(gp)
+ 8002030:	d0a6f517 	ldw	r2,-25644(gp)
  8002034:	100b883a 	mov	r5,r2
  8002038:	1809883a 	mov	r4,r3
  800203c:	8002c540 	call	8002c54 <__udivsi3>
@@ -4114,7 +4114,7 @@ BYTE XferInTransfer( BYTE addr/* not sure if it's necessary */, BYTE ep, WORD nb
     MAXreg_wr( rHCTL, devtable[ addr ].epinfo[ ep ].rcvToggle );    //set toggle value
  8002120:	e0fffb03 	ldbu	r3,-20(fp)
  8002124:	00820074 	movhi	r2,2049
- 8002128:	10997c04 	addi	r2,r2,26096
+ 8002128:	10997a04 	addi	r2,r2,26088
  800212c:	180690fa 	slli	r3,r3,3
  8002130:	10c5883a 	add	r2,r2,r3
  8002134:	10c00017 	ldw	r3,0(r2)
@@ -4192,7 +4192,7 @@ BYTE XferInTransfer( BYTE addr/* not sure if it's necessary */, BYTE ep, WORD nb
                 devtable[ addr ].epinfo[ ep ].rcvToggle = bmRCVTOG1;
  8002204:	e0fffb03 	ldbu	r3,-20(fp)
  8002208:	00820074 	movhi	r2,2049
- 800220c:	10997c04 	addi	r2,r2,26096
+ 800220c:	10997a04 	addi	r2,r2,26088
  8002210:	180690fa 	slli	r3,r3,3
  8002214:	10c5883a 	add	r2,r2,r3
  8002218:	10c00017 	ldw	r3,0(r2)
@@ -4207,7 +4207,7 @@ BYTE XferInTransfer( BYTE addr/* not sure if it's necessary */, BYTE ep, WORD nb
                 devtable[ addr ].epinfo[ ep ].rcvToggle = bmRCVTOG0;
  8002234:	e0fffb03 	ldbu	r3,-20(fp)
  8002238:	00820074 	movhi	r2,2049
- 800223c:	10997c04 	addi	r2,r2,26096
+ 800223c:	10997a04 	addi	r2,r2,26088
  8002240:	180690fa 	slli	r3,r3,3
  8002244:	10c5883a 	add	r2,r2,r3
  8002248:	10c00017 	ldw	r3,0(r2)
@@ -4242,14 +4242,14 @@ void USB_init( void )
         devtable[ i ].epinfo = NULL;       //clear device table
  800228c:	e0ffff03 	ldbu	r3,-4(fp)
  8002290:	00820074 	movhi	r2,2049
- 8002294:	10997c04 	addi	r2,r2,26096
+ 8002294:	10997a04 	addi	r2,r2,26088
  8002298:	180690fa 	slli	r3,r3,3
  800229c:	10c5883a 	add	r2,r2,r3
  80022a0:	10000015 	stw	zero,0(r2)
         devtable[ i ].devclass = 0;
  80022a4:	e0ffff03 	ldbu	r3,-4(fp)
  80022a8:	00820074 	movhi	r2,2049
- 80022ac:	10997c04 	addi	r2,r2,26096
+ 80022ac:	10997a04 	addi	r2,r2,26088
  80022b0:	180690fa 	slli	r3,r3,3
  80022b4:	10c5883a 	add	r2,r2,r3
  80022b8:	10800104 	addi	r2,r2,4
@@ -4271,17 +4271,17 @@ void USB_init( void )
     }
     devtable[ 0 ].epinfo = &dev0ep;  //set single ep for uninitialized device
  80022d8:	00820074 	movhi	r2,2049
- 80022dc:	10997c04 	addi	r2,r2,26096
- 80022e0:	d0e6e804 	addi	r3,gp,-25696
+ 80022dc:	10997a04 	addi	r2,r2,26088
+ 80022e0:	d0e6e604 	addi	r3,gp,-25704
  80022e4:	10c00015 	stw	r3,0(r2)
     dev0ep.MaxPktSize = 0;
- 80022e8:	d026e88d 	sth	zero,-25694(gp)
+ 80022e8:	d026e68d 	sth	zero,-25702(gp)
     dev0ep.sndToggle = bmSNDTOG0;   //set DATA0/1 toggles to 0
  80022ec:	00801004 	movi	r2,64
- 80022f0:	d0a6e945 	stb	r2,-25691(gp)
+ 80022f0:	d0a6e745 	stb	r2,-25699(gp)
     dev0ep.rcvToggle = bmRCVTOG0;
  80022f4:	00800404 	movi	r2,16
- 80022f8:	d0a6e985 	stb	r2,-25690(gp)
+ 80022f8:	d0a6e785 	stb	r2,-25698(gp)
 }
  80022fc:	0001883a 	nop
  8002300:	e037883a 	mov	sp,fp
@@ -4307,7 +4307,7 @@ void USB_Task( void )
  BYTE i;
 
     switch( usb_task_state & USB_STATE_MASK ) {
- 8002324:	d0a00703 	ldbu	r2,-32740(gp)
+ 8002324:	d0a00603 	ldbu	r2,-32744(gp)
  8002328:	10803fcc 	andi	r2,r2,255
  800232c:	10803c0c 	andi	r2,r2,240
  8002330:	10c00820 	cmpeqi	r3,r2,32
@@ -4349,7 +4349,7 @@ void USB_Task( void )
         /* Detached state - when nothing is connected to ( or just disconnected from) USB bus   */
         case( USB_STATE_DETACHED ):
             switch( usb_task_state ) {
- 800236c:	d0a00703 	ldbu	r2,-32740(gp)
+ 800236c:	d0a00603 	ldbu	r2,-32744(gp)
  8002370:	10803fcc 	andi	r2,r2,255
  8002374:	10c000e0 	cmpeqi	r3,r2,3
  8002378:	1800091e 	bne	r3,zero,80023a0 <USB_Task+0x90>
@@ -4373,7 +4373,7 @@ void USB_Task( void )
  8002390:	80022780 	call	8002278 <USB_init>
                     usb_task_state = USB_DETACHED_SUBSTATE_WAIT_FOR_DEVICE;
  8002394:	008000c4 	movi	r2,3
- 8002398:	d0a00705 	stb	r2,-32740(gp)
+ 8002398:	d0a00605 	stb	r2,-32744(gp)
                     break;
  800239c:	00000506 	br	80023b4 <USB_Task+0xa4>
                 case( USB_DETACHED_SUBSTATE_WAIT_FOR_DEVICE ):
@@ -4394,7 +4394,7 @@ void USB_Task( void )
             /**/
         case( USB_STATE_ATTACHED ):                     //prepare for enumeration
             switch( usb_task_state ) {
- 80023b8:	d0a00703 	ldbu	r2,-32740(gp)
+ 80023b8:	d0a00603 	ldbu	r2,-32744(gp)
  80023bc:	10803fcc 	andi	r2,r2,255
  80023c0:	10bffc04 	addi	r2,r2,-16
  80023c4:	10c001a8 	cmpgeui	r3,r2,6
@@ -4417,7 +4417,7 @@ void USB_Task( void )
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 {
   return _alt_nticks;
- 80023fc:	d0a6f817 	ldw	r2,-25632(gp)
+ 80023fc:	d0a6f617 	ldw	r2,-25640(gp)
                 case( USB_STATE_ATTACHED ):
                     usb_delay = (alt_nticks()*1000)/alt_ticks_per_second() + 200;           //initial settle 200ms
  8002400:	0140fa04 	movi	r5,1000
@@ -4430,15 +4430,15 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 {
   return _alt_tick_rate;
- 8002410:	d0a6f717 	ldw	r2,-25636(gp)
+ 8002410:	d0a6f517 	ldw	r2,-25644(gp)
  8002414:	100b883a 	mov	r5,r2
  8002418:	1809883a 	mov	r4,r3
  800241c:	8002c540 	call	8002c54 <__udivsi3>
  8002420:	10803204 	addi	r2,r2,200
- 8002424:	d0a6eb15 	stw	r2,-25684(gp)
+ 8002424:	d0a6e915 	stw	r2,-25692(gp)
                     usb_task_state = USB_ATTACHED_SUBSTATE_SETTLE;
  8002428:	00800444 	movi	r2,17
- 800242c:	d0a00705 	stb	r2,-32740(gp)
+ 800242c:	d0a00605 	stb	r2,-32744(gp)
                     break;//case( USB_STATE_ATTACHED )
  8002430:	0000d206 	br	800277c <USB_Task+0x46c>
  * alt_nticks() returns the elapsed number of system clock ticks since reset.
@@ -4447,7 +4447,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 {
   return _alt_nticks;
- 8002434:	d0a6f817 	ldw	r2,-25632(gp)
+ 8002434:	d0a6f617 	ldw	r2,-25640(gp)
                 case( USB_ATTACHED_SUBSTATE_SETTLE ):   //waiting for settle timer to expire
                     if( (alt_nticks()*1000)/alt_ticks_per_second() > usb_delay ) {
  8002438:	0140fa04 	movi	r5,1000
@@ -4460,16 +4460,16 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 {
   return _alt_tick_rate;
- 8002448:	d0a6f717 	ldw	r2,-25636(gp)
+ 8002448:	d0a6f517 	ldw	r2,-25644(gp)
  800244c:	100b883a 	mov	r5,r2
  8002450:	1809883a 	mov	r4,r3
  8002454:	8002c540 	call	8002c54 <__udivsi3>
  8002458:	1007883a 	mov	r3,r2
- 800245c:	d0a6eb17 	ldw	r2,-25684(gp)
+ 800245c:	d0a6e917 	ldw	r2,-25692(gp)
  8002460:	10c0c32e 	bgeu	r2,r3,8002770 <USB_Task+0x460>
                         usb_task_state = USB_ATTACHED_SUBSTATE_RESET_DEVICE;
  8002464:	00800484 	movi	r2,18
- 8002468:	d0a00705 	stb	r2,-32740(gp)
+ 8002468:	d0a00605 	stb	r2,-32744(gp)
                     }
                     break;//case( USB_ATTACHED_SUBSTATE_SETTLE )
  800246c:	0000c006 	br	8002770 <USB_Task+0x460>
@@ -4484,7 +4484,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  8002484:	800160c0 	call	800160c <MAXreg_wr>
                     usb_task_state = USB_ATTACHED_SUBSTATE_WAIT_RESET_COMPLETE;
  8002488:	008004c4 	movi	r2,19
- 800248c:	d0a00705 	stb	r2,-32740(gp)
+ 800248c:	d0a00605 	stb	r2,-32744(gp)
                     break;//case( USB_ATTACHED_SUBSTATE_RESET_DEVICE )
  8002490:	0000ba06 	br	800277c <USB_Task+0x46c>
                 case( USB_ATTACHED_SUBSTATE_WAIT_RESET_COMPLETE ):                  //wait for bus reset and first SOF
@@ -4506,7 +4506,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  80024c4:	800160c0 	call	800160c <MAXreg_wr>
                         usb_task_state = USB_ATTACHED_SUBSTATE_WAIT_SOF;
  80024c8:	00800504 	movi	r2,20
- 80024cc:	d0a00705 	stb	r2,-32740(gp)
+ 80024cc:	d0a00605 	stb	r2,-32744(gp)
                     }
                     break;//case( USB_ATTACHED_SUBSTATE_WAIT_RESET_COMPLETE )
  80024d0:	0000a906 	br	8002778 <USB_Task+0x468>
@@ -4516,14 +4516,14 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  80024d8:	80017500 	call	8001750 <MAXreg_rd>
                         usb_task_state = USB_ATTACHED_SUBSTATE_GET_DEVICE_DESCRIPTOR_SIZE;
  80024dc:	00800544 	movi	r2,21
- 80024e0:	d0a00705 	stb	r2,-32740(gp)
+ 80024e0:	d0a00605 	stb	r2,-32744(gp)
                     }
                     break;//case( USB_ATTACHED_SUBSTATE_WAIT_SOF )
  80024e4:	0000a506 	br	800277c <USB_Task+0x46c>
                 case( USB_ATTACHED_SUBSTATE_GET_DEVICE_DESCRIPTOR_SIZE ):   //send request for first 8 bytes of device descriptor
                     devtable[ 0 ].epinfo->MaxPktSize = 0x0008;             //fill max packet size with minimum allowed
  80024e8:	00820074 	movhi	r2,2049
- 80024ec:	10997c04 	addi	r2,r2,26096
+ 80024ec:	10997a04 	addi	r2,r2,26088
  80024f0:	10800017 	ldw	r2,0(r2)
  80024f4:	00c00204 	movi	r3,8
  80024f8:	10c0008d 	sth	r3,2(r2)
@@ -4547,7 +4547,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  8002538:	1000861e 	bne	r2,zero,8002754 <USB_Task+0x444>
                         devtable[ 0 ].epinfo->MaxPktSize = buf.bMaxPacketSize0;
  800253c:	00820074 	movhi	r2,2049
- 8002540:	10997c04 	addi	r2,r2,26096
+ 8002540:	10997a04 	addi	r2,r2,26088
  8002544:	10800017 	ldw	r2,0(r2)
  8002548:	e0ffbbc3 	ldbu	r3,-273(fp)
  800254c:	18c03fcc 	andi	r3,r3,255
@@ -4697,7 +4697,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                 		}
                         usb_task_state = USB_STATE_ADDRESSING;
  8002748:	00800804 	movi	r2,32
- 800274c:	d0a00705 	stb	r2,-32740(gp)
+ 800274c:	d0a00605 	stb	r2,-32744(gp)
                     else {
                         usb_error = rcode;
                         last_usb_task_state = usb_task_state;
@@ -4712,13 +4712,13 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                     else {
                         usb_error = rcode;
  8002754:	e0bfb983 	ldbu	r2,-282(fp)
- 8002758:	d0a6ec45 	stb	r2,-25679(gp)
+ 8002758:	d0a6ea45 	stb	r2,-25687(gp)
                         last_usb_task_state = usb_task_state;
- 800275c:	d0a00703 	ldbu	r2,-32740(gp)
- 8002760:	d0a6ea05 	stb	r2,-25688(gp)
+ 800275c:	d0a00603 	ldbu	r2,-32744(gp)
+ 8002760:	d0a6e805 	stb	r2,-25696(gp)
                         usb_task_state = USB_STATE_ERROR;
  8002764:	00bfffc4 	movi	r2,-1
- 8002768:	d0a00705 	stb	r2,-32740(gp)
+ 8002768:	d0a00605 	stb	r2,-32744(gp)
                     }
                     break;//case( USB_ATTACHED_SUBSTATE_GET_DEVICE_DESCRIPTOR_SIZE ):
  800276c:	00000306 	br	800277c <USB_Task+0x46c>
@@ -4752,7 +4752,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                 if( devtable[ i ].epinfo == NULL ) {
  800278c:	e0ffb903 	ldbu	r3,-284(fp)
  8002790:	00820074 	movhi	r2,2049
- 8002794:	10997c04 	addi	r2,r2,26096
+ 8002794:	10997a04 	addi	r2,r2,26088
  8002798:	180690fa 	slli	r3,r3,3
  800279c:	10c5883a 	add	r2,r2,r3
  80027a0:	10800017 	ldw	r2,0(r2)
@@ -4760,10 +4760,10 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                     devtable[ i ].epinfo = devtable[ 0 ].epinfo;        //set correct MaxPktSize
  80027a8:	e13fb903 	ldbu	r4,-284(fp)
  80027ac:	00820074 	movhi	r2,2049
- 80027b0:	10997c04 	addi	r2,r2,26096
+ 80027b0:	10997a04 	addi	r2,r2,26088
  80027b4:	10c00017 	ldw	r3,0(r2)
  80027b8:	00820074 	movhi	r2,2049
- 80027bc:	10997c04 	addi	r2,r2,26096
+ 80027bc:	10997a04 	addi	r2,r2,26088
  80027c0:	200890fa 	slli	r4,r4,3
  80027c4:	1105883a 	add	r2,r2,r4
  80027c8:	10c00015 	stw	r3,0(r2)
@@ -4786,10 +4786,10 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  8002800:	1000051e 	bne	r2,zero,8002818 <USB_Task+0x508>
                         tmp_addr = i;
  8002804:	e0bfb903 	ldbu	r2,-284(fp)
- 8002808:	d0a6ec05 	stb	r2,-25680(gp)
+ 8002808:	d0a6ea05 	stb	r2,-25688(gp)
                         usb_task_state = USB_STATE_CONFIGURING;
  800280c:	00800c04 	movi	r2,48
- 8002810:	d0a00705 	stb	r2,-32740(gp)
+ 8002810:	d0a00605 	stb	r2,-32744(gp)
                     else {
                         usb_error = rcode;          //set address error
                         last_usb_task_state = usb_task_state;
@@ -4804,13 +4804,13 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                     else {
                         usb_error = rcode;          //set address error
  8002818:	e0bfb983 	ldbu	r2,-282(fp)
- 800281c:	d0a6ec45 	stb	r2,-25679(gp)
+ 800281c:	d0a6ea45 	stb	r2,-25687(gp)
                         last_usb_task_state = usb_task_state;
- 8002820:	d0a00703 	ldbu	r2,-32740(gp)
- 8002824:	d0a6ea05 	stb	r2,-25688(gp)
+ 8002820:	d0a00603 	ldbu	r2,-32744(gp)
+ 8002824:	d0a6e805 	stb	r2,-25696(gp)
                         usb_task_state = USB_STATE_ERROR;
  8002828:	00bfffc4 	movi	r2,-1
- 800282c:	d0a00705 	stb	r2,-32740(gp)
+ 800282c:	d0a00605 	stb	r2,-32744(gp)
                     }
                     break;  //break if address assigned or error occurred during address assignment attempt
  8002830:	00000606 	br	800284c <USB_Task+0x53c>
@@ -4832,19 +4832,19 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                 }
             }
             if( usb_task_state == USB_STATE_ADDRESSING ) {
- 800284c:	d0a00703 	ldbu	r2,-32740(gp)
+ 800284c:	d0a00603 	ldbu	r2,-32744(gp)
  8002850:	10803fcc 	andi	r2,r2,255
  8002854:	10800818 	cmpnei	r2,r2,32
  8002858:	1000341e 	bne	r2,zero,800292c <USB_Task+0x61c>
                 usb_error = 0xfe;
  800285c:	00bfff84 	movi	r2,-2
- 8002860:	d0a6ec45 	stb	r2,-25679(gp)
+ 8002860:	d0a6ea45 	stb	r2,-25687(gp)
                 last_usb_task_state = usb_task_state;
- 8002864:	d0a00703 	ldbu	r2,-32740(gp)
- 8002868:	d0a6ea05 	stb	r2,-25688(gp)
+ 8002864:	d0a00603 	ldbu	r2,-32744(gp)
+ 8002868:	d0a6e805 	stb	r2,-25696(gp)
                 usb_task_state = USB_STATE_ERROR;
  800286c:	00bfffc4 	movi	r2,-1
- 8002870:	d0a00705 	stb	r2,-32740(gp)
+ 8002870:	d0a00605 	stb	r2,-32744(gp)
             }
             break;//case ( USB_STATE_ADDRESSING )
  8002874:	00002d06 	br	800292c <USB_Task+0x61c>
@@ -4862,7 +4862,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  8002894:	8002d100 	call	8002d10 <__mulsi3>
  8002898:	8085883a 	add	r2,r16,r2
  800289c:	10800017 	ldw	r2,0(r2)
- 80028a0:	d0e6ec03 	ldbu	r3,-25680(gp)
+ 80028a0:	d0e6ea03 	ldbu	r3,-25688(gp)
  80028a4:	18c03fcc 	andi	r3,r3,255
  80028a8:	000b883a 	mov	r5,zero
  80028ac:	1809883a 	mov	r4,r3
@@ -4874,7 +4874,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
  80028c0:	1000031e 	bne	r2,zero,80028d0 <USB_Task+0x5c0>
 			        usb_task_state = USB_STATE_RUNNING;
  80028c4:	00801004 	movi	r2,64
- 80028c8:	d0a00705 	stb	r2,-32740(gp)
+ 80028c8:	d0a00605 	stb	r2,-32744(gp)
                     break;
  80028cc:	00000606 	br	80028e8 <USB_Task+0x5d8>
                 usb_task_state = USB_STATE_ERROR;
@@ -4895,19 +4895,19 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
                 }
             }
             if( usb_task_state == USB_STATE_CONFIGURING ) {
- 80028e8:	d0a00703 	ldbu	r2,-32740(gp)
+ 80028e8:	d0a00603 	ldbu	r2,-32744(gp)
  80028ec:	10803fcc 	andi	r2,r2,255
  80028f0:	10800c18 	cmpnei	r2,r2,48
  80028f4:	10000f1e 	bne	r2,zero,8002934 <USB_Task+0x624>
                 usb_error = 0xfd;
  80028f8:	00bfff44 	movi	r2,-3
- 80028fc:	d0a6ec45 	stb	r2,-25679(gp)
+ 80028fc:	d0a6ea45 	stb	r2,-25687(gp)
                 last_usb_task_state = usb_task_state;
- 8002900:	d0a00703 	ldbu	r2,-32740(gp)
- 8002904:	d0a6ea05 	stb	r2,-25688(gp)
+ 8002900:	d0a00603 	ldbu	r2,-32744(gp)
+ 8002904:	d0a6e805 	stb	r2,-25696(gp)
                 usb_task_state = USB_STATE_ERROR;
  8002908:	00bfffc4 	movi	r2,-1
- 800290c:	d0a00705 	stb	r2,-32740(gp)
+ 800290c:	d0a00605 	stb	r2,-32744(gp)
             }
             break;//( USB_STATE_CONFIGURING )
  8002910:	00000806 	br	8002934 <USB_Task+0x624>
@@ -5089,7 +5089,7 @@ BYTE GetUsbTaskState( void )
  8002a84:	df000015 	stw	fp,0(sp)
  8002a88:	d839883a 	mov	fp,sp
     return( usb_task_state );
- 8002a8c:	d0a00703 	ldbu	r2,-32740(gp)
+ 8002a8c:	d0a00603 	ldbu	r2,-32744(gp)
 }
  8002a90:	e037883a 	mov	sp,fp
  8002a94:	df000017 	ldw	fp,0(sp)
@@ -5109,7 +5109,7 @@ DEV_RECORD* GetDevtable( BYTE index )
  8002ab4:	e0bfff03 	ldbu	r2,-4(fp)
  8002ab8:	100690fa 	slli	r3,r2,3
  8002abc:	00820074 	movhi	r2,2049
- 8002ac0:	10997c04 	addi	r2,r2,26096
+ 8002ac0:	10997a04 	addi	r2,r2,26088
  8002ac4:	1885883a 	add	r2,r3,r2
 }
  8002ac8:	e037883a 	mov	sp,fp
@@ -5321,7 +5321,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  8002d74:	d9800215 	stw	r6,8(sp)
  8002d78:	d9c00315 	stw	r7,12(sp)
  8002d7c:	00820074 	movhi	r2,2049
- 8002d80:	10923604 	addi	r2,r2,18648
+ 8002d80:	10923504 	addi	r2,r2,18644
  8002d84:	10800017 	ldw	r2,0(r2)
  8002d88:	200b883a 	mov	r5,r4
  8002d8c:	d9800104 	addi	r6,sp,4
@@ -5337,7 +5337,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08002dac <putchar>:
  8002dac:	00820074 	movhi	r2,2049
- 8002db0:	10923604 	addi	r2,r2,18648
+ 8002db0:	10923504 	addi	r2,r2,18644
  8002db4:	200b883a 	mov	r5,r4
  8002db8:	11000017 	ldw	r4,0(r2)
  8002dbc:	21800217 	ldw	r6,8(r4)
@@ -5395,7 +5395,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08002e84 <puts>:
  8002e84:	00820074 	movhi	r2,2049
- 8002e88:	10923604 	addi	r2,r2,18648
+ 8002e88:	10923504 	addi	r2,r2,18644
  8002e8c:	200b883a 	mov	r5,r4
  8002e90:	11000017 	ldw	r4,0(r2)
  8002e94:	8002dc41 	jmpi	8002dc4 <_puts_r>
@@ -7703,7 +7703,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08005274 <__vfprintf_internal>:
  8005274:	00820074 	movhi	r2,2049
- 8005278:	10923604 	addi	r2,r2,18648
+ 8005278:	10923504 	addi	r2,r2,18644
  800527c:	300f883a 	mov	r7,r6
  8005280:	280d883a 	mov	r6,r5
  8005284:	200b883a 	mov	r5,r4
@@ -7762,7 +7762,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 0800534c <__swsetup_r>:
  800534c:	00820074 	movhi	r2,2049
  8005350:	defffd04 	addi	sp,sp,-12
- 8005354:	10923604 	addi	r2,r2,18648
+ 8005354:	10923504 	addi	r2,r2,18644
  8005358:	dc400115 	stw	r17,4(sp)
  800535c:	2023883a 	mov	r17,r4
  8005360:	11000017 	ldw	r4,0(r2)
@@ -9595,12 +9595,12 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 08006fc8 <fflush>:
  8006fc8:	20000526 	beq	r4,zero,8006fe0 <fflush+0x18>
  8006fcc:	00820074 	movhi	r2,2049
- 8006fd0:	10923604 	addi	r2,r2,18648
+ 8006fd0:	10923504 	addi	r2,r2,18644
  8006fd4:	200b883a 	mov	r5,r4
  8006fd8:	11000017 	ldw	r4,0(r2)
  8006fdc:	8006f6c1 	jmpi	8006f6c <_fflush_r>
  8006fe0:	00820074 	movhi	r2,2049
- 8006fe4:	10923504 	addi	r2,r2,18644
+ 8006fe4:	10923404 	addi	r2,r2,18640
  8006fe8:	11000017 	ldw	r4,0(r2)
  8006fec:	01420034 	movhi	r5,2048
  8006ff0:	295bdb04 	addi	r5,r5,28524
@@ -9760,7 +9760,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  8007228:	defffb04 	addi	sp,sp,-20
  800722c:	dc000015 	stw	r16,0(sp)
  8007230:	04020074 	movhi	r16,2049
- 8007234:	84123504 	addi	r16,r16,18644
+ 8007234:	84123404 	addi	r16,r16,18640
  8007238:	dcc00315 	stw	r19,12(sp)
  800723c:	2027883a 	mov	r19,r4
  8007240:	81000017 	ldw	r4,0(r16)
@@ -9830,7 +9830,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08007340 <_cleanup>:
  8007340:	00820074 	movhi	r2,2049
- 8007344:	10923504 	addi	r2,r2,18644
+ 8007344:	10923404 	addi	r2,r2,18640
  8007348:	11000017 	ldw	r4,0(r2)
  800734c:	01420074 	movhi	r5,2049
  8007350:	29707104 	addi	r5,r5,-15932
@@ -9856,7 +9856,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08007378 <__fp_lock_all>:
  8007378:	00820074 	movhi	r2,2049
- 800737c:	10923604 	addi	r2,r2,18648
+ 800737c:	10923504 	addi	r2,r2,18644
  8007380:	11000017 	ldw	r4,0(r2)
  8007384:	01420034 	movhi	r5,2048
  8007388:	295c6a04 	addi	r5,r5,29096
@@ -9864,7 +9864,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08007390 <__fp_unlock_all>:
  8007390:	00820074 	movhi	r2,2049
- 8007394:	10923604 	addi	r2,r2,18648
+ 8007394:	10923504 	addi	r2,r2,18644
  8007398:	11000017 	ldw	r4,0(r2)
  800739c:	01420034 	movhi	r5,2048
  80073a0:	295bfe04 	addi	r5,r5,28664
@@ -9915,7 +9915,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800744c:	00ffffc4 	movi	r3,-1
  8007450:	10c00d26 	beq	r2,r3,8007488 <_malloc_trim_r+0xe0>
  8007454:	00c20074 	movhi	r3,2049
- 8007458:	18d93204 	addi	r3,r3,25800
+ 8007458:	18d93004 	addi	r3,r3,25792
  800745c:	18800017 	ldw	r2,0(r3)
  8007460:	99000217 	ldw	r4,8(r19)
  8007464:	8c23c83a 	sub	r17,r17,r16
@@ -9935,13 +9935,13 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800749c:	1107c83a 	sub	r3,r2,r4
  80074a0:	28ffdd0e 	bge	r5,r3,8007418 <__alt_data_end+0xfc007418>
  80074a4:	01420074 	movhi	r5,2049
- 80074a8:	29523804 	addi	r5,r5,18656
+ 80074a8:	29523704 	addi	r5,r5,18652
  80074ac:	29400017 	ldw	r5,0(r5)
  80074b0:	18c00054 	ori	r3,r3,1
  80074b4:	20c00115 	stw	r3,4(r4)
  80074b8:	00c20074 	movhi	r3,2049
  80074bc:	1145c83a 	sub	r2,r2,r5
- 80074c0:	18d93204 	addi	r3,r3,25800
+ 80074c0:	18d93004 	addi	r3,r3,25792
  80074c4:	18800015 	stw	r2,0(r3)
  80074c8:	003fd306 	br	8007418 <__alt_data_end+0xfc007418>
 
@@ -10066,12 +10066,12 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  80076a0:	10c00054 	ori	r3,r2,1
  80076a4:	30c00115 	stw	r3,4(r6)
  80076a8:	00c20074 	movhi	r3,2049
- 80076ac:	18d23904 	addi	r3,r3,18660
+ 80076ac:	18d23804 	addi	r3,r3,18656
  80076b0:	18c00017 	ldw	r3,0(r3)
  80076b4:	21800215 	stw	r6,8(r4)
  80076b8:	10ffc036 	bltu	r2,r3,80075bc <__alt_data_end+0xfc0075bc>
  80076bc:	00820074 	movhi	r2,2049
- 80076c0:	10991f04 	addi	r2,r2,25724
+ 80076c0:	10991d04 	addi	r2,r2,25716
  80076c4:	11400017 	ldw	r5,0(r2)
  80076c8:	8809883a 	mov	r4,r17
  80076cc:	80073a80 	call	80073a8 <_malloc_trim_r>
@@ -10593,7 +10593,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08007eb4 <__locale_mb_cur_max>:
  8007eb4:	00820074 	movhi	r2,2049
- 8007eb8:	10923704 	addi	r2,r2,18652
+ 8007eb8:	10923604 	addi	r2,r2,18648
  8007ebc:	10800017 	ldw	r2,0(r2)
  8007ec0:	f800283a 	ret
 
@@ -10613,7 +10613,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 08007ee4 <setlocale>:
  8007ee4:	00820074 	movhi	r2,2049
- 8007ee8:	10923604 	addi	r2,r2,18648
+ 8007ee8:	10923504 	addi	r2,r2,18644
  8007eec:	280d883a 	mov	r6,r5
  8007ef0:	200b883a 	mov	r5,r4
  8007ef4:	11000017 	ldw	r4,0(r2)
@@ -10949,8 +10949,8 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  8008404:	18805d16 	blt	r3,r2,800857c <_malloc_r+0x4b8>
  8008408:	05c20074 	movhi	r23,2049
  800840c:	00820074 	movhi	r2,2049
- 8008410:	10991f04 	addi	r2,r2,25724
- 8008414:	bdd23804 	addi	r23,r23,18656
+ 8008410:	10991d04 	addi	r2,r2,25716
+ 8008414:	bdd23704 	addi	r23,r23,18652
  8008418:	15400017 	ldw	r21,0(r2)
  800841c:	b8c00017 	ldw	r3,0(r23)
  8008420:	00bfffc4 	movi	r2,-1
@@ -10970,7 +10970,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  8008458:	a080e826 	beq	r20,r2,80087fc <_malloc_r+0x738>
  800845c:	a180a636 	bltu	r20,r6,80086f8 <_malloc_r+0x634>
  8008460:	07020074 	movhi	fp,2049
- 8008464:	e7193204 	addi	fp,fp,25800
+ 8008464:	e7193004 	addi	fp,fp,25792
  8008468:	e0800017 	ldw	r2,0(fp)
  800846c:	a887883a 	add	r3,r21,r2
  8008470:	e0c00015 	stw	r3,0(fp)
@@ -11019,12 +11019,12 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800851c:	21400215 	stw	r5,8(r4)
  8008520:	3080cd36 	bltu	r6,r2,8008858 <_malloc_r+0x794>
  8008524:	00820074 	movhi	r2,2049
- 8008528:	10991e04 	addi	r2,r2,25720
+ 8008528:	10991c04 	addi	r2,r2,25712
  800852c:	11000017 	ldw	r4,0(r2)
  8008530:	20c0012e 	bgeu	r4,r3,8008538 <_malloc_r+0x474>
  8008534:	10c00015 	stw	r3,0(r2)
  8008538:	00820074 	movhi	r2,2049
- 800853c:	10991d04 	addi	r2,r2,25716
+ 800853c:	10991b04 	addi	r2,r2,25708
  8008540:	11000017 	ldw	r4,0(r2)
  8008544:	9c000217 	ldw	r16,8(r19)
  8008548:	20c0012e 	bgeu	r4,r3,8008550 <_malloc_r+0x48c>
@@ -11217,7 +11217,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  8008834:	01c01f84 	movi	r7,126
  8008838:	003e4006 	br	800813c <__alt_data_end+0xfc00813c>
  800883c:	00820074 	movhi	r2,2049
- 8008840:	10923804 	addi	r2,r2,18656
+ 8008840:	10923704 	addi	r2,r2,18652
  8008844:	15000015 	stw	r20,0(r2)
  8008848:	003f1106 	br	8008490 <__alt_data_end+0xfc008490>
  800884c:	00800044 	movi	r2,1
@@ -11227,7 +11227,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800885c:	9009883a 	mov	r4,r18
  8008860:	80074cc0 	call	80074cc <_free_r>
  8008864:	00820074 	movhi	r2,2049
- 8008868:	10993204 	addi	r2,r2,25800
+ 8008868:	10993004 	addi	r2,r2,25792
  800886c:	10c00017 	ldw	r3,0(r2)
  8008870:	003f2c06 	br	8008524 <__alt_data_end+0xfc008524>
  8008874:	00c05504 	movi	r3,340
@@ -12715,7 +12715,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 08009ed8 <putc>:
  8009ed8:	00820074 	movhi	r2,2049
  8009edc:	defffc04 	addi	sp,sp,-16
- 8009ee0:	10923604 	addi	r2,r2,18648
+ 8009ee0:	10923504 	addi	r2,r2,18644
  8009ee4:	dc000115 	stw	r16,4(sp)
  8009ee8:	14000017 	ldw	r16,0(r2)
  8009eec:	dc400215 	stw	r17,8(sp)
@@ -13147,7 +13147,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800a57c:	dc000015 	stw	r16,0(sp)
  800a580:	04020074 	movhi	r16,2049
  800a584:	dc400115 	stw	r17,4(sp)
- 800a588:	84192004 	addi	r16,r16,25728
+ 800a588:	84191e04 	addi	r16,r16,25720
  800a58c:	2023883a 	mov	r17,r4
  800a590:	2809883a 	mov	r4,r5
  800a594:	dfc00215 	stw	ra,8(sp)
@@ -14735,7 +14735,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 0800be04 <__vfiprintf_internal>:
  800be04:	00820074 	movhi	r2,2049
- 800be08:	10923604 	addi	r2,r2,18648
+ 800be08:	10923504 	addi	r2,r2,18644
  800be0c:	300f883a 	mov	r7,r6
  800be10:	280d883a 	mov	r6,r5
  800be14:	200b883a 	mov	r5,r4
@@ -14875,7 +14875,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 0800c01c <__swbuf>:
  800c01c:	00820074 	movhi	r2,2049
- 800c020:	10923604 	addi	r2,r2,18648
+ 800c020:	10923504 	addi	r2,r2,18644
  800c024:	280d883a 	mov	r6,r5
  800c028:	200b883a 	mov	r5,r4
  800c02c:	11000017 	ldw	r4,0(r2)
@@ -14888,7 +14888,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c040:	04020074 	movhi	r16,2049
  800c044:	dc400115 	stw	r17,4(sp)
  800c048:	300b883a 	mov	r5,r6
- 800c04c:	84192004 	addi	r16,r16,25728
+ 800c04c:	84191e04 	addi	r16,r16,25720
  800c050:	2023883a 	mov	r17,r4
  800c054:	380d883a 	mov	r6,r7
  800c058:	1009883a 	mov	r4,r2
@@ -14912,7 +14912,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c098:	dc000015 	stw	r16,0(sp)
  800c09c:	04020074 	movhi	r16,2049
  800c0a0:	dc400115 	stw	r17,4(sp)
- 800c0a4:	84192004 	addi	r16,r16,25728
+ 800c0a4:	84191e04 	addi	r16,r16,25720
  800c0a8:	2023883a 	mov	r17,r4
  800c0ac:	2809883a 	mov	r4,r5
  800c0b0:	dfc00215 	stw	ra,8(sp)
@@ -15051,7 +15051,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 
 0800c2b4 <fclose>:
  800c2b4:	00820074 	movhi	r2,2049
- 800c2b8:	10923604 	addi	r2,r2,18648
+ 800c2b8:	10923504 	addi	r2,r2,18644
  800c2bc:	200b883a 	mov	r5,r4
  800c2c0:	11000017 	ldw	r4,0(r2)
  800c2c4:	800c1c41 	jmpi	800c1c4 <_fclose_r>
@@ -15161,7 +15161,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 0800c450 <fputwc>:
  800c450:	00820074 	movhi	r2,2049
  800c454:	defffc04 	addi	sp,sp,-16
- 800c458:	10923604 	addi	r2,r2,18648
+ 800c458:	10923504 	addi	r2,r2,18644
  800c45c:	dc000115 	stw	r16,4(sp)
  800c460:	14000017 	ldw	r16,0(r2)
  800c464:	dc400215 	stw	r17,8(sp)
@@ -15198,7 +15198,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c4d8:	dc000015 	stw	r16,0(sp)
  800c4dc:	04020074 	movhi	r16,2049
  800c4e0:	dc400115 	stw	r17,4(sp)
- 800c4e4:	84192004 	addi	r16,r16,25728
+ 800c4e4:	84191e04 	addi	r16,r16,25720
  800c4e8:	2023883a 	mov	r17,r4
  800c4ec:	300b883a 	mov	r5,r6
  800c4f0:	1009883a 	mov	r4,r2
@@ -15222,7 +15222,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c530:	dc000015 	stw	r16,0(sp)
  800c534:	04020074 	movhi	r16,2049
  800c538:	dc400115 	stw	r17,4(sp)
- 800c53c:	84192004 	addi	r16,r16,25728
+ 800c53c:	84191e04 	addi	r16,r16,25720
  800c540:	2023883a 	mov	r17,r4
  800c544:	2809883a 	mov	r4,r5
  800c548:	dfc00215 	stw	ra,8(sp)
@@ -15247,7 +15247,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c58c:	04020074 	movhi	r16,2049
  800c590:	dc400115 	stw	r17,4(sp)
  800c594:	300b883a 	mov	r5,r6
- 800c598:	84192004 	addi	r16,r16,25728
+ 800c598:	84191e04 	addi	r16,r16,25720
  800c59c:	2023883a 	mov	r17,r4
  800c5a0:	380d883a 	mov	r6,r7
  800c5a4:	1009883a 	mov	r4,r2
@@ -15273,7 +15273,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c5ec:	04020074 	movhi	r16,2049
  800c5f0:	dc400115 	stw	r17,4(sp)
  800c5f4:	300b883a 	mov	r5,r6
- 800c5f8:	84192004 	addi	r16,r16,25728
+ 800c5f8:	84191e04 	addi	r16,r16,25720
  800c5fc:	2023883a 	mov	r17,r4
  800c600:	380d883a 	mov	r6,r7
  800c604:	1009883a 	mov	r4,r2
@@ -15298,7 +15298,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c648:	dc800815 	stw	r18,32(sp)
  800c64c:	dc400715 	stw	r17,28(sp)
  800c650:	dc000615 	stw	r16,24(sp)
- 800c654:	10923a04 	addi	r2,r2,18664
+ 800c654:	10923904 	addi	r2,r2,18660
  800c658:	dfc00915 	stw	ra,36(sp)
  800c65c:	2021883a 	mov	r16,r4
  800c660:	3823883a 	mov	r17,r7
@@ -15338,7 +15338,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c6e0:	00820074 	movhi	r2,2049
  800c6e4:	dc800615 	stw	r18,24(sp)
  800c6e8:	dc400515 	stw	r17,20(sp)
- 800c6ec:	10923604 	addi	r2,r2,18648
+ 800c6ec:	10923504 	addi	r2,r2,18644
  800c6f0:	dfc00915 	stw	ra,36(sp)
  800c6f4:	dd000815 	stw	r20,32(sp)
  800c6f8:	dcc00715 	stw	r19,28(sp)
@@ -15347,7 +15347,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c704:	14400017 	ldw	r17,0(r2)
  800c708:	20001926 	beq	r4,zero,800c770 <wcrtomb+0x94>
  800c70c:	00820074 	movhi	r2,2049
- 800c710:	10923a04 	addi	r2,r2,18664
+ 800c710:	10923904 	addi	r2,r2,18660
  800c714:	15000017 	ldw	r20,0(r2)
  800c718:	2021883a 	mov	r16,r4
  800c71c:	2827883a 	mov	r19,r5
@@ -15372,7 +15372,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
  800c768:	dec00a04 	addi	sp,sp,40
  800c76c:	f800283a 	ret
  800c770:	00820074 	movhi	r2,2049
- 800c774:	10923a04 	addi	r2,r2,18664
+ 800c774:	10923904 	addi	r2,r2,18660
  800c778:	14000017 	ldw	r16,0(r2)
  800c77c:	8007ea80 	call	8007ea8 <__locale_charset>
  800c780:	100f883a 	mov	r7,r2
@@ -15400,7 +15400,7 @@ char* ConvUTF8ToStr(BYTE* utf8, BYTE length)
 0800c7cc <_wctomb_r>:
  800c7cc:	00820074 	movhi	r2,2049
  800c7d0:	defff904 	addi	sp,sp,-28
- 800c7d4:	10923a04 	addi	r2,r2,18664
+ 800c7d4:	10923904 	addi	r2,r2,18660
  800c7d8:	dfc00615 	stw	ra,24(sp)
  800c7dc:	dc400515 	stw	r17,20(sp)
  800c7e0:	dc000415 	stw	r16,16(sp)
@@ -18813,12 +18813,12 @@ static ALT_INLINE int* alt_get_errno(void)
  800fc94:	df000015 	stw	fp,0(sp)
  800fc98:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 800fc9c:	d0a01317 	ldw	r2,-32692(gp)
+ 800fc9c:	d0a01217 	ldw	r2,-32696(gp)
  800fca0:	10000326 	beq	r2,zero,800fcb0 <alt_get_errno+0x24>
- 800fca4:	d0a01317 	ldw	r2,-32692(gp)
+ 800fca4:	d0a01217 	ldw	r2,-32696(gp)
  800fca8:	103ee83a 	callr	r2
  800fcac:	00000106 	br	800fcb4 <alt_get_errno+0x28>
- 800fcb0:	d0a6f304 	addi	r2,gp,-25652
+ 800fcb0:	d0a6f104 	addi	r2,gp,-25660
 }
  800fcb4:	e037883a 	mov	sp,fp
  800fcb8:	dfc00117 	ldw	ra,4(sp)
@@ -18952,12 +18952,12 @@ static ALT_INLINE int* alt_get_errno(void)
  800fdd4:	df000015 	stw	fp,0(sp)
  800fdd8:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 800fddc:	d0a01317 	ldw	r2,-32692(gp)
+ 800fddc:	d0a01217 	ldw	r2,-32696(gp)
  800fde0:	10000326 	beq	r2,zero,800fdf0 <alt_get_errno+0x24>
- 800fde4:	d0a01317 	ldw	r2,-32692(gp)
+ 800fde4:	d0a01217 	ldw	r2,-32696(gp)
  800fde8:	103ee83a 	callr	r2
  800fdec:	00000106 	br	800fdf4 <alt_get_errno+0x28>
- 800fdf0:	d0a6f304 	addi	r2,gp,-25652
+ 800fdf0:	d0a6f104 	addi	r2,gp,-25660
 }
  800fdf4:	e037883a 	mov	sp,fp
  800fdf8:	dfc00117 	ldw	ra,4(sp)
@@ -19060,12 +19060,12 @@ static ALT_INLINE int* alt_get_errno(void)
  800fec8:	df000015 	stw	fp,0(sp)
  800fecc:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 800fed0:	d0a01317 	ldw	r2,-32692(gp)
+ 800fed0:	d0a01217 	ldw	r2,-32696(gp)
  800fed4:	10000326 	beq	r2,zero,800fee4 <alt_get_errno+0x24>
- 800fed8:	d0a01317 	ldw	r2,-32692(gp)
+ 800fed8:	d0a01217 	ldw	r2,-32696(gp)
  800fedc:	103ee83a 	callr	r2
  800fee0:	00000106 	br	800fee8 <alt_get_errno+0x28>
- 800fee4:	d0a6f304 	addi	r2,gp,-25652
+ 800fee4:	d0a6f104 	addi	r2,gp,-25660
 }
  800fee8:	e037883a 	mov	sp,fp
  800feec:	dfc00117 	ldw	ra,4(sp)
@@ -19222,11 +19222,11 @@ void alt_load (void)
 
   alt_load_section (&__flash_rwdata_start, 
  8010020:	01820074 	movhi	r6,2049
- 8010024:	31924504 	addi	r6,r6,18708
+ 8010024:	31924404 	addi	r6,r6,18704
  8010028:	01420074 	movhi	r5,2049
  801002c:	294b7604 	addi	r5,r5,11736
  8010030:	01020074 	movhi	r4,2049
- 8010034:	21124504 	addi	r4,r4,18708
+ 8010034:	21124404 	addi	r4,r4,18704
  8010038:	800ffa80 	call	800ffa8 <alt_load_section>
 
   /*
@@ -19283,12 +19283,12 @@ static ALT_INLINE int* alt_get_errno(void)
  801009c:	df000015 	stw	fp,0(sp)
  80100a0:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 80100a4:	d0a01317 	ldw	r2,-32692(gp)
+ 80100a4:	d0a01217 	ldw	r2,-32696(gp)
  80100a8:	10000326 	beq	r2,zero,80100b8 <alt_get_errno+0x24>
- 80100ac:	d0a01317 	ldw	r2,-32692(gp)
+ 80100ac:	d0a01217 	ldw	r2,-32696(gp)
  80100b0:	103ee83a 	callr	r2
  80100b4:	00000106 	br	80100bc <alt_get_errno+0x28>
- 80100b8:	d0a6f304 	addi	r2,gp,-25652
+ 80100b8:	d0a6f104 	addi	r2,gp,-25660
 }
  80100bc:	e037883a 	mov	sp,fp
  80100c0:	dfc00117 	ldw	ra,4(sp)
@@ -19464,9 +19464,9 @@ void alt_main (void)
   main (alt_argc, alt_argv, alt_envp);
 #else
   result = main (alt_argc, alt_argv, alt_envp);
- 80101f8:	d0a6f417 	ldw	r2,-25648(gp)
- 80101fc:	d0e6f517 	ldw	r3,-25644(gp)
- 8010200:	d126f617 	ldw	r4,-25640(gp)
+ 80101f8:	d0a6f217 	ldw	r2,-25656(gp)
+ 80101fc:	d0e6f317 	ldw	r3,-25652(gp)
+ 8010200:	d126f417 	ldw	r4,-25648(gp)
  8010204:	200d883a 	mov	r6,r4
  8010208:	180b883a 	mov	r5,r3
  801020c:	1009883a 	mov	r4,r2
@@ -19527,12 +19527,12 @@ static ALT_INLINE int* alt_get_errno(void)
  8010278:	df000015 	stw	fp,0(sp)
  801027c:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 8010280:	d0a01317 	ldw	r2,-32692(gp)
+ 8010280:	d0a01217 	ldw	r2,-32696(gp)
  8010284:	10000326 	beq	r2,zero,8010294 <alt_get_errno+0x24>
- 8010288:	d0a01317 	ldw	r2,-32692(gp)
+ 8010288:	d0a01217 	ldw	r2,-32696(gp)
  801028c:	103ee83a 	callr	r2
  8010290:	00000106 	br	8010298 <alt_get_errno+0x28>
- 8010294:	d0a6f304 	addi	r2,gp,-25652
+ 8010294:	d0a6f104 	addi	r2,gp,-25660
 }
  8010298:	e037883a 	mov	sp,fp
  801029c:	dfc00117 	ldw	ra,4(sp)
@@ -19737,18 +19737,18 @@ static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE
 
   /* Always return data aligned on a word boundary */
   heap_end = (char *)(((unsigned int)heap_end + 3) & ~3);
- 8010464:	d0a01417 	ldw	r2,-32688(gp)
+ 8010464:	d0a01317 	ldw	r2,-32692(gp)
  8010468:	10c000c4 	addi	r3,r2,3
  801046c:	00bfff04 	movi	r2,-4
  8010470:	1884703a 	and	r2,r3,r2
- 8010474:	d0a01415 	stw	r2,-32688(gp)
+ 8010474:	d0a01315 	stw	r2,-32692(gp)
   if (((heap_end + incr) - __alt_heap_start) > ALT_MAX_HEAP_BYTES) {
     alt_irq_enable_all(context);
     return (caddr_t)-1;
   }
 #else
   if ((heap_end + incr) > __alt_heap_limit) {
- 8010478:	d0e01417 	ldw	r3,-32688(gp)
+ 8010478:	d0e01317 	ldw	r3,-32692(gp)
  801047c:	e0bfff17 	ldw	r2,-4(fp)
  8010480:	1887883a 	add	r3,r3,r2
  8010484:	00830034 	movhi	r2,3072
@@ -19772,13 +19772,13 @@ static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE
 #endif
 
   prev_heap_end = heap_end; 
- 80104a8:	d0a01417 	ldw	r2,-32688(gp)
+ 80104a8:	d0a01317 	ldw	r2,-32692(gp)
  80104ac:	e0bffd15 	stw	r2,-12(fp)
   heap_end += incr; 
- 80104b0:	d0e01417 	ldw	r3,-32688(gp)
+ 80104b0:	d0e01317 	ldw	r3,-32692(gp)
  80104b4:	e0bfff17 	ldw	r2,-4(fp)
  80104b8:	1885883a 	add	r2,r3,r2
- 80104bc:	d0a01415 	stw	r2,-32688(gp)
+ 80104bc:	d0a01315 	stw	r2,-32692(gp)
  80104c0:	e0bffb17 	ldw	r2,-20(fp)
  80104c4:	e0bffc15 	stw	r2,-16(fp)
  80104c8:	e0bffc17 	ldw	r2,-16(fp)
@@ -19892,7 +19892,7 @@ void alt_tick (void)
  801058c:	df000304 	addi	fp,sp,12
   alt_alarm* next;
   alt_alarm* alarm = (alt_alarm*) alt_alarm_list.next;
- 8010590:	d0a01517 	ldw	r2,-32684(gp)
+ 8010590:	d0a01417 	ldw	r2,-32688(gp)
  8010594:	e0bffd15 	stw	r2,-12(fp)
 
   alt_u32    next_callback;
@@ -19900,9 +19900,9 @@ void alt_tick (void)
   /* update the tick counter */
 
   _alt_nticks++;
- 8010598:	d0a6f817 	ldw	r2,-25632(gp)
+ 8010598:	d0a6f617 	ldw	r2,-25640(gp)
  801059c:	10800044 	addi	r2,r2,1
- 80105a0:	d0a6f815 	stw	r2,-25632(gp)
+ 80105a0:	d0a6f615 	stw	r2,-25640(gp)
 
   /* process the registered callbacks */
 
@@ -19923,7 +19923,7 @@ void alt_tick (void)
  80105b8:	10800403 	ldbu	r2,16(r2)
  80105bc:	10803fcc 	andi	r2,r2,255
  80105c0:	10000426 	beq	r2,zero,80105d4 <alt_tick+0x54>
- 80105c4:	d0a6f817 	ldw	r2,-25632(gp)
+ 80105c4:	d0a6f617 	ldw	r2,-25640(gp)
  80105c8:	1000021e 	bne	r2,zero,80105d4 <alt_tick+0x54>
     {
       alarm->rollover = 0;
@@ -19935,7 +19935,7 @@ void alt_tick (void)
     if ((alarm->time <= _alt_nticks) && (alarm->rollover == 0))
  80105d4:	e0bffd17 	ldw	r2,-12(fp)
  80105d8:	10800217 	ldw	r2,8(r2)
- 80105dc:	d0e6f817 	ldw	r3,-25632(gp)
+ 80105dc:	d0e6f617 	ldw	r3,-25640(gp)
  80105e0:	18801d36 	bltu	r3,r2,8010658 <alt_tick+0xd8>
  80105e4:	e0bffd17 	ldw	r2,-12(fp)
  80105e8:	10800403 	ldbu	r2,16(r2)
@@ -19979,7 +19979,7 @@ void alt_tick (void)
         if(alarm->time < _alt_nticks)
  801063c:	e0bffd17 	ldw	r2,-12(fp)
  8010640:	10c00217 	ldw	r3,8(r2)
- 8010644:	d0a6f817 	ldw	r2,-25632(gp)
+ 8010644:	d0a6f617 	ldw	r2,-25640(gp)
  8010648:	1880032e 	bgeu	r3,r2,8010658 <alt_tick+0xd8>
         {
           alarm->rollover = 1;
@@ -19999,7 +19999,7 @@ void alt_tick (void)
 
   while (alarm != (alt_alarm*) &alt_alarm_list)
  8010660:	e0fffd17 	ldw	r3,-12(fp)
- 8010664:	d0a01504 	addi	r2,gp,-32684
+ 8010664:	d0a01404 	addi	r2,gp,-32688
  8010668:	18bfcf1e 	bne	r3,r2,80105a8 <__alt_data_end+0xfc0105a8>
 
   /* 
@@ -20050,12 +20050,12 @@ static ALT_INLINE int* alt_get_errno(void)
  80106c0:	df000015 	stw	fp,0(sp)
  80106c4:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 80106c8:	d0a01317 	ldw	r2,-32692(gp)
+ 80106c8:	d0a01217 	ldw	r2,-32696(gp)
  80106cc:	10000326 	beq	r2,zero,80106dc <alt_get_errno+0x24>
- 80106d0:	d0a01317 	ldw	r2,-32692(gp)
+ 80106d0:	d0a01217 	ldw	r2,-32696(gp)
  80106d4:	103ee83a 	callr	r2
  80106d8:	00000106 	br	80106e0 <alt_get_errno+0x28>
- 80106dc:	d0a6f304 	addi	r2,gp,-25652
+ 80106dc:	d0a6f104 	addi	r2,gp,-25660
 }
  80106e0:	e037883a 	mov	sp,fp
  80106e4:	dfc00117 	ldw	ra,4(sp)
@@ -20187,7 +20187,7 @@ static ALT_INLINE int alt_dev_reg (alt_dev* dev)
   extern alt_llist alt_dev_list;
 
   return alt_dev_llist_insert ((alt_dev_llist*) dev, &alt_dev_list);
- 8010808:	d1601004 	addi	r5,gp,-32704
+ 8010808:	d1600f04 	addi	r5,gp,-32708
  801080c:	e13fff17 	ldw	r4,-4(fp)
  8010810:	80118fc0 	call	80118fc <alt_dev_llist_insert>
 }
@@ -20464,7 +20464,7 @@ void altera_avalon_jtag_uart_init(altera_avalon_jtag_uart_state* sp,
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 {
   return _alt_tick_rate;
- 8010aa0:	d0e6f717 	ldw	r3,-25636(gp)
+ 8010aa0:	d0e6f517 	ldw	r3,-25644(gp)
  8010aa4:	e1fffd17 	ldw	r7,-12(fp)
  8010aa8:	01820074 	movhi	r6,2049
  8010aac:	31833d04 	addi	r6,r6,3316
@@ -20807,7 +20807,7 @@ altera_avalon_jtag_uart_timeout(void* context)
  8010d74:	10c00044 	addi	r3,r2,1
  8010d78:	e0bff917 	ldw	r2,-28(fp)
  8010d7c:	10c00915 	stw	r3,36(r2)
- 8010d80:	d0a6f717 	ldw	r2,-25636(gp)
+ 8010d80:	d0a6f517 	ldw	r2,-25644(gp)
       ALT_FLAG_POST (sp->events, ALT_JTAG_UART_TIMEOUT, OS_FLAG_SET);
     }
   }
@@ -21842,12 +21842,12 @@ void alt_avalon_timer_sc_init (void* base, alt_u32 irq_controller_id,
 static ALT_INLINE int ALT_ALWAYS_INLINE alt_sysclk_init (alt_u32 nticks)
 {
   if (! _alt_tick_rate)
- 80115c8:	d0a6f717 	ldw	r2,-25636(gp)
+ 80115c8:	d0a6f517 	ldw	r2,-25644(gp)
  80115cc:	1000021e 	bne	r2,zero,80115d8 <alt_avalon_timer_sc_init+0x38>
   {
     _alt_tick_rate = nticks;
  80115d0:	e0bffb17 	ldw	r2,-20(fp)
- 80115d4:	d0a6f715 	stw	r2,-25636(gp)
+ 80115d4:	d0a6f515 	stw	r2,-25644(gp)
   
   alt_sysclk_init (freq);
   
@@ -21906,7 +21906,7 @@ int alt_alarm_start (alt_alarm* alarm, alt_u32 nticks,
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_ticks_per_second (void)
 {
   return _alt_tick_rate;
- 801163c:	d0a6f717 	ldw	r2,-25636(gp)
+ 801163c:	d0a6f517 	ldw	r2,-25644(gp)
   
   if (alt_ticks_per_second ())
  8011640:	10003c26 	beq	r2,zero,8011734 <alt_alarm_start+0x118>
@@ -21949,7 +21949,7 @@ static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE
 static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
 {
   return _alt_nticks;
- 8011684:	d0a6f817 	ldw	r2,-25632(gp)
+ 8011684:	d0a6f617 	ldw	r2,-25640(gp)
       
       current_nticks = alt_nticks();
  8011688:	e0bff615 	stw	r2,-40(fp)
@@ -21987,7 +21987,7 @@ static ALT_INLINE alt_u32 ALT_ALWAYS_INLINE alt_nticks (void)
     
       alt_llist_insert (&alt_alarm_list, &alarm->llist);
  80116cc:	e0bffc17 	ldw	r2,-16(fp)
- 80116d0:	d0e01504 	addi	r3,gp,-32684
+ 80116d0:	d0e01404 	addi	r3,gp,-32688
  80116d4:	e0fffa15 	stw	r3,-24(fp)
  80116d8:	e0bffb15 	stw	r2,-20(fp)
  */
@@ -22254,12 +22254,12 @@ static ALT_INLINE int* alt_get_errno(void)
  80118c8:	df000015 	stw	fp,0(sp)
  80118cc:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 80118d0:	d0a01317 	ldw	r2,-32692(gp)
+ 80118d0:	d0a01217 	ldw	r2,-32696(gp)
  80118d4:	10000326 	beq	r2,zero,80118e4 <alt_get_errno+0x24>
- 80118d8:	d0a01317 	ldw	r2,-32692(gp)
+ 80118d8:	d0a01217 	ldw	r2,-32696(gp)
  80118dc:	103ee83a 	callr	r2
  80118e0:	00000106 	br	80118e8 <alt_get_errno+0x28>
- 80118e4:	d0a6f304 	addi	r2,gp,-25652
+ 80118e4:	d0a6f104 	addi	r2,gp,-25660
 }
  80118e8:	e037883a 	mov	sp,fp
  80118ec:	dfc00117 	ldw	ra,4(sp)
@@ -22525,11 +22525,11 @@ static ALT_INLINE int ALT_ALWAYS_INLINE alt_irq_enable (alt_u32 id)
  8011b10:	e0bffa17 	ldw	r2,-24(fp)
  8011b14:	1884983a 	sll	r2,r3,r2
  8011b18:	1007883a 	mov	r3,r2
- 8011b1c:	d0a6f917 	ldw	r2,-25628(gp)
+ 8011b1c:	d0a6f717 	ldw	r2,-25636(gp)
  8011b20:	1884b03a 	or	r2,r3,r2
- 8011b24:	d0a6f915 	stw	r2,-25628(gp)
+ 8011b24:	d0a6f715 	stw	r2,-25636(gp)
   NIOS2_WRITE_IENABLE (alt_irq_active);
- 8011b28:	d0a6f917 	ldw	r2,-25628(gp)
+ 8011b28:	d0a6f717 	ldw	r2,-25636(gp)
  8011b2c:	100170fa 	wrctl	ienable,r2
  8011b30:	e0bffc17 	ldw	r2,-16(fp)
  8011b34:	e0bffd15 	stw	r2,-12(fp)
@@ -22599,11 +22599,11 @@ static ALT_INLINE int ALT_ALWAYS_INLINE alt_irq_disable (alt_u32 id)
  8011b9c:	1884983a 	sll	r2,r3,r2
  8011ba0:	0084303a 	nor	r2,zero,r2
  8011ba4:	1007883a 	mov	r3,r2
- 8011ba8:	d0a6f917 	ldw	r2,-25628(gp)
+ 8011ba8:	d0a6f717 	ldw	r2,-25636(gp)
  8011bac:	1884703a 	and	r2,r3,r2
- 8011bb0:	d0a6f915 	stw	r2,-25628(gp)
+ 8011bb0:	d0a6f715 	stw	r2,-25636(gp)
   NIOS2_WRITE_IENABLE (alt_irq_active);
- 8011bb4:	d0a6f917 	ldw	r2,-25628(gp)
+ 8011bb4:	d0a6f717 	ldw	r2,-25636(gp)
  8011bb8:	100170fa 	wrctl	ienable,r2
  8011bbc:	e0bffc17 	ldw	r2,-16(fp)
  8011bc0:	e0bffd15 	stw	r2,-12(fp)
@@ -22715,7 +22715,7 @@ static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE
 
     alt_irq[id].handler = isr;
  8011c8c:	00820074 	movhi	r2,2049
- 8011c90:	10998e04 	addi	r2,r2,26168
+ 8011c90:	10998c04 	addi	r2,r2,26160
  8011c94:	e0fff817 	ldw	r3,-32(fp)
  8011c98:	180690fa 	slli	r3,r3,3
  8011c9c:	10c5883a 	add	r2,r2,r3
@@ -22723,7 +22723,7 @@ static ALT_INLINE alt_irq_context ALT_ALWAYS_INLINE
  8011ca4:	10c00015 	stw	r3,0(r2)
     alt_irq[id].context = isr_context;
  8011ca8:	00820074 	movhi	r2,2049
- 8011cac:	10998e04 	addi	r2,r2,26168
+ 8011cac:	10998c04 	addi	r2,r2,26160
  8011cb0:	e0fff817 	ldw	r3,-32(fp)
  8011cb4:	180690fa 	slli	r3,r3,3
  8011cb8:	10c5883a 	add	r2,r2,r3
@@ -22902,12 +22902,12 @@ static ALT_INLINE int* alt_get_errno(void)
  8011e88:	df000015 	stw	fp,0(sp)
  8011e8c:	d839883a 	mov	fp,sp
   return ((alt_errno) ? alt_errno() : &errno);
- 8011e90:	d0a01317 	ldw	r2,-32692(gp)
+ 8011e90:	d0a01217 	ldw	r2,-32696(gp)
  8011e94:	10000326 	beq	r2,zero,8011ea4 <alt_get_errno+0x24>
- 8011e98:	d0a01317 	ldw	r2,-32692(gp)
+ 8011e98:	d0a01217 	ldw	r2,-32696(gp)
  8011e9c:	103ee83a 	callr	r2
  8011ea0:	00000106 	br	8011ea8 <alt_get_errno+0x28>
- 8011ea4:	d0a6f304 	addi	r2,gp,-25652
+ 8011ea4:	d0a6f104 	addi	r2,gp,-25660
 }
  8011ea8:	e037883a 	mov	sp,fp
  8011eac:	dfc00117 	ldw	ra,4(sp)
@@ -23008,7 +23008,7 @@ static int alt_file_locked (alt_fd* fd)
  8011f70:	e0bffd17 	ldw	r2,-12(fp)
  8011f74:	10800044 	addi	r2,r2,1
  8011f78:	e0bffd15 	stw	r2,-12(fp)
- 8011f7c:	d0a01217 	ldw	r2,-32696(gp)
+ 8011f7c:	d0a01117 	ldw	r2,-32700(gp)
  8011f80:	1007883a 	mov	r3,r2
  8011f84:	e0bffd17 	ldw	r2,-12(fp)
  8011f88:	18bfd92e 	bgeu	r3,r2,8011ef0 <__alt_data_end+0xfc011ef0>
@@ -23057,7 +23057,7 @@ int ALT_OPEN (const char* file, int flags, int mode)
    */
   
   if (!(dev = alt_find_dev (file, &alt_dev_list)))
- 8011fd8:	d1601004 	addi	r5,gp,-32704
+ 8011fd8:	d1600f04 	addi	r5,gp,-32708
  8011fdc:	e13ffd17 	ldw	r4,-12(fp)
  8011fe0:	80121280 	call	8012128 <alt_find_dev>
  8011fe4:	e0bff815 	stw	r2,-32(fp)
@@ -23295,7 +23295,7 @@ alt_dev* alt_find_file (const char* name)
  80121c4:	df000304 	addi	fp,sp,12
  80121c8:	e13fff15 	stw	r4,-4(fp)
   alt_dev* next = (alt_dev*) alt_fs_list.next;   
- 80121cc:	d0a00e17 	ldw	r2,-32712(gp)
+ 80121cc:	d0a00d17 	ldw	r2,-32716(gp)
  80121d0:	e0bffd15 	stw	r2,-12(fp)
   /*
    * Check each list entry in turn, until a match is found, or we reach the
@@ -23383,7 +23383,7 @@ alt_dev* alt_find_file (const char* name)
  
   while (next != (alt_dev*) &alt_fs_list)
  801229c:	e0fffd17 	ldw	r3,-12(fp)
- 80122a0:	d0a00e04 	addi	r2,gp,-32712
+ 80122a0:	d0a00d04 	addi	r2,gp,-32716
  80122a4:	18bfcc1e 	bne	r3,r2,80121d8 <__alt_data_end+0xfc0121d8>
     next = (alt_dev*) next->llist.next;
   }
@@ -23447,13 +23447,13 @@ int alt_get_fd (alt_dev* dev)
  8012328:	e0fffe17 	ldw	r3,-8(fp)
  801232c:	10c00015 	stw	r3,0(r2)
       if (i > alt_max_fd)
- 8012330:	d0e01217 	ldw	r3,-32696(gp)
+ 8012330:	d0e01117 	ldw	r3,-32700(gp)
  8012334:	e0bffc17 	ldw	r2,-16(fp)
  8012338:	1880020e 	bge	r3,r2,8012344 <alt_get_fd+0x84>
       {
         alt_max_fd = i;
  801233c:	e0bffc17 	ldw	r2,-16(fp)
- 8012340:	d0a01215 	stw	r2,-32696(gp)
+ 8012340:	d0a01115 	stw	r2,-32700(gp)
       }
       rc = i;
  8012344:	e0bffc17 	ldw	r2,-16(fp)
@@ -23565,7 +23565,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
  8012444:	2021883a 	mov	r16,r4
  8012448:	80126000 	call	8012600 <__call_exitprocs>
  801244c:	00820074 	movhi	r2,2049
- 8012450:	10923504 	addi	r2,r2,18644
+ 8012450:	10923404 	addi	r2,r2,18640
  8012454:	11000017 	ldw	r4,0(r2)
  8012458:	20800f17 	ldw	r2,60(r4)
  801245c:	10000126 	beq	r2,zero,8012464 <exit+0x30>
@@ -23610,7 +23610,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
  80124e8:	defffa04 	addi	sp,sp,-24
  80124ec:	dc000315 	stw	r16,12(sp)
  80124f0:	04020074 	movhi	r16,2049
- 80124f4:	84123504 	addi	r16,r16,18644
+ 80124f4:	84123404 	addi	r16,r16,18640
  80124f8:	80c00017 	ldw	r3,0(r16)
  80124fc:	dc400415 	stw	r17,16(sp)
  8012500:	dfc00515 	stw	ra,20(sp)
@@ -23695,7 +23695,7 @@ alt_exception_cause_generated_bad_addr(alt_exception_cause cause)
  8012634:	04800044 	movi	r18,1
  8012638:	057fffc4 	movi	r21,-1
  801263c:	00820074 	movhi	r2,2049
- 8012640:	10923504 	addi	r2,r2,18644
+ 8012640:	10923404 	addi	r2,r2,18640
  8012644:	12000017 	ldw	r8,0(r2)
  8012648:	45005217 	ldw	r20,328(r8)
  801264c:	44c05204 	addi	r19,r8,328

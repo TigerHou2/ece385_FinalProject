@@ -39,7 +39,7 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 	assign boomed = boom;
 	collider COLLIDER (	.clk, .reset, .terrain_data, 
 								.X(X_Pos), .Y(Y_Pos), .DrawX, 
-								.D(10'd2), .U(10'd2), .L(10'd2), .R(10'd2),
+								.D(10'd3), .U(10'd3), .L(10'd3), .R(10'd3),
 								.DD, .UU, .LL, .RR	);
 	
 	
