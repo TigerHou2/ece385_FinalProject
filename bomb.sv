@@ -5,7 +5,7 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 					input	 [479:0]	terrain_data,
 					input		[9:0]	DrawX, DrawY,
 					input		[9:0] boomRadius,
-					output	[9:0]	X, Y,
+					output	[9:0]	X, Y, VX, VY,
 					output			boomed,
 					output			drawBomb,
 					output  [17:0]	addrBomb,
@@ -16,6 +16,8 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 	
 	assign X = X_Pos;
 	assign Y = Y_Pos;
+	assign VX = X_Vel;
+	assign VY = Y_Vel;
 	 
 	parameter [9:0] X_Default=700;	// Default position on the X axis
 	parameter [9:0] Y_Default=500;	// Default position on the Y axis

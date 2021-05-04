@@ -21,6 +21,13 @@
 		.spi0_SS_n                      (<connected-to-spi0_SS_n>),                      //                        .SS_n
 		.usb_gpx_export                 (<connected-to-usb_gpx_export>),                 //                 usb_gpx.export
 		.usb_irq_export                 (<connected-to-usb_irq_export>),                 //                 usb_irq.export
-		.usb_rst_export                 (<connected-to-usb_rst_export>)                  //                 usb_rst.export
+		.usb_rst_export                 (<connected-to-usb_rst_export>),                 //                 usb_rst.export
+		.p1_pos_export                  (<connected-to-p1_pos_export>),                  //                  p1_pos.export
+		.p2_pos_export                  (<connected-to-p2_pos_export>),                  //                  p2_pos.export
+		.p1_vel_export                  (<connected-to-p1_vel_export>),                  //                  p1_vel.export
+		.p2_vel_export                  (<connected-to-p2_vel_export>),                  //                  p2_vel.export
+		.b1_pos_export                  (<connected-to-b1_pos_export>),                  //                  b1_pos.export
+		.b1_vel_export                  (<connected-to-b1_vel_export>),                  //                  b1_vel.export
+		.aim_export                     (<connected-to-aim_export>)                      //                     aim.export
 	);
 

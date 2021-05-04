@@ -4,6 +4,7 @@
 //Revised October 2020 - Zuofu Cheng
 
 #include <stdio.h>
+#include <math.h>
 #include "system.h"
 #include "altera_avalon_spi.h"
 #include "altera_avalon_spi_regs.h"
@@ -24,6 +25,147 @@ const char* const devclasses[] = { " Uninitialized", " HID Keyboard", " HID Mous
 
 static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8}; // W,S,A,D,Q,E
 static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18}; // I,K,J,L,U,O
+
+// P1 position and velocity
+volatile SHORT *p1_pos = (SHORT*) P1_POS_BASE;
+volatile SHORT *p1_vel = (SHORT*) P1_VEL_BASE;
+
+// AI position and velocity
+volatile SHORT *p2_pos = (SHORT*) P2_POS_BASE;
+volatile SHORT *p2_vel = (SHORT*) P2_VEL_BASE;
+
+// P1 projectile position and velocity
+volatile SHORT *b1_pos = (SHORT*) B1_POS_BASE;
+volatile SHORT *b1_vel = (SHORT*) B1_VEL_BASE;
+
+// P2 aim power and angle
+volatile SHORT *p2_pow = (SHORT*) AIM_BASE + 1;
+volatile SHORT *p2_ang = (SHORT*) AIM_BASE;
+
+// aim tracking
+int cooldown = 100;
+
+// aim lookup table [power][angle]
+float vx_lookup[8][9] = {	{-4, -3, -3, -2, 0, 2, 3, 3, 4},
+							{-5, -4, -4, -3, 0, 3, 4, 4 ,5},
+							{-6, -5, -4, -3, 0, 3, 4, 5, 6},
+							{-7, -6, -5, -3, 0, 3, 5, 6, 7},
+							{-8, -7, -6, -3, 0, 3, 6, 7, 8},
+							{-9, -8, -6, -4, 0, 4, 6, 8, 9},
+							{-10, -9, -7, -4, 0, 4, 7, 9, 10},
+							{-11, -10, -8, -4, 0, 4, 8, 10, 11} };
+float vy_lookup[8][9] = {	{0, 2, 3, 3, 4, 3, 3, 2, 0},
+							{0, 3, 4, 4, 5, 4, 4, 3, 0},
+							{0, 3, 4, 5, 6, 5, 4, 3, 0},
+							{0, 3, 5, 6, 7, 6, 5, 3, 0},
+							{0, 3, 6, 7, 8, 7, 6, 3, 0},
+							{0, 4, 6, 8, 9, 8, 6, 4, 0},
+							{0, 4, 7, 9, 10, 9, 7, 4, 0},
+							{0, 4, 8, 10, 11, 10, 8, 4, 0} };
+
+
+BYTE ai_player(BYTE key) {
+
+	// global parameter increments
+	cooldown += 1;
+	cooldown = cooldown % 120;
+
+	// get player states
+	float p1x = (float) *(p1_pos+1);
+	float p1y = (float) *(p1_pos+0);
+	float p1vx = (float) *(p1_vel+1);
+	float p1vy = (float) *(p1_vel+0);
+	float p2x = (float) *(p2_pos+1);
+	float p2y = (float) *(p2_pos+0);
+	float p2vx = (float) *(p2_vel+1);
+	float p2vy = (float) *(p2_vel+0);
+
+	// get bomb states
+	float bx = (float) *(b1_pos+1);
+	float by = (float) *(b1_pos+0);
+	float bvx = (float) *(b1_vel+1);
+	float bvy = (float) *(b1_vel+0);
+
+	// dodging bombs
+	float a = -bvy;
+	float b = bvx;
+	float m = -a/b;
+	float c = b * (m*bx-by);
+	float dsq = pow(a*p2x+b*p2y+c,2) / (a*a+b*b);
+	if (dsq < 700){
+		return (BYTE) 12;
+	}
+
+	// aiming
+	float dx = p1x - p2x;
+	float dy = p1y - p2y;
+	float delta = 100;
+	float delta0 = 0;
+	float delta_sgn = 0;
+	float dist_x = (dx>=0) ? dx - 8 : dx + 8;
+	int power_tgt = 0;
+	int angle_tgt = 0;
+
+	for (int i = 0; i < 6; i++){ // search in power levels 0-5 (ignore highest power)
+		for (int j = 0; j < 9; j++){
+			float den = vx_lookup[i][j] - p1vx;
+			if ( (fabs(den) > 0.1) && (vx_lookup[i][j]*dx > 0) ){
+				float t = dist_x / den;
+				delta0 = p1vy + dy/t - t - vy_lookup[i][j] - 1;
+				if ( (t > 0) && (fabs(delta0) < delta) ){
+					delta = fabs(delta0);
+					delta_sgn = delta0;
+					power_tgt = (i-1)%8;
+					angle_tgt = j;
+				}
+			}
+		}
+	}
+
+	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta = %f\n",
+			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta);
+
+	if (delta < 12 && cooldown > 7){ // have targeting solution, start adjusting aim
+		if (*p2_ang < angle_tgt){
+			printf("Turning right");
+			return (BYTE) 18; // turn cw
+		}
+		else if (*p2_ang > angle_tgt){
+			printf("Turning left");
+			return (BYTE) 24; // turn ccw
+		}
+		else if ( (*p2_pow != (power_tgt-1)%8)){
+			printf("Charging");
+			return (BYTE) 14; // hold aim
+		}
+		else {
+			printf("Shooting");
+			cooldown = 0;
+			return key; // shoot
+		}
+	}
+	else {				// no targeting solution, adjust position
+		if (fabs(p2vx) > 2) {
+			printf("Speeding at %f", p2vx);
+			// do nothing if speeding
+		}
+		else if ( (p2vy == 0) && (p2vx == 0) ) {
+			printf("Jumping");
+			return (BYTE) 12; // jump to move quickly
+		}
+		else if (p2x < 320+(320-p1x)/2+cooldown/2){
+			printf("Moving right");
+			return (BYTE) 15; // move right
+		}
+		else {
+			printf("Moving left");
+			return (BYTE) 13; // move left
+		}
+	}
+
+	return key;
+
+}
 
 BYTE GetDriverandReport() {
 	BYTE i;
@@ -206,6 +348,8 @@ int main() {
 				} else {
 					p2_key = 0x00;
 				}
+
+				p2_key = ai_player(p2_key);
 
 				setKeycode( (p1_key << 8) + p2_key );
 

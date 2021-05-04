@@ -21,7 +21,9 @@ module player (	input 			clk, reset, frame_clk,
 						input  [47:0]	controls,
 						input  [9:0]	DX, DY,
 						input				Dboomed,
-						output [9:0]	BX, BY,
+						output [9:0]	PX, PY, VX, VY,
+						output [9:0]	BX, BY, BVX, BVY,
+						output [31:0]	aim,
 						output			boomed,
 						output [9:0]	HP, HPP,
 						output			drawPlayer, drawBomb,
@@ -30,6 +32,11 @@ module player (	input 			clk, reset, frame_clk,
     
 	logic [9:0] X_Pos, X_Vel, Y_Pos, Y_Vel, width, height, centerX, centerY, health, health_padded;
 	logic [17:0] facingOffset;
+	
+	assign PX = X_Pos;
+	assign PY = Y_Pos;
+	assign VX = X_Vel;
+	assign VY = Y_Vel;
 	
 	assign HP	= health;
 	assign HPP	= health_padded;
@@ -81,12 +88,14 @@ module player (	input 			clk, reset, frame_clk,
 	logic [3:0]	angle;
 	logic [2:0] power;
 	logic			drawBombNaive;
+	assign aim = {13'd0,power,12'd0,angle};
 	
 	parameter [3:0]	angle_Max = 8;
 	parameter [2:0]	power_Max = 7;
 	
 	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
-						.angle, .power, .terrain_data, .DrawX, .DrawY, .boomRadius, .X(BX), .Y(BY), .boomed,
+						.angle, .power, .terrain_data, .DrawX, .DrawY, .boomRadius, 
+						.X(BX), .Y(BY), .VX(BVX), .VY(BVY), .boomed,
 						.drawBomb(drawBombNaive), .addrBomb, .terrain_out	);
 						
 						

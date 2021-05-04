@@ -22,7 +22,14 @@ module finalsoc (
 	spi0_SS_n,
 	usb_gpx_export,
 	usb_irq_export,
-	usb_rst_export);	
+	usb_rst_export,
+	p1_pos_export,
+	p2_pos_export,
+	p1_vel_export,
+	p2_vel_export,
+	b1_pos_export,
+	b1_vel_export,
+	aim_export);	
 
 	input		clk_50_clk;
 	output	[15:0]	hex_digits_export;
@@ -47,4 +54,11 @@ module finalsoc (
 	input		usb_gpx_export;
 	input		usb_irq_export;
 	output		usb_rst_export;
+	input	[31:0]	p1_pos_export;
+	input	[31:0]	p2_pos_export;
+	input	[31:0]	p1_vel_export;
+	input	[31:0]	p2_vel_export;
+	input	[31:0]	b1_pos_export;
+	input	[31:0]	b1_vel_export;
+	input	[31:0]	aim_export;
 endmodule

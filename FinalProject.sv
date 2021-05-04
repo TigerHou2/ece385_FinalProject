@@ -69,15 +69,17 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	logic [9:0]		drawxsig, drawysig;
 	logic [7:0]		Red, Blue, Green;
 	logic [15:0]	keycode;
-	logic [7:0]		key_p1, key_p2;
-	logic [17:0]	P1A, P2A, B1A, B2A;
-	logic				P1D, P2D, B1D, B2D;
-	logic				BB1, BB2;
-	logic	[47:0]	P1C, P2C;
-	logic [9:0]		B1X, B1Y, B2X, B2Y;
-	logic [9:0]		HP1, HPP1, HP2, HPP2;
-	logic [17:0]	addrBG;
-	logic				drawBG;
+	logic [7:0]		key_p1, key_p2;										// (@ 2.5 MHz)	player input from keyboard/software
+	logic [17:0]	P1A, P2A, B1A, B2A; 									// (@ 50 MHz)	sprite address
+	logic				P1D, P2D, B1D, B2D;									// (@ 50 MHz)	player/bomb draw enable
+	logic				BB1, BB2;												// (@ 60 Hz)	exploded
+	logic	[47:0]	P1C, P2C;												// (fixed)		keyboard control mapping
+	logic [31:0]	P2_aim;													// (@ 60 Hz)	player 2 (AI) aim angle
+	logic [9:0]		B1X, B1Y, B2X, B2Y, B1VX, B1VY, B2VX, B2VY;	// (@ 60 Hz)	bomb pos/vel
+	logic [9:0]		P1X, P1Y, P2X, P2Y, P1VX, P1VY, P2VX, P2VY;	// (@ 60 Hz)	player pos/vel
+	logic [9:0]		HP1, HPP1, HP2, HPP2;								// (@ 60 Hz)	player health and padding
+	logic [17:0]	addrBG;													// (@ 50 MHz)	background address
+	logic				drawBG;													// (@ 50 MHz)	draw background enable
 
 //=======================================================
 //  Structural coding
@@ -158,7 +160,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.altpll_0_areset_conduit_export    (),						//altpll_0_areset_conduit.export
 		.key_external_connection_export    (KEY),					//key_external_connection.export
 
-		//SDRAM
+		// SDRAM
 		.sdram_clk_clk(DRAM_CLK),										//clk_sdram.clk
 		.sdram_wire_addr(DRAM_ADDR),									//sdram_wire.addr
 		.sdram_wire_ba(DRAM_BA),										//.ba
@@ -170,21 +172,32 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.sdram_wire_ras_n(DRAM_RAS_N),								//.ras_n
 		.sdram_wire_we_n(DRAM_WE_N),									//.we_n
 
-		//USB SPI	
+		// USB SPI	
 		.spi0_SS_n(SPI0_CS_N),
 		.spi0_MOSI(SPI0_MOSI),
 		.spi0_MISO(SPI0_MISO),
 		.spi0_SCLK(SPI0_SCLK),
 		
-		//USB GPIO
+		// USB GPIO
 		.usb_rst_export(USB_RST),
 		.usb_irq_export(USB_IRQ),
 		.usb_gpx_export(USB_GPX),
 		
-		//LEDs and HEX
+		// LEDs and HEX
 		.hex_digits_export({hex_num_4, hex_num_3, hex_num_1, hex_num_0}),
 //		.leds_export({hundreds, signs, LEDR}),
-		.keycode_export(keycode)
+		.keycode_export(keycode),
+		
+		// Player and bomb pos/vel
+		.p1_pos_export({6'd0,P1X,6'd0,P1Y}),
+		.p1_vel_export({{6{P1VX[9]}},P1VX,{6{P1VY[9]}},P1VY}),
+		.p2_pos_export({6'd0,P2X,6'd0,P2Y}),
+		.p2_vel_export({{6{P2VX[9]}},P2VX,{6{P2VY[9]}},P2VY}),
+		.b1_pos_export({6'd0,B1X,6'd0,B1Y}),
+		.b1_vel_export({{6{B1VX[9]}},B1VX,{6{B1VY[9]}},B1VY}),
+		
+		// AI aim
+		.aim_export(P2_aim)
 		
 	 );
 
@@ -193,13 +206,15 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
 								.keycode(key_p1), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b0), .controls(P1C),
-								.DX(B2X), .DY(B2Y), .Dboomed(BB2), .BX(B1X), .BY(B1Y), .boomed(BB1), .HP(HP1), .HPP(HPP1),
+								.DX(B2X), .DY(B2Y), .Dboomed(BB2), .boomed(BB1), .HP(HP1), .HPP(HPP1),
+								.PX(P1X), .PY(P1Y), .VX(P1VX), .VY(P1VY), .BX(B1X), .BY(B1Y), .BVX(B1VX), .BVY(B1VY),
 								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
 								.terrain_out(T1O));
 								
 player P2				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
 								.keycode(key_p2), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b1), .controls(P2C),
-								.DX(B1X), .DY(B1Y), .Dboomed(BB1), .BX(B2X), .BY(B2Y), .boomed(BB2), .HP(HP2), .HPP(HPP2),
+								.DX(B1X), .DY(B1Y), .Dboomed(BB1), .boomed(BB2), .aim(P2_aim), .HP(HP2), .HPP(HPP2),
+								.PX(P2X), .PY(P2Y), .VX(P2VX), .VY(P2VY), .BX(B2X), .BY(B2Y), .BVX(B2VX), .BVY(B2VY),
 								.drawPlayer(P2D), .drawBomb(B2D), .addrPlayer(P2A), .addrBomb(B2A),
 								.terrain_out(T2O));
 				

@@ -22,7 +22,14 @@
 			spi0_SS_n                      : out   std_logic;                                        -- SS_n
 			usb_gpx_export                 : in    std_logic                     := 'X';             -- export
 			usb_irq_export                 : in    std_logic                     := 'X';             -- export
-			usb_rst_export                 : out   std_logic                                         -- export
+			usb_rst_export                 : out   std_logic;                                        -- export
+			p1_pos_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			p2_pos_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			p1_vel_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			p2_vel_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			b1_pos_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			b1_vel_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			aim_export                     : in    std_logic_vector(31 downto 0) := (others => 'X')  -- export
 		);
 	end component finalsoc;
 
@@ -50,6 +57,13 @@
 			spi0_SS_n                      => CONNECTED_TO_spi0_SS_n,                      --                        .SS_n
 			usb_gpx_export                 => CONNECTED_TO_usb_gpx_export,                 --                 usb_gpx.export
 			usb_irq_export                 => CONNECTED_TO_usb_irq_export,                 --                 usb_irq.export
-			usb_rst_export                 => CONNECTED_TO_usb_rst_export                  --                 usb_rst.export
+			usb_rst_export                 => CONNECTED_TO_usb_rst_export,                 --                 usb_rst.export
+			p1_pos_export                  => CONNECTED_TO_p1_pos_export,                  --                  p1_pos.export
+			p2_pos_export                  => CONNECTED_TO_p2_pos_export,                  --                  p2_pos.export
+			p1_vel_export                  => CONNECTED_TO_p1_vel_export,                  --                  p1_vel.export
+			p2_vel_export                  => CONNECTED_TO_p2_vel_export,                  --                  p2_vel.export
+			b1_pos_export                  => CONNECTED_TO_b1_pos_export,                  --                  b1_pos.export
+			b1_vel_export                  => CONNECTED_TO_b1_vel_export,                  --                  b1_vel.export
+			aim_export                     => CONNECTED_TO_aim_export                      --                     aim.export
 		);
 
