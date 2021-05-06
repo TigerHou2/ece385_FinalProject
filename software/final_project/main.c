@@ -4,6 +4,8 @@
 //Revised October 2020 - Zuofu Cheng
 
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 #include "system.h"
 #include "altera_avalon_spi.h"
@@ -23,8 +25,8 @@ extern HID_DEVICE hid_device;
 static BYTE addr = 1; 				//hard-wired USB address
 const char* const devclasses[] = { " Uninitialized", " HID Keyboard", " HID Mouse", " Mass storage" };
 
-static BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8}; // W,S,A,D,Q,E
-static BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18}; // I,K,J,L,U,O
+static const BYTE p1_bytes[] = {26, 22, 4, 7, 20, 8}; // W,S,A,D,Q,E
+static const BYTE p2_bytes[] = {12, 14, 13, 15, 24, 18}; // I,K,J,L,U,O
 
 // P1 position and velocity
 volatile SHORT *p1_pos = (SHORT*) P1_POS_BASE;
@@ -42,124 +44,149 @@ volatile SHORT *b1_vel = (SHORT*) B1_VEL_BASE;
 volatile SHORT *p2_pow = (SHORT*) AIM_BASE + 1;
 volatile SHORT *p2_ang = (SHORT*) AIM_BASE;
 
-// aim tracking
-int cooldown = 100;
-
-// aim lookup table [power][angle]
-float vx_lookup[8][9] = {	{-4, -3, -3, -2, 0, 2, 3, 3, 4},
-							{-5, -4, -4, -3, 0, 3, 4, 4 ,5},
-							{-6, -5, -4, -3, 0, 3, 4, 5, 6},
-							{-7, -6, -5, -3, 0, 3, 5, 6, 7},
-							{-8, -7, -6, -3, 0, 3, 6, 7, 8},
-							{-9, -8, -6, -4, 0, 4, 6, 8, 9},
-							{-10, -9, -7, -4, 0, 4, 7, 9, 10},
-							{-11, -10, -8, -4, 0, 4, 8, 10, 11} };
-float vy_lookup[8][9] = {	{0, 2, 3, 3, 4, 3, 3, 2, 0},
-							{0, 3, 4, 4, 5, 4, 4, 3, 0},
-							{0, 3, 4, 5, 6, 5, 4, 3, 0},
-							{0, 3, 5, 6, 7, 6, 5, 3, 0},
-							{0, 3, 6, 7, 8, 7, 6, 3, 0},
-							{0, 4, 6, 8, 9, 8, 6, 4, 0},
-							{0, 4, 7, 9, 10, 9, 7, 4, 0},
-							{0, 4, 8, 10, 11, 10, 8, 4, 0} };
-
 
 BYTE ai_player(BYTE key) {
 
+	// aim lookup table [power][angle]
+	static const int vx_lookup[8][9] = {
+			{-4, -3, -3, -2, 0, 2, 3, 3, 4},
+			{-5, -4, -4, -3, 0, 3, 4, 4 ,5},
+			{-6, -5, -4, -3, 0, 3, 4, 5, 6},
+			{-7, -6, -5, -3, 0, 3, 5, 6, 7},
+			{-8, -7, -6, -3, 0, 3, 6, 7, 8},
+			{-9, -8, -6, -4, 0, 4, 6, 8, 9},
+			{-10, -9, -7, -4, 0, 4, 7, 9, 10},
+			{-11, -10, -8, -4, 0, 4, 8, 10, 11} };
+	static const int vy_lookup[8][9] = {
+			{0, 2, 3, 3, 4, 3, 3, 2, 0},
+			{0, 3, 4, 4, 5, 4, 4, 3, 0},
+			{0, 3, 4, 5, 6, 5, 4, 3, 0},
+			{0, 3, 5, 6, 7, 6, 5, 3, 0},
+			{0, 3, 6, 7, 8, 7, 6, 3, 0},
+			{0, 4, 6, 8, 9, 8, 6, 4, 0},
+			{0, 4, 7, 9, 10, 9, 7, 4, 0},
+			{0, 4, 8, 10, 11, 10, 8, 4, 0} };
+
 	// global parameter increments
+	static int cooldown;
 	cooldown += 1;
 	cooldown = cooldown % 120;
 
 	// get player states
-	float p1x = (float) *(p1_pos+1);
-	float p1y = (float) *(p1_pos+0);
-	float p1vx = (float) *(p1_vel+1);
-	float p1vy = (float) *(p1_vel+0);
-	float p2x = (float) *(p2_pos+1);
-	float p2y = (float) *(p2_pos+0);
-	float p2vx = (float) *(p2_vel+1);
-	float p2vy = (float) *(p2_vel+0);
+	int p1x = (int) *(p1_pos+1);
+	int p1y = (int) *(p1_pos+0);
+	int p1vx = (int) *(p1_vel+1);
+	int p1vy = (int) *(p1_vel+0);
+	int p2x = (int) *(p2_pos+1);
+	int p2y = (int) *(p2_pos+0);
+	int p2vx = (int) *(p2_vel+1);
+	int p2vy = (int) *(p2_vel+0);
 
 	// get bomb states
-	float bx = (float) *(b1_pos+1);
-	float by = (float) *(b1_pos+0);
-	float bvx = (float) *(b1_vel+1);
-	float bvy = (float) *(b1_vel+0);
+	int bx = (int) *(b1_pos+1);
+	int by = (int) *(b1_pos+0);
+	int bvx = (int) *(b1_vel+1);
+	int bvy = (int) *(b1_vel+0);
 
 	// dodging bombs
-	float a = -bvy;
-	float b = bvx;
-	float m = -a/b;
+	int a = -bvy;
+	int b = bvx;
+	float m = (float) -a/b;
 	float c = b * (m*bx-by);
 	float dsq = pow(a*p2x+b*p2y+c,2) / (a*a+b*b);
-	if (dsq < 700){
-		return (BYTE) 12;
+	if (dsq < 1200){
+		return 12;
 	}
 
 	// aiming
-	float dx = p1x - p2x;
-	float dy = p1y - p2y;
-	float delta = 100;
-	float delta0 = 0;
-	float delta_sgn = 0;
-	float dist_x = (dx>=0) ? dx - 8 : dx + 8;
+	int dx = p1x - p2x;
+	int dy = p1y - p2y;
+	float delta = 100;			// shot accuracy metric
+	float delta_sgn = 0;		// shot accuracy metric (signed)
+	static const float tol = 15;// accuracy tolerance
 	int power_tgt = 0;
 	int angle_tgt = 0;
 
-	for (int i = 0; i < 6; i++){ // search in power levels 0-5 (ignore highest power)
+	for (int i = 0; i < 6; i++){
+		if (delta < tol){ break; }
+
 		for (int j = 0; j < 9; j++){
-			float den = vx_lookup[i][j] - p1vx;
-			if ( (fabs(den) > 0.1) && (vx_lookup[i][j]*dx > 0) ){
-				float t = dist_x / den;
-				delta0 = p1vy + dy/t - t - vy_lookup[i][j] - 1;
-				if ( (t > 0) && (fabs(delta0) < delta) ){
-					delta = fabs(delta0);
-					delta_sgn = delta0;
-					power_tgt = (i-1)%8;
-					angle_tgt = j;
-				}
+			if (delta < tol){ break; }
+
+			// implied a = 0.5 for the quadratic equation
+			int b = (p1vy - vy_lookup[i][j]);
+			int c = -dy;
+
+			int det = b*b-2*c;
+			if (det <= 0){ continue; }
+
+			float t1 = (-b+sqrt((float)det));
+			if (t1 < 0){ continue; }
+
+			float t2 = (-b-sqrt((float)det));
+			float t = (t2>0) ? t2 : t1;
+
+			float delta0 = t * (vx_lookup[i][j]-p1vx) - dx;
+			if ( (t >= 0) && (fabs(delta0) < delta) ){
+				delta = fabs(delta0);
+				delta_sgn = delta0;
+				power_tgt = i;
+				angle_tgt = j;
 			}
 		}
 	}
 
-	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta = %f\n",
-			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta);
+	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta_sgn = %f\n",
+			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
+	printf("      p1vy = %i, p2vy = %i   ", p1vy, p2vy);
 
-	if (delta < 12 && cooldown > 7){ // have targeting solution, start adjusting aim
+	if (delta < tol && cooldown > 7){ // have targeting solution, start adjusting aim
 		if (*p2_ang < angle_tgt){
-			printf("Turning right");
-			return (BYTE) 18; // turn cw
+//			printf("Turning right");
+			return 18; // turn cw
 		}
 		else if (*p2_ang > angle_tgt){
-			printf("Turning left");
-			return (BYTE) 24; // turn ccw
+//			printf("Turning left");
+			return 24; // turn ccw
 		}
-		else if ( (*p2_pow != (power_tgt-1)%8)){
-			printf("Charging");
-			return (BYTE) 14; // hold aim
+		else if ( (*p2_pow != power_tgt)){
+//			printf("Charging");
+			return 14; // hold aim
 		}
 		else {
-			printf("Shooting");
+//			printf("Shooting");
 			cooldown = 0;
 			return key; // shoot
 		}
 	}
 	else {				// no targeting solution, adjust position
-		if (fabs(p2vx) > 2) {
-			printf("Speeding at %f", p2vx);
+		if (abs(p2vx) > 2) {
+//			printf("Speeding at %i", p2vx);
 			// do nothing if speeding
 		}
-		else if ( (p2vy == 0) && (p2vx == 0) ) {
-			printf("Jumping");
-			return (BYTE) 12; // jump to move quickly
-		}
-		else if (p2x < 320+(320-p1x)/2+cooldown/2){
-			printf("Moving right");
-			return (BYTE) 15; // move right
+		else if ( (cooldown%3==0) && (p2vy==0) ){
+//			printf("Jumping");
+			return 12; // jump to move quickly
 		}
 		else {
-			printf("Moving left");
-			return (BYTE) 13; // move left
+			if (delta_sgn < 0){ // p2x < 320+(320-p1x)/2+cooldown/2
+//				printf("Moving right");
+				return 15; // move right
+			}
+			else if (delta_sgn > 0){
+//				printf("Moving left");
+				return 13; // move left
+			}
+			else {
+				if (dx > 0){
+//					printf("Moving right");
+					return 15; // move right
+				}
+				else if (dx < 0){
+//					printf("Moving left");
+					return 13; // move left
+				}
+			}
 		}
 	}
 
@@ -280,6 +307,7 @@ int main() {
 	BYTE allKeycodes[] = "ABCDEF";
 	BYTE p1_key;
 	BYTE p2_key;
+	BYTE ai_key;
 	BYTE * k1;
 	BYTE * k2;
 	BOOT_MOUSE_REPORT buf;		//USB mouse report
@@ -288,7 +316,6 @@ int main() {
 	BYTE runningdebugflag = 0;//flag to dump out a bunch of information when we first get to USB_STATE_RUNNING
 	BYTE errorflag = 0; //flag once we get an error device so we don't keep dumping out state info
 	BYTE device;
-	WORD keycode;
 
 	printf("initializing MAX3421E...\n");
 	MAX3421E_init();
@@ -309,15 +336,15 @@ int main() {
 				//run keyboard debug polling
 				rcode = kbdPoll(&kbdbuf);
 				if (rcode == hrNAK) {
-					continue; //NAK means no new data
+					 continue; //NAK means no new data
 				} else if (rcode) {
 					printf("Rcode: ");
 					printf("%x \n", rcode);
 					continue;
 				}
-				printf("keycodes: ");
+//				printf("keycodes: ");
 				for (int i = 0; i < 6; i++) {
-					printf("%x ", kbdbuf.keycode[i]);
+//					printf("%x ", kbdbuf.keycode[i]);
 					*(allKeycodes+i) = kbdbuf.keycode[i];
 				}
 
@@ -349,7 +376,8 @@ int main() {
 					p2_key = 0x00;
 				}
 
-				p2_key = ai_player(p2_key);
+				ai_key = ai_player(p2_key);
+				p2_key = ai_key;
 
 				setKeycode( (p1_key << 8) + p2_key );
 
