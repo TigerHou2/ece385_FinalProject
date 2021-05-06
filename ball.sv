@@ -21,8 +21,9 @@ module player (	input 			clk, reset, frame_clk,
 						input  [47:0]	controls,
 						input  [9:0]	DX, DY,
 						input				Dboomed,
-						output [9:0]	PX, PY, VX, VY,
-						output [9:0]	BX, BY, BVX, BVY,
+						input  [9:0]	EX, EY,				// enemy position
+						output [9:0]	PX, PY, VX, VY,	// self position and velocity
+						output [9:0]	BX, BY, BVX, BVY,	// enemy bomb position and velocity
 						output [31:0]	aim,
 						output			boomed,
 						output [9:0]	HP, HPP,
@@ -79,10 +80,10 @@ module player (	input 			clk, reset, frame_clk,
 	assign centerY	= 13;
 	
 	logic	DD, UU, LL, RR;
-	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, 
-								.D(height-centerY), .U(centerY), .L(centerX), .R(width-centerX),
-								.DD, .UU, .LL, .RR	);
+	terrain_collider COLLIDER (	.clk, .reset, .terrain_data, 
+											.X(X_Pos), .Y(Y_Pos), .DrawX, 
+											.D(height-centerY), .U(centerY), .L(centerX), .R(width-centerX),
+											.DD, .UU, .LL, .RR	);
 	
 	logic launch;
 	logic [3:0]	angle;
@@ -95,7 +96,7 @@ module player (	input 			clk, reset, frame_clk,
 	
 	bomb BOMB	(	.clk, .reset, .frame_clk, .launch, .launchX(X_Pos), .launchY(Y_Pos), 
 						.angle, .power, .terrain_data, .DrawX, .DrawY, .boomRadius, 
-						.X(BX), .Y(BY), .VX(BVX), .VY(BVY), .boomed,
+						.EX, .EY, .X(BX), .Y(BY), .VX(BVX), .VY(BVY), .boomed,
 						.drawBomb(drawBombNaive), .addrBomb, .terrain_out	);
 						
 						

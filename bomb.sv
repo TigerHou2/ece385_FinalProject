@@ -5,6 +5,7 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 					input	 [479:0]	terrain_data,
 					input		[9:0]	DrawX, DrawY,
 					input		[9:0] boomRadius,
+					input		[9:0]	EX, EY,
 					output	[9:0]	X, Y, VX, VY,
 					output			boomed,
 					output			drawBomb,
@@ -39,10 +40,14 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 	
 	logic	boom, DD, UU, LL, RR, out_of_bounds;
 	assign boomed = boom;
-	collider COLLIDER (	.clk, .reset, .terrain_data, 
-								.X(X_Pos), .Y(Y_Pos), .DrawX, 
-								.D(10'd3), .U(10'd3), .L(10'd3), .R(10'd3),
-								.DD, .UU, .LL, .RR	);
+	terrain_collider TERRAIN_COLLIDER (	.clk, .reset, .terrain_data, 
+													.X(X_Pos), .Y(Y_Pos), .DrawX, 
+													.D(10'd3), .U(10'd3), .L(10'd3), .R(10'd3),
+													.DD, .UU, .LL, .RR	);
+	
+	logic collided;
+	player_collider PLAYER_COLLIDER (	.X(X_Pos), .Y(Y_Pos), .PX(EX), .PY(EY), 
+													.radius(boomRadius), .collided	);
 	
 	
 	logic removePixel;
@@ -181,7 +186,7 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 			boom <= 1'b1;
 		end
 		
-		else if (launch == 1'b1)
+		else if (launch == 1'b1 && boom == 1'b1)
 		begin
 			X_Pos <= launchX;
 			Y_Pos <= launchY - 10'd4;
@@ -198,7 +203,7 @@ module bomb	(	input				clk, reset, frame_clk, launch,
 		
 			// Explosion detection
 			if (boom == 1'b0) begin
-				boom <= DD | UU | LL | RR | out_of_bounds;
+				boom <= DD | UU | LL | RR | out_of_bounds | collided;
 			end
 			
 			if (boom == 1'b1) begin

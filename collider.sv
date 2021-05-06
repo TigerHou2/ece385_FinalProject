@@ -1,8 +1,8 @@
-module collider	(	input				clk, reset,
-							input	[479:0]	terrain_data, 
-							input [9:0]		X, Y, DrawX, 
-							input	[9:0]		D, U, L, R,
-							output			DD, UU, LL, RR	);
+module terrain_collider	(	input				clk, reset,
+									input	[479:0]	terrain_data, 
+									input [9:0]		X, Y, DrawX, 
+									input	[9:0]		D, U, L, R,
+									output			DD, UU, LL, RR	);
 							
 		always_ff @ (posedge clk)
 		begin
@@ -35,5 +35,22 @@ module collider	(	input				clk, reset,
 			end
 		end
 							
+endmodule
+
+module player_collider	(	input [9:0]		X, Y, PX, PY, radius,
+									output			collided	);
+				
+		int DX, DY;
+		assign DX = X - PX;
+		assign DY = Y - PY;
+				
+		always_comb
+		begin
+			if (DX*DX + DY*DY <= radius*radius)
+				collided = 1'b1;
+			else
+				collided = 1'b0;
+		end
+									
 endmodule
 							

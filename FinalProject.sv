@@ -116,10 +116,17 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign HEX0[7] = 1'b1;
 	
 	
-	//Assign one button to reset
-	assign {Reset_h}=~ (KEY[0]);
+	logic Toggle_h, AI_on;
+	
+	assign {Reset_h}  = ~(KEY[0]);	// Assign key 0 to reset
+	assign {Toggle_h} = ~(KEY[1]);	// Assign key 1 aimbot toggle
+	
+	always_ff @ (posedge Toggle_h)
+	begin
+			AI_on <= ~AI_on;
+	end
 
-	//Our A/D converter is only 12 bit
+	// Our A/D converter is only 12 bit
 	assign VGA_R = Red[7:4];
 	assign VGA_B = Blue[7:4];
 	assign VGA_G = Green[7:4];
@@ -197,7 +204,10 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 		.b1_vel_export({{6{B1VX[9]}},B1VX,{6{B1VY[9]}},B1VY}),
 		
 		// AI aim
-		.aim_export(P2_aim)
+		.aim_export(P2_aim), 
+		
+		// AI toggle
+		.aim_toggle_export(AI_on)
 		
 	 );
 
@@ -207,14 +217,16 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 player P1				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
 								.keycode(key_p1), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b0), .controls(P1C),
 								.DX(B2X), .DY(B2Y), .Dboomed(BB2), .boomed(BB1), .HP(HP1), .HPP(HPP1),
-								.PX(P1X), .PY(P1Y), .VX(P1VX), .VY(P1VY), .BX(B1X), .BY(B1Y), .BVX(B1VX), .BVY(B1VY),
+								.EX(P2X), .EY(P2Y), .PX(P1X), .PY(P1Y), .VX(P1VX), .VY(P1VY), 
+								.BX(B1X), .BY(B1Y), .BVX(B1VX), .BVY(B1VY),
 								.drawPlayer(P1D), .drawBomb(B1D), .addrPlayer(P1A), .addrBomb(B1A),
 								.terrain_out(T1O));
 								
 player P2				(	.clk(CLOCK_50), .reset(Reset_h), .frame_clk(VGA_VS), .terrain_data(terrain_out),
 								.keycode(key_p2), .DrawX(drawxsig), .DrawY(drawysig), .ID(1'b1), .controls(P2C),
 								.DX(B1X), .DY(B1Y), .Dboomed(BB1), .boomed(BB2), .aim(P2_aim), .HP(HP2), .HPP(HPP2),
-								.PX(P2X), .PY(P2Y), .VX(P2VX), .VY(P2VY), .BX(B2X), .BY(B2Y), .BVX(B2VX), .BVY(B2VY),
+								.EX(P1X), .EY(P1Y), .PX(P2X), .PY(P2Y), .VX(P2VX), .VY(P2VY), 
+								.BX(B2X), .BY(B2Y), .BVX(B2VX), .BVY(B2VY),
 								.drawPlayer(P2D), .drawBomb(B2D), .addrPlayer(P2A), .addrBomb(B2A),
 								.terrain_out(T2O));
 				

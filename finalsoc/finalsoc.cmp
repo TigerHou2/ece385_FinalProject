@@ -1,6 +1,7 @@
 	component finalsoc is
 		port (
 			aim_export                     : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
+			aim_toggle_export              : in    std_logic                     := 'X';             -- export
 			b1_pos_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
 			b1_vel_export                  : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
 			clk_50_clk                     : in    std_logic                     := 'X';             -- clk

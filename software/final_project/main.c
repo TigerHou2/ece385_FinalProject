@@ -44,6 +44,8 @@ volatile SHORT *b1_vel = (SHORT*) B1_VEL_BASE;
 volatile SHORT *p2_pow = (SHORT*) AIM_BASE + 1;
 volatile SHORT *p2_ang = (SHORT*) AIM_BASE;
 
+// aimbot toggle
+volatile BOOL *aimbot_on = (BOOL*) AIM_TOGGLE_BASE;
 
 BYTE ai_player(BYTE key) {
 
@@ -67,8 +69,9 @@ BYTE ai_player(BYTE key) {
 			{0, 4, 7, 9, 10, 9, 7, 4, 0},
 			{0, 4, 8, 10, 11, 10, 8, 4, 0} };
 
-	// global parameter increments
+	// global parameters
 	static int cooldown;
+	static const float tol = 15;// accuracy tolerance
 	cooldown += 1;
 	cooldown = cooldown % 120;
 
@@ -100,10 +103,10 @@ BYTE ai_player(BYTE key) {
 
 	// aiming
 	int dx = p1x - p2x;
-	int dy = p1y - p2y;
+	int dx_offset = (dx>0) ? dx - 10 : dx + 10;
+	int dy = p1y - p2y + 5;
 	float delta = 100;			// shot accuracy metric
 	float delta_sgn = 0;		// shot accuracy metric (signed)
-	static const float tol = 15;// accuracy tolerance
 	int power_tgt = 0;
 	int angle_tgt = 0;
 
@@ -113,21 +116,27 @@ BYTE ai_player(BYTE key) {
 		for (int j = 0; j < 9; j++){
 			if (delta < tol){ break; }
 
-			// implied a = 0.5 for the quadratic equation
+			if ( (dx > 20) && (j < 3) ){ continue; }
+			else if ( (dx < 20) && (j > 3) ) { continue; }
+			else if ( (abs(dx) <= tol) && (j != 3) ) { continue; }
+
+			// implied a = 1/12 = 1/2 * gravity, where gravity = 1/6
 			int b = (p1vy - vy_lookup[i][j]);
 			int c = -dy;
 
-			int det = b*b-2*c;
+			int det = b*b-c/3;
 			if (det <= 0){ continue; }
 
-			float t1 = (-b+sqrt((float)det));
+			float t1 = (-b+sqrt((float)det)) * 6;
 			if (t1 < 0){ continue; }
+			float delta1 = t1 * (vx_lookup[i][j]-p1vx) - dx_offset;
 
-			float t2 = (-b-sqrt((float)det));
-			float t = (t2>0) ? t2 : t1;
+			float t2 = (-b-sqrt((float)det)) * 6;
+			float delta2 = (t2>0)? t2 * (vx_lookup[i][j]-p1vx) - dx_offset : delta1;
 
-			float delta0 = t * (vx_lookup[i][j]-p1vx) - dx;
-			if ( (t >= 0) && (fabs(delta0) < delta) ){
+			float delta0 = (fabs(delta1)<fabs(delta2)) ? delta1 : delta2;
+
+			if (fabs(delta0) < delta){
 				delta = fabs(delta0);
 				delta_sgn = delta0;
 				power_tgt = i;
@@ -140,50 +149,41 @@ BYTE ai_player(BYTE key) {
 			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
 	printf("      p1vy = %i, p2vy = %i   ", p1vy, p2vy);
 
-	if (delta < tol && cooldown > 7){ // have targeting solution, start adjusting aim
+	if (*aimbot_on){
+		return key;
+	}
+
+	if (delta < tol){ // have targeting solution, start aiming
 		if (*p2_ang < angle_tgt){
-//			printf("Turning right");
-			return 18; // turn cw
+			return 18; // turn right
 		}
 		else if (*p2_ang > angle_tgt){
-//			printf("Turning left");
-			return 24; // turn ccw
+			return 24; // turn left
 		}
 		else if ( (*p2_pow != power_tgt)){
-//			printf("Charging");
-			return 14; // hold aim
+			return 14; // charging
 		}
 		else {
-//			printf("Shooting");
 			cooldown = 0;
-			return key; // shoot
+			return key; // shooting
 		}
 	}
 	else {				// no targeting solution, adjust position
-		if (abs(p2vx) > 2) {
-//			printf("Speeding at %i", p2vx);
-			// do nothing if speeding
+		if ( (cooldown%3==0) && (p2vy==0) && (p2vx==0) ){
+			return 12; // jumping
 		}
-		else if ( (cooldown%3==0) && (p2vy==0) ){
-//			printf("Jumping");
-			return 12; // jump to move quickly
-		}
-		else {
-			if (delta_sgn < 0){ // p2x < 320+(320-p1x)/2+cooldown/2
-//				printf("Moving right");
+		else if (abs(p2vx) < 2){
+			if (delta_sgn < 0){
 				return 15; // move right
 			}
 			else if (delta_sgn > 0){
-//				printf("Moving left");
 				return 13; // move left
 			}
 			else {
 				if (dx > 0){
-//					printf("Moving right");
 					return 15; // move right
 				}
 				else if (dx < 0){
-//					printf("Moving left");
 					return 13; // move left
 				}
 			}
@@ -336,7 +336,7 @@ int main() {
 				//run keyboard debug polling
 				rcode = kbdPoll(&kbdbuf);
 				if (rcode == hrNAK) {
-					 continue; //NAK means no new data
+					 //continue; //NAK means no new data
 				} else if (rcode) {
 					printf("Rcode: ");
 					printf("%x \n", rcode);

@@ -1,10 +1,17 @@
 
 module finalsoc (
+	aim_export,
+	b1_pos_export,
+	b1_vel_export,
 	clk_50_clk,
 	hex_digits_export,
 	key_external_connection_export,
 	keycode_export,
 	leds_export,
+	p1_pos_export,
+	p1_vel_export,
+	p2_pos_export,
+	p2_vel_export,
 	reset_50_reset_n,
 	sdram_clk_clk,
 	sdram_wire_addr,
@@ -23,19 +30,20 @@ module finalsoc (
 	usb_gpx_export,
 	usb_irq_export,
 	usb_rst_export,
-	p1_pos_export,
-	p2_pos_export,
-	p1_vel_export,
-	p2_vel_export,
-	b1_pos_export,
-	b1_vel_export,
-	aim_export);	
+	aim_toggle_export);	
 
+	input	[31:0]	aim_export;
+	input	[31:0]	b1_pos_export;
+	input	[31:0]	b1_vel_export;
 	input		clk_50_clk;
 	output	[15:0]	hex_digits_export;
 	input	[1:0]	key_external_connection_export;
 	output	[15:0]	keycode_export;
 	output	[13:0]	leds_export;
+	input	[31:0]	p1_pos_export;
+	input	[31:0]	p1_vel_export;
+	input	[31:0]	p2_pos_export;
+	input	[31:0]	p2_vel_export;
 	input		reset_50_reset_n;
 	output		sdram_clk_clk;
 	output	[12:0]	sdram_wire_addr;
@@ -54,11 +62,5 @@ module finalsoc (
 	input		usb_gpx_export;
 	input		usb_irq_export;
 	output		usb_rst_export;
-	input	[31:0]	p1_pos_export;
-	input	[31:0]	p2_pos_export;
-	input	[31:0]	p1_vel_export;
-	input	[31:0]	p2_vel_export;
-	input	[31:0]	b1_pos_export;
-	input	[31:0]	b1_vel_export;
-	input	[31:0]	aim_export;
+	input		aim_toggle_export;
 endmodule
