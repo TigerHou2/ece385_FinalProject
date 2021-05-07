@@ -75,6 +75,10 @@ BYTE ai_player(BYTE key) {
 	cooldown += 1;
 	cooldown = cooldown % 120;
 
+	if (*aimbot_on){
+		return key;
+	}
+
 	// get player states
 	int p1x = (int) *(p1_pos+1);
 	int p1y = (int) *(p1_pos+0);
@@ -148,10 +152,6 @@ BYTE ai_player(BYTE key) {
 	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta_sgn = %f\n",
 			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
 	printf("      p1vy = %i, p2vy = %i   ", p1vy, p2vy);
-
-	if (*aimbot_on){
-		return key;
-	}
 
 	if (delta < tol){ // have targeting solution, start aiming
 		if (*p2_ang < angle_tgt){

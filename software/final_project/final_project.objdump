@@ -1092,609 +1092,606 @@ BYTE ai_player(BYTE key) {
  80002a8:	800530c0 	call	800530c <__modsi3>
  80002ac:	d0a6fb15 	stw	r2,-25620(gp)
 
+	if (*aimbot_on){
+ 80002b0:	d0a00c17 	ldw	r2,-32720(gp)
+ 80002b4:	10800017 	ldw	r2,0(r2)
+ 80002b8:	10000226 	beq	r2,zero,80002c4 <ai_player+0x58>
+		return key;
+ 80002bc:	e0bffc03 	ldbu	r2,-16(fp)
+ 80002c0:	00024f06 	br	8000c00 <ai_player+0x994>
+	}
+
 	// get player states
 	int p1x = (int) *(p1_pos+1);
- 80002b0:	d0a00417 	ldw	r2,-32752(gp)
- 80002b4:	10800084 	addi	r2,r2,2
- 80002b8:	1080000b 	ldhu	r2,0(r2)
- 80002bc:	10bfffcc 	andi	r2,r2,65535
- 80002c0:	10a0001c 	xori	r2,r2,32768
- 80002c4:	10a00004 	addi	r2,r2,-32768
- 80002c8:	e0bfe015 	stw	r2,-128(fp)
+ 80002c4:	d0a00417 	ldw	r2,-32752(gp)
+ 80002c8:	10800084 	addi	r2,r2,2
+ 80002cc:	1080000b 	ldhu	r2,0(r2)
+ 80002d0:	10bfffcc 	andi	r2,r2,65535
+ 80002d4:	10a0001c 	xori	r2,r2,32768
+ 80002d8:	10a00004 	addi	r2,r2,-32768
+ 80002dc:	e0bfe015 	stw	r2,-128(fp)
 	int p1y = (int) *(p1_pos+0);
- 80002cc:	d0a00417 	ldw	r2,-32752(gp)
- 80002d0:	1080000b 	ldhu	r2,0(r2)
- 80002d4:	10bfffcc 	andi	r2,r2,65535
- 80002d8:	10a0001c 	xori	r2,r2,32768
- 80002dc:	10a00004 	addi	r2,r2,-32768
- 80002e0:	e0bfe115 	stw	r2,-124(fp)
+ 80002e0:	d0a00417 	ldw	r2,-32752(gp)
+ 80002e4:	1080000b 	ldhu	r2,0(r2)
+ 80002e8:	10bfffcc 	andi	r2,r2,65535
+ 80002ec:	10a0001c 	xori	r2,r2,32768
+ 80002f0:	10a00004 	addi	r2,r2,-32768
+ 80002f4:	e0bfe115 	stw	r2,-124(fp)
 	int p1vx = (int) *(p1_vel+1);
- 80002e4:	d0a00517 	ldw	r2,-32748(gp)
- 80002e8:	10800084 	addi	r2,r2,2
- 80002ec:	1080000b 	ldhu	r2,0(r2)
- 80002f0:	10bfffcc 	andi	r2,r2,65535
- 80002f4:	10a0001c 	xori	r2,r2,32768
- 80002f8:	10a00004 	addi	r2,r2,-32768
- 80002fc:	e0bfe215 	stw	r2,-120(fp)
+ 80002f8:	d0a00517 	ldw	r2,-32748(gp)
+ 80002fc:	10800084 	addi	r2,r2,2
+ 8000300:	1080000b 	ldhu	r2,0(r2)
+ 8000304:	10bfffcc 	andi	r2,r2,65535
+ 8000308:	10a0001c 	xori	r2,r2,32768
+ 800030c:	10a00004 	addi	r2,r2,-32768
+ 8000310:	e0bfe215 	stw	r2,-120(fp)
 	int p1vy = (int) *(p1_vel+0);
- 8000300:	d0a00517 	ldw	r2,-32748(gp)
- 8000304:	1080000b 	ldhu	r2,0(r2)
- 8000308:	10bfffcc 	andi	r2,r2,65535
- 800030c:	10a0001c 	xori	r2,r2,32768
- 8000310:	10a00004 	addi	r2,r2,-32768
- 8000314:	e0bfe315 	stw	r2,-116(fp)
+ 8000314:	d0a00517 	ldw	r2,-32748(gp)
+ 8000318:	1080000b 	ldhu	r2,0(r2)
+ 800031c:	10bfffcc 	andi	r2,r2,65535
+ 8000320:	10a0001c 	xori	r2,r2,32768
+ 8000324:	10a00004 	addi	r2,r2,-32768
+ 8000328:	e0bfe315 	stw	r2,-116(fp)
 	int p2x = (int) *(p2_pos+1);
- 8000318:	d0a00617 	ldw	r2,-32744(gp)
- 800031c:	10800084 	addi	r2,r2,2
- 8000320:	1080000b 	ldhu	r2,0(r2)
- 8000324:	10bfffcc 	andi	r2,r2,65535
- 8000328:	10a0001c 	xori	r2,r2,32768
- 800032c:	10a00004 	addi	r2,r2,-32768
- 8000330:	e0bfe415 	stw	r2,-112(fp)
+ 800032c:	d0a00617 	ldw	r2,-32744(gp)
+ 8000330:	10800084 	addi	r2,r2,2
+ 8000334:	1080000b 	ldhu	r2,0(r2)
+ 8000338:	10bfffcc 	andi	r2,r2,65535
+ 800033c:	10a0001c 	xori	r2,r2,32768
+ 8000340:	10a00004 	addi	r2,r2,-32768
+ 8000344:	e0bfe415 	stw	r2,-112(fp)
 	int p2y = (int) *(p2_pos+0);
- 8000334:	d0a00617 	ldw	r2,-32744(gp)
- 8000338:	1080000b 	ldhu	r2,0(r2)
- 800033c:	10bfffcc 	andi	r2,r2,65535
- 8000340:	10a0001c 	xori	r2,r2,32768
- 8000344:	10a00004 	addi	r2,r2,-32768
- 8000348:	e0bfe515 	stw	r2,-108(fp)
+ 8000348:	d0a00617 	ldw	r2,-32744(gp)
+ 800034c:	1080000b 	ldhu	r2,0(r2)
+ 8000350:	10bfffcc 	andi	r2,r2,65535
+ 8000354:	10a0001c 	xori	r2,r2,32768
+ 8000358:	10a00004 	addi	r2,r2,-32768
+ 800035c:	e0bfe515 	stw	r2,-108(fp)
 	int p2vx = (int) *(p2_vel+1);
- 800034c:	d0a00717 	ldw	r2,-32740(gp)
- 8000350:	10800084 	addi	r2,r2,2
- 8000354:	1080000b 	ldhu	r2,0(r2)
- 8000358:	10bfffcc 	andi	r2,r2,65535
- 800035c:	10a0001c 	xori	r2,r2,32768
- 8000360:	10a00004 	addi	r2,r2,-32768
- 8000364:	e0bfe615 	stw	r2,-104(fp)
+ 8000360:	d0a00717 	ldw	r2,-32740(gp)
+ 8000364:	10800084 	addi	r2,r2,2
+ 8000368:	1080000b 	ldhu	r2,0(r2)
+ 800036c:	10bfffcc 	andi	r2,r2,65535
+ 8000370:	10a0001c 	xori	r2,r2,32768
+ 8000374:	10a00004 	addi	r2,r2,-32768
+ 8000378:	e0bfe615 	stw	r2,-104(fp)
 	int p2vy = (int) *(p2_vel+0);
- 8000368:	d0a00717 	ldw	r2,-32740(gp)
- 800036c:	1080000b 	ldhu	r2,0(r2)
- 8000370:	10bfffcc 	andi	r2,r2,65535
- 8000374:	10a0001c 	xori	r2,r2,32768
- 8000378:	10a00004 	addi	r2,r2,-32768
- 800037c:	e0bfe715 	stw	r2,-100(fp)
+ 800037c:	d0a00717 	ldw	r2,-32740(gp)
+ 8000380:	1080000b 	ldhu	r2,0(r2)
+ 8000384:	10bfffcc 	andi	r2,r2,65535
+ 8000388:	10a0001c 	xori	r2,r2,32768
+ 800038c:	10a00004 	addi	r2,r2,-32768
+ 8000390:	e0bfe715 	stw	r2,-100(fp)
 
 	// get bomb states
 	int bx = (int) *(b1_pos+1);
- 8000380:	d0a00817 	ldw	r2,-32736(gp)
- 8000384:	10800084 	addi	r2,r2,2
- 8000388:	1080000b 	ldhu	r2,0(r2)
- 800038c:	10bfffcc 	andi	r2,r2,65535
- 8000390:	10a0001c 	xori	r2,r2,32768
- 8000394:	10a00004 	addi	r2,r2,-32768
- 8000398:	e0bfe815 	stw	r2,-96(fp)
+ 8000394:	d0a00817 	ldw	r2,-32736(gp)
+ 8000398:	10800084 	addi	r2,r2,2
+ 800039c:	1080000b 	ldhu	r2,0(r2)
+ 80003a0:	10bfffcc 	andi	r2,r2,65535
+ 80003a4:	10a0001c 	xori	r2,r2,32768
+ 80003a8:	10a00004 	addi	r2,r2,-32768
+ 80003ac:	e0bfe815 	stw	r2,-96(fp)
 	int by = (int) *(b1_pos+0);
- 800039c:	d0a00817 	ldw	r2,-32736(gp)
- 80003a0:	1080000b 	ldhu	r2,0(r2)
- 80003a4:	10bfffcc 	andi	r2,r2,65535
- 80003a8:	10a0001c 	xori	r2,r2,32768
- 80003ac:	10a00004 	addi	r2,r2,-32768
- 80003b0:	e0bfe915 	stw	r2,-92(fp)
+ 80003b0:	d0a00817 	ldw	r2,-32736(gp)
+ 80003b4:	1080000b 	ldhu	r2,0(r2)
+ 80003b8:	10bfffcc 	andi	r2,r2,65535
+ 80003bc:	10a0001c 	xori	r2,r2,32768
+ 80003c0:	10a00004 	addi	r2,r2,-32768
+ 80003c4:	e0bfe915 	stw	r2,-92(fp)
 	int bvx = (int) *(b1_vel+1);
- 80003b4:	d0a00917 	ldw	r2,-32732(gp)
- 80003b8:	10800084 	addi	r2,r2,2
- 80003bc:	1080000b 	ldhu	r2,0(r2)
- 80003c0:	10bfffcc 	andi	r2,r2,65535
- 80003c4:	10a0001c 	xori	r2,r2,32768
- 80003c8:	10a00004 	addi	r2,r2,-32768
- 80003cc:	e0bfea15 	stw	r2,-88(fp)
+ 80003c8:	d0a00917 	ldw	r2,-32732(gp)
+ 80003cc:	10800084 	addi	r2,r2,2
+ 80003d0:	1080000b 	ldhu	r2,0(r2)
+ 80003d4:	10bfffcc 	andi	r2,r2,65535
+ 80003d8:	10a0001c 	xori	r2,r2,32768
+ 80003dc:	10a00004 	addi	r2,r2,-32768
+ 80003e0:	e0bfea15 	stw	r2,-88(fp)
 	int bvy = (int) *(b1_vel+0);
- 80003d0:	d0a00917 	ldw	r2,-32732(gp)
- 80003d4:	1080000b 	ldhu	r2,0(r2)
- 80003d8:	10bfffcc 	andi	r2,r2,65535
- 80003dc:	10a0001c 	xori	r2,r2,32768
- 80003e0:	10a00004 	addi	r2,r2,-32768
- 80003e4:	e0bfeb15 	stw	r2,-84(fp)
+ 80003e4:	d0a00917 	ldw	r2,-32732(gp)
+ 80003e8:	1080000b 	ldhu	r2,0(r2)
+ 80003ec:	10bfffcc 	andi	r2,r2,65535
+ 80003f0:	10a0001c 	xori	r2,r2,32768
+ 80003f4:	10a00004 	addi	r2,r2,-32768
+ 80003f8:	e0bfeb15 	stw	r2,-84(fp)
 
 	// dodging bombs
 	int a = -bvy;
- 80003e8:	e0bfeb17 	ldw	r2,-84(fp)
- 80003ec:	0085c83a 	sub	r2,zero,r2
- 80003f0:	e0bfec15 	stw	r2,-80(fp)
-	int b = bvx;
- 80003f4:	e0bfea17 	ldw	r2,-88(fp)
- 80003f8:	e0bfed15 	stw	r2,-76(fp)
-	float m = (float) -a/b;
- 80003fc:	e0bfec17 	ldw	r2,-80(fp)
+ 80003fc:	e0bfeb17 	ldw	r2,-84(fp)
  8000400:	0085c83a 	sub	r2,zero,r2
- 8000404:	1009883a 	mov	r4,r2
- 8000408:	80068040 	call	8006804 <__floatsisf>
- 800040c:	1021883a 	mov	r16,r2
- 8000410:	e13fed17 	ldw	r4,-76(fp)
- 8000414:	80068040 	call	8006804 <__floatsisf>
- 8000418:	1007883a 	mov	r3,r2
- 800041c:	180b883a 	mov	r5,r3
- 8000420:	8009883a 	mov	r4,r16
- 8000424:	800592c0 	call	800592c <__divsf3>
- 8000428:	1007883a 	mov	r3,r2
- 800042c:	e0ffee15 	stw	r3,-72(fp)
+ 8000404:	e0bfec15 	stw	r2,-80(fp)
+	int b = bvx;
+ 8000408:	e0bfea17 	ldw	r2,-88(fp)
+ 800040c:	e0bfed15 	stw	r2,-76(fp)
+	float m = (float) -a/b;
+ 8000410:	e0bfec17 	ldw	r2,-80(fp)
+ 8000414:	0085c83a 	sub	r2,zero,r2
+ 8000418:	1009883a 	mov	r4,r2
+ 800041c:	80068040 	call	8006804 <__floatsisf>
+ 8000420:	1021883a 	mov	r16,r2
+ 8000424:	e13fed17 	ldw	r4,-76(fp)
+ 8000428:	80068040 	call	8006804 <__floatsisf>
+ 800042c:	1007883a 	mov	r3,r2
+ 8000430:	180b883a 	mov	r5,r3
+ 8000434:	8009883a 	mov	r4,r16
+ 8000438:	800592c0 	call	800592c <__divsf3>
+ 800043c:	1007883a 	mov	r3,r2
+ 8000440:	e0ffee15 	stw	r3,-72(fp)
 	float c = b * (m*bx-by);
- 8000430:	e13fed17 	ldw	r4,-76(fp)
- 8000434:	80068040 	call	8006804 <__floatsisf>
- 8000438:	1021883a 	mov	r16,r2
- 800043c:	e13fe817 	ldw	r4,-96(fp)
- 8000440:	80068040 	call	8006804 <__floatsisf>
- 8000444:	1007883a 	mov	r3,r2
- 8000448:	e17fee17 	ldw	r5,-72(fp)
- 800044c:	1809883a 	mov	r4,r3
- 8000450:	8005ef00 	call	8005ef0 <__mulsf3>
- 8000454:	1007883a 	mov	r3,r2
- 8000458:	1823883a 	mov	r17,r3
- 800045c:	e13fe917 	ldw	r4,-92(fp)
- 8000460:	80068040 	call	8006804 <__floatsisf>
- 8000464:	1007883a 	mov	r3,r2
- 8000468:	180b883a 	mov	r5,r3
- 800046c:	8809883a 	mov	r4,r17
- 8000470:	80063200 	call	8006320 <__subsf3>
- 8000474:	1007883a 	mov	r3,r2
- 8000478:	1805883a 	mov	r2,r3
- 800047c:	100b883a 	mov	r5,r2
- 8000480:	8009883a 	mov	r4,r16
- 8000484:	8005ef00 	call	8005ef0 <__mulsf3>
+ 8000444:	e13fed17 	ldw	r4,-76(fp)
+ 8000448:	80068040 	call	8006804 <__floatsisf>
+ 800044c:	1021883a 	mov	r16,r2
+ 8000450:	e13fe817 	ldw	r4,-96(fp)
+ 8000454:	80068040 	call	8006804 <__floatsisf>
+ 8000458:	1007883a 	mov	r3,r2
+ 800045c:	e17fee17 	ldw	r5,-72(fp)
+ 8000460:	1809883a 	mov	r4,r3
+ 8000464:	8005ef00 	call	8005ef0 <__mulsf3>
+ 8000468:	1007883a 	mov	r3,r2
+ 800046c:	1823883a 	mov	r17,r3
+ 8000470:	e13fe917 	ldw	r4,-92(fp)
+ 8000474:	80068040 	call	8006804 <__floatsisf>
+ 8000478:	1007883a 	mov	r3,r2
+ 800047c:	180b883a 	mov	r5,r3
+ 8000480:	8809883a 	mov	r4,r17
+ 8000484:	80063200 	call	8006320 <__subsf3>
  8000488:	1007883a 	mov	r3,r2
- 800048c:	e0ffef15 	stw	r3,-68(fp)
+ 800048c:	1805883a 	mov	r2,r3
+ 8000490:	100b883a 	mov	r5,r2
+ 8000494:	8009883a 	mov	r4,r16
+ 8000498:	8005ef00 	call	8005ef0 <__mulsf3>
+ 800049c:	1007883a 	mov	r3,r2
+ 80004a0:	e0ffef15 	stw	r3,-68(fp)
 	float dsq = pow(a*p2x+b*p2y+c,2) / (a*a+b*b);
- 8000490:	e17fe417 	ldw	r5,-112(fp)
- 8000494:	e13fec17 	ldw	r4,-80(fp)
- 8000498:	800543c0 	call	800543c <__mulsi3>
- 800049c:	1021883a 	mov	r16,r2
- 80004a0:	e17fe517 	ldw	r5,-108(fp)
- 80004a4:	e13fed17 	ldw	r4,-76(fp)
- 80004a8:	800543c0 	call	800543c <__mulsi3>
- 80004ac:	8085883a 	add	r2,r16,r2
- 80004b0:	1009883a 	mov	r4,r2
- 80004b4:	80068040 	call	8006804 <__floatsisf>
- 80004b8:	1007883a 	mov	r3,r2
- 80004bc:	e17fef17 	ldw	r5,-68(fp)
- 80004c0:	1809883a 	mov	r4,r3
- 80004c4:	80054640 	call	8005464 <__addsf3>
- 80004c8:	1007883a 	mov	r3,r2
- 80004cc:	1805883a 	mov	r2,r3
- 80004d0:	1009883a 	mov	r4,r2
- 80004d4:	80090400 	call	8009040 <__extendsfdf2>
- 80004d8:	1011883a 	mov	r8,r2
- 80004dc:	1813883a 	mov	r9,r3
- 80004e0:	000d883a 	mov	r6,zero
- 80004e4:	01d00034 	movhi	r7,16384
- 80004e8:	4009883a 	mov	r4,r8
- 80004ec:	480b883a 	mov	r5,r9
- 80004f0:	800350c0 	call	800350c <pow>
- 80004f4:	1021883a 	mov	r16,r2
- 80004f8:	1823883a 	mov	r17,r3
- 80004fc:	e17fec17 	ldw	r5,-80(fp)
- 8000500:	e13fec17 	ldw	r4,-80(fp)
- 8000504:	800543c0 	call	800543c <__mulsi3>
- 8000508:	1025883a 	mov	r18,r2
- 800050c:	e17fed17 	ldw	r5,-76(fp)
- 8000510:	e13fed17 	ldw	r4,-76(fp)
- 8000514:	800543c0 	call	800543c <__mulsi3>
- 8000518:	9085883a 	add	r2,r18,r2
- 800051c:	1009883a 	mov	r4,r2
- 8000520:	8008f640 	call	8008f64 <__floatsidf>
- 8000524:	1009883a 	mov	r4,r2
- 8000528:	180b883a 	mov	r5,r3
- 800052c:	200d883a 	mov	r6,r4
- 8000530:	280f883a 	mov	r7,r5
- 8000534:	8009883a 	mov	r4,r16
- 8000538:	880b883a 	mov	r5,r17
- 800053c:	80071d40 	call	80071d4 <__divdf3>
- 8000540:	1009883a 	mov	r4,r2
- 8000544:	180b883a 	mov	r5,r3
- 8000548:	2005883a 	mov	r2,r4
- 800054c:	2807883a 	mov	r3,r5
- 8000550:	1009883a 	mov	r4,r2
- 8000554:	180b883a 	mov	r5,r3
- 8000558:	80091500 	call	8009150 <__truncdfsf2>
- 800055c:	1007883a 	mov	r3,r2
- 8000560:	e0fff015 	stw	r3,-64(fp)
+ 80004a4:	e17fe417 	ldw	r5,-112(fp)
+ 80004a8:	e13fec17 	ldw	r4,-80(fp)
+ 80004ac:	800543c0 	call	800543c <__mulsi3>
+ 80004b0:	1021883a 	mov	r16,r2
+ 80004b4:	e17fe517 	ldw	r5,-108(fp)
+ 80004b8:	e13fed17 	ldw	r4,-76(fp)
+ 80004bc:	800543c0 	call	800543c <__mulsi3>
+ 80004c0:	8085883a 	add	r2,r16,r2
+ 80004c4:	1009883a 	mov	r4,r2
+ 80004c8:	80068040 	call	8006804 <__floatsisf>
+ 80004cc:	1007883a 	mov	r3,r2
+ 80004d0:	e17fef17 	ldw	r5,-68(fp)
+ 80004d4:	1809883a 	mov	r4,r3
+ 80004d8:	80054640 	call	8005464 <__addsf3>
+ 80004dc:	1007883a 	mov	r3,r2
+ 80004e0:	1805883a 	mov	r2,r3
+ 80004e4:	1009883a 	mov	r4,r2
+ 80004e8:	80090400 	call	8009040 <__extendsfdf2>
+ 80004ec:	1011883a 	mov	r8,r2
+ 80004f0:	1813883a 	mov	r9,r3
+ 80004f4:	000d883a 	mov	r6,zero
+ 80004f8:	01d00034 	movhi	r7,16384
+ 80004fc:	4009883a 	mov	r4,r8
+ 8000500:	480b883a 	mov	r5,r9
+ 8000504:	800350c0 	call	800350c <pow>
+ 8000508:	1021883a 	mov	r16,r2
+ 800050c:	1823883a 	mov	r17,r3
+ 8000510:	e17fec17 	ldw	r5,-80(fp)
+ 8000514:	e13fec17 	ldw	r4,-80(fp)
+ 8000518:	800543c0 	call	800543c <__mulsi3>
+ 800051c:	1025883a 	mov	r18,r2
+ 8000520:	e17fed17 	ldw	r5,-76(fp)
+ 8000524:	e13fed17 	ldw	r4,-76(fp)
+ 8000528:	800543c0 	call	800543c <__mulsi3>
+ 800052c:	9085883a 	add	r2,r18,r2
+ 8000530:	1009883a 	mov	r4,r2
+ 8000534:	8008f640 	call	8008f64 <__floatsidf>
+ 8000538:	1009883a 	mov	r4,r2
+ 800053c:	180b883a 	mov	r5,r3
+ 8000540:	200d883a 	mov	r6,r4
+ 8000544:	280f883a 	mov	r7,r5
+ 8000548:	8009883a 	mov	r4,r16
+ 800054c:	880b883a 	mov	r5,r17
+ 8000550:	80071d40 	call	80071d4 <__divdf3>
+ 8000554:	1009883a 	mov	r4,r2
+ 8000558:	180b883a 	mov	r5,r3
+ 800055c:	2005883a 	mov	r2,r4
+ 8000560:	2807883a 	mov	r3,r5
+ 8000564:	1009883a 	mov	r4,r2
+ 8000568:	180b883a 	mov	r5,r3
+ 800056c:	80091500 	call	8009150 <__truncdfsf2>
+ 8000570:	1007883a 	mov	r3,r2
+ 8000574:	e0fff015 	stw	r3,-64(fp)
 	if (dsq < 1200){
- 8000564:	015125b4 	movhi	r5,17558
- 8000568:	e13ff017 	ldw	r4,-64(fp)
- 800056c:	8005e280 	call	8005e28 <__lesf2>
- 8000570:	1000020e 	bge	r2,zero,800057c <ai_player+0x310>
+ 8000578:	015125b4 	movhi	r5,17558
+ 800057c:	e13ff017 	ldw	r4,-64(fp)
+ 8000580:	8005e280 	call	8005e28 <__lesf2>
+ 8000584:	1000020e 	bge	r2,zero,8000590 <ai_player+0x324>
 		return 12;
- 8000574:	00800304 	movi	r2,12
- 8000578:	0001a106 	br	8000c00 <ai_player+0x994>
+ 8000588:	00800304 	movi	r2,12
+ 800058c:	00019c06 	br	8000c00 <ai_player+0x994>
 	}
 
 	// aiming
 	int dx = p1x - p2x;
- 800057c:	e0ffe017 	ldw	r3,-128(fp)
- 8000580:	e0bfe417 	ldw	r2,-112(fp)
- 8000584:	1885c83a 	sub	r2,r3,r2
- 8000588:	e0bff115 	stw	r2,-60(fp)
+ 8000590:	e0ffe017 	ldw	r3,-128(fp)
+ 8000594:	e0bfe417 	ldw	r2,-112(fp)
+ 8000598:	1885c83a 	sub	r2,r3,r2
+ 800059c:	e0bff115 	stw	r2,-60(fp)
 	int dx_offset = (dx>0) ? dx - 10 : dx + 10;
- 800058c:	e0bff117 	ldw	r2,-60(fp)
- 8000590:	0080030e 	bge	zero,r2,80005a0 <ai_player+0x334>
- 8000594:	e0bff117 	ldw	r2,-60(fp)
- 8000598:	10bffd84 	addi	r2,r2,-10
- 800059c:	00000206 	br	80005a8 <ai_player+0x33c>
  80005a0:	e0bff117 	ldw	r2,-60(fp)
- 80005a4:	10800284 	addi	r2,r2,10
- 80005a8:	e0bff215 	stw	r2,-56(fp)
+ 80005a4:	0080030e 	bge	zero,r2,80005b4 <ai_player+0x348>
+ 80005a8:	e0bff117 	ldw	r2,-60(fp)
+ 80005ac:	10bffd84 	addi	r2,r2,-10
+ 80005b0:	00000206 	br	80005bc <ai_player+0x350>
+ 80005b4:	e0bff117 	ldw	r2,-60(fp)
+ 80005b8:	10800284 	addi	r2,r2,10
+ 80005bc:	e0bff215 	stw	r2,-56(fp)
 	int dy = p1y - p2y + 5;
- 80005ac:	e0ffe117 	ldw	r3,-124(fp)
- 80005b0:	e0bfe517 	ldw	r2,-108(fp)
- 80005b4:	1885c83a 	sub	r2,r3,r2
- 80005b8:	10800144 	addi	r2,r2,5
- 80005bc:	e0bff315 	stw	r2,-52(fp)
+ 80005c0:	e0ffe117 	ldw	r3,-124(fp)
+ 80005c4:	e0bfe517 	ldw	r2,-108(fp)
+ 80005c8:	1885c83a 	sub	r2,r3,r2
+ 80005cc:	10800144 	addi	r2,r2,5
+ 80005d0:	e0bff315 	stw	r2,-52(fp)
 	float delta = 100;			// shot accuracy metric
- 80005c0:	0090b234 	movhi	r2,17096
- 80005c4:	e0bfda15 	stw	r2,-152(fp)
+ 80005d4:	0090b234 	movhi	r2,17096
+ 80005d8:	e0bfda15 	stw	r2,-152(fp)
 	float delta_sgn = 0;		// shot accuracy metric (signed)
- 80005c8:	e03fdb15 	stw	zero,-148(fp)
+ 80005dc:	e03fdb15 	stw	zero,-148(fp)
 	int power_tgt = 0;
- 80005cc:	e03fdc15 	stw	zero,-144(fp)
+ 80005e0:	e03fdc15 	stw	zero,-144(fp)
 	int angle_tgt = 0;
- 80005d0:	e03fdd15 	stw	zero,-140(fp)
+ 80005e4:	e03fdd15 	stw	zero,-140(fp)
 
 	for (int i = 0; i < 6; i++){
- 80005d4:	e03fde15 	stw	zero,-136(fp)
- 80005d8:	00011706 	br	8000a38 <ai_player+0x7cc>
+ 80005e8:	e03fde15 	stw	zero,-136(fp)
+ 80005ec:	00011706 	br	8000a4c <ai_player+0x7e0>
 		if (delta < tol){ break; }
- 80005dc:	d0a00d17 	ldw	r2,-32716(gp)
- 80005e0:	100b883a 	mov	r5,r2
- 80005e4:	e13fda17 	ldw	r4,-152(fp)
- 80005e8:	8005e280 	call	8005e28 <__lesf2>
- 80005ec:	10011616 	blt	r2,zero,8000a48 <ai_player+0x7dc>
+ 80005f0:	d0a00d17 	ldw	r2,-32716(gp)
+ 80005f4:	100b883a 	mov	r5,r2
+ 80005f8:	e13fda17 	ldw	r4,-152(fp)
+ 80005fc:	8005e280 	call	8005e28 <__lesf2>
+ 8000600:	10011616 	blt	r2,zero,8000a5c <ai_player+0x7f0>
 
 		for (int j = 0; j < 9; j++){
- 80005f0:	e03fdf15 	stw	zero,-132(fp)
- 80005f4:	00010806 	br	8000a18 <ai_player+0x7ac>
+ 8000604:	e03fdf15 	stw	zero,-132(fp)
+ 8000608:	00010806 	br	8000a2c <ai_player+0x7c0>
 			if (delta < tol){ break; }
- 80005f8:	d0a00d17 	ldw	r2,-32716(gp)
- 80005fc:	100b883a 	mov	r5,r2
- 8000600:	e13fda17 	ldw	r4,-152(fp)
- 8000604:	8005e280 	call	8005e28 <__lesf2>
- 8000608:	10010716 	blt	r2,zero,8000a28 <ai_player+0x7bc>
+ 800060c:	d0a00d17 	ldw	r2,-32716(gp)
+ 8000610:	100b883a 	mov	r5,r2
+ 8000614:	e13fda17 	ldw	r4,-152(fp)
+ 8000618:	8005e280 	call	8005e28 <__lesf2>
+ 800061c:	10010716 	blt	r2,zero,8000a3c <ai_player+0x7d0>
 
 			if ( (dx > 20) && (j < 3) ){ continue; }
- 800060c:	e0bff117 	ldw	r2,-60(fp)
- 8000610:	10800550 	cmplti	r2,r2,21
- 8000614:	1000031e 	bne	r2,zero,8000624 <ai_player+0x3b8>
- 8000618:	e0bfdf17 	ldw	r2,-132(fp)
- 800061c:	108000c8 	cmpgei	r2,r2,3
- 8000620:	1000f126 	beq	r2,zero,80009e8 <ai_player+0x77c>
+ 8000620:	e0bff117 	ldw	r2,-60(fp)
+ 8000624:	10800550 	cmplti	r2,r2,21
+ 8000628:	1000031e 	bne	r2,zero,8000638 <ai_player+0x3cc>
+ 800062c:	e0bfdf17 	ldw	r2,-132(fp)
+ 8000630:	108000c8 	cmpgei	r2,r2,3
+ 8000634:	1000f126 	beq	r2,zero,80009fc <ai_player+0x790>
 			else if ( (dx < 20) && (j > 3) ) { continue; }
- 8000624:	e0bff117 	ldw	r2,-60(fp)
- 8000628:	10800508 	cmpgei	r2,r2,20
- 800062c:	1000031e 	bne	r2,zero,800063c <ai_player+0x3d0>
- 8000630:	e0bfdf17 	ldw	r2,-132(fp)
- 8000634:	10800110 	cmplti	r2,r2,4
- 8000638:	1000ed26 	beq	r2,zero,80009f0 <ai_player+0x784>
+ 8000638:	e0bff117 	ldw	r2,-60(fp)
+ 800063c:	10800508 	cmpgei	r2,r2,20
+ 8000640:	1000031e 	bne	r2,zero,8000650 <ai_player+0x3e4>
+ 8000644:	e0bfdf17 	ldw	r2,-132(fp)
+ 8000648:	10800110 	cmplti	r2,r2,4
+ 800064c:	1000ed26 	beq	r2,zero,8000a04 <ai_player+0x798>
 			else if ( (abs(dx) <= tol) && (j != 3) ) { continue; }
- 800063c:	e0bff117 	ldw	r2,-60(fp)
- 8000640:	1000010e 	bge	r2,zero,8000648 <ai_player+0x3dc>
- 8000644:	0085c83a 	sub	r2,zero,r2
- 8000648:	1009883a 	mov	r4,r2
- 800064c:	80068040 	call	8006804 <__floatsisf>
- 8000650:	1007883a 	mov	r3,r2
- 8000654:	d0a00d17 	ldw	r2,-32716(gp)
- 8000658:	100b883a 	mov	r5,r2
- 800065c:	1809883a 	mov	r4,r3
- 8000660:	8005e280 	call	8005e28 <__lesf2>
- 8000664:	00800316 	blt	zero,r2,8000674 <ai_player+0x408>
- 8000668:	e0bfdf17 	ldw	r2,-132(fp)
- 800066c:	108000e0 	cmpeqi	r2,r2,3
- 8000670:	1000e126 	beq	r2,zero,80009f8 <ai_player+0x78c>
+ 8000650:	e0bff117 	ldw	r2,-60(fp)
+ 8000654:	1000010e 	bge	r2,zero,800065c <ai_player+0x3f0>
+ 8000658:	0085c83a 	sub	r2,zero,r2
+ 800065c:	1009883a 	mov	r4,r2
+ 8000660:	80068040 	call	8006804 <__floatsisf>
+ 8000664:	1007883a 	mov	r3,r2
+ 8000668:	d0a00d17 	ldw	r2,-32716(gp)
+ 800066c:	100b883a 	mov	r5,r2
+ 8000670:	1809883a 	mov	r4,r3
+ 8000674:	8005e280 	call	8005e28 <__lesf2>
+ 8000678:	00800316 	blt	zero,r2,8000688 <ai_player+0x41c>
+ 800067c:	e0bfdf17 	ldw	r2,-132(fp)
+ 8000680:	108000e0 	cmpeqi	r2,r2,3
+ 8000684:	1000e126 	beq	r2,zero,8000a0c <ai_player+0x7a0>
 
 			// implied a = 1/12 = 1/2 * gravity, where gravity = 1/6
 			int b = (p1vy - vy_lookup[i][j]);
- 8000674:	04020074 	movhi	r16,2049
- 8000678:	8419f604 	addi	r16,r16,26584
- 800067c:	e0bfde17 	ldw	r2,-136(fp)
- 8000680:	01400244 	movi	r5,9
- 8000684:	1009883a 	mov	r4,r2
- 8000688:	800543c0 	call	800543c <__mulsi3>
- 800068c:	1007883a 	mov	r3,r2
- 8000690:	e0bfdf17 	ldw	r2,-132(fp)
- 8000694:	1885883a 	add	r2,r3,r2
- 8000698:	1085883a 	add	r2,r2,r2
- 800069c:	1085883a 	add	r2,r2,r2
- 80006a0:	8085883a 	add	r2,r16,r2
- 80006a4:	10800017 	ldw	r2,0(r2)
- 80006a8:	e0ffe317 	ldw	r3,-116(fp)
- 80006ac:	1885c83a 	sub	r2,r3,r2
- 80006b0:	e0bff415 	stw	r2,-48(fp)
+ 8000688:	04020074 	movhi	r16,2049
+ 800068c:	8419f604 	addi	r16,r16,26584
+ 8000690:	e0bfde17 	ldw	r2,-136(fp)
+ 8000694:	01400244 	movi	r5,9
+ 8000698:	1009883a 	mov	r4,r2
+ 800069c:	800543c0 	call	800543c <__mulsi3>
+ 80006a0:	1007883a 	mov	r3,r2
+ 80006a4:	e0bfdf17 	ldw	r2,-132(fp)
+ 80006a8:	1885883a 	add	r2,r3,r2
+ 80006ac:	1085883a 	add	r2,r2,r2
+ 80006b0:	1085883a 	add	r2,r2,r2
+ 80006b4:	8085883a 	add	r2,r16,r2
+ 80006b8:	10800017 	ldw	r2,0(r2)
+ 80006bc:	e0ffe317 	ldw	r3,-116(fp)
+ 80006c0:	1885c83a 	sub	r2,r3,r2
+ 80006c4:	e0bff415 	stw	r2,-48(fp)
 			int c = -dy;
- 80006b4:	e0bff317 	ldw	r2,-52(fp)
- 80006b8:	0085c83a 	sub	r2,zero,r2
- 80006bc:	e0bff515 	stw	r2,-44(fp)
+ 80006c8:	e0bff317 	ldw	r2,-52(fp)
+ 80006cc:	0085c83a 	sub	r2,zero,r2
+ 80006d0:	e0bff515 	stw	r2,-44(fp)
 
 			int det = b*b-c/3;
- 80006c0:	e17ff417 	ldw	r5,-48(fp)
- 80006c4:	e13ff417 	ldw	r4,-48(fp)
- 80006c8:	800543c0 	call	800543c <__mulsi3>
- 80006cc:	1021883a 	mov	r16,r2
- 80006d0:	e0bff517 	ldw	r2,-44(fp)
- 80006d4:	014000c4 	movi	r5,3
- 80006d8:	1009883a 	mov	r4,r2
- 80006dc:	80052880 	call	8005288 <__divsi3>
- 80006e0:	8085c83a 	sub	r2,r16,r2
- 80006e4:	e0bff615 	stw	r2,-40(fp)
+ 80006d4:	e17ff417 	ldw	r5,-48(fp)
+ 80006d8:	e13ff417 	ldw	r4,-48(fp)
+ 80006dc:	800543c0 	call	800543c <__mulsi3>
+ 80006e0:	1021883a 	mov	r16,r2
+ 80006e4:	e0bff517 	ldw	r2,-44(fp)
+ 80006e8:	014000c4 	movi	r5,3
+ 80006ec:	1009883a 	mov	r4,r2
+ 80006f0:	80052880 	call	8005288 <__divsi3>
+ 80006f4:	8085c83a 	sub	r2,r16,r2
+ 80006f8:	e0bff615 	stw	r2,-40(fp)
 			if (det <= 0){ continue; }
- 80006e8:	e0bff617 	ldw	r2,-40(fp)
- 80006ec:	0080c40e 	bge	zero,r2,8000a00 <ai_player+0x794>
+ 80006fc:	e0bff617 	ldw	r2,-40(fp)
+ 8000700:	0080c40e 	bge	zero,r2,8000a14 <ai_player+0x7a8>
 
 			float t1 = (-b+sqrt((float)det)) * 6;
- 80006f0:	e0bff417 	ldw	r2,-48(fp)
- 80006f4:	0085c83a 	sub	r2,zero,r2
- 80006f8:	1009883a 	mov	r4,r2
- 80006fc:	8008f640 	call	8008f64 <__floatsidf>
- 8000700:	1021883a 	mov	r16,r2
- 8000704:	1823883a 	mov	r17,r3
- 8000708:	e13ff617 	ldw	r4,-40(fp)
- 800070c:	80068040 	call	8006804 <__floatsisf>
- 8000710:	1007883a 	mov	r3,r2
- 8000714:	1809883a 	mov	r4,r3
- 8000718:	80090400 	call	8009040 <__extendsfdf2>
- 800071c:	100b883a 	mov	r5,r2
- 8000720:	180d883a 	mov	r6,r3
- 8000724:	2809883a 	mov	r4,r5
- 8000728:	300b883a 	mov	r5,r6
- 800072c:	80039d00 	call	80039d0 <sqrt>
- 8000730:	1009883a 	mov	r4,r2
- 8000734:	180b883a 	mov	r5,r3
- 8000738:	200d883a 	mov	r6,r4
- 800073c:	280f883a 	mov	r7,r5
- 8000740:	8009883a 	mov	r4,r16
- 8000744:	880b883a 	mov	r5,r17
- 8000748:	80069280 	call	8006928 <__adddf3>
- 800074c:	1009883a 	mov	r4,r2
- 8000750:	180b883a 	mov	r5,r3
- 8000754:	2005883a 	mov	r2,r4
- 8000758:	2807883a 	mov	r3,r5
- 800075c:	000d883a 	mov	r6,zero
- 8000760:	01d00634 	movhi	r7,16408
- 8000764:	1009883a 	mov	r4,r2
- 8000768:	180b883a 	mov	r5,r3
- 800076c:	8007dfc0 	call	8007dfc <__muldf3>
- 8000770:	1009883a 	mov	r4,r2
- 8000774:	180b883a 	mov	r5,r3
- 8000778:	2005883a 	mov	r2,r4
- 800077c:	2807883a 	mov	r3,r5
- 8000780:	1009883a 	mov	r4,r2
- 8000784:	180b883a 	mov	r5,r3
- 8000788:	80091500 	call	8009150 <__truncdfsf2>
- 800078c:	1007883a 	mov	r3,r2
- 8000790:	e0fff715 	stw	r3,-36(fp)
+ 8000704:	e0bff417 	ldw	r2,-48(fp)
+ 8000708:	0085c83a 	sub	r2,zero,r2
+ 800070c:	1009883a 	mov	r4,r2
+ 8000710:	8008f640 	call	8008f64 <__floatsidf>
+ 8000714:	1021883a 	mov	r16,r2
+ 8000718:	1823883a 	mov	r17,r3
+ 800071c:	e13ff617 	ldw	r4,-40(fp)
+ 8000720:	80068040 	call	8006804 <__floatsisf>
+ 8000724:	1007883a 	mov	r3,r2
+ 8000728:	1809883a 	mov	r4,r3
+ 800072c:	80090400 	call	8009040 <__extendsfdf2>
+ 8000730:	100b883a 	mov	r5,r2
+ 8000734:	180d883a 	mov	r6,r3
+ 8000738:	2809883a 	mov	r4,r5
+ 800073c:	300b883a 	mov	r5,r6
+ 8000740:	80039d00 	call	80039d0 <sqrt>
+ 8000744:	1009883a 	mov	r4,r2
+ 8000748:	180b883a 	mov	r5,r3
+ 800074c:	200d883a 	mov	r6,r4
+ 8000750:	280f883a 	mov	r7,r5
+ 8000754:	8009883a 	mov	r4,r16
+ 8000758:	880b883a 	mov	r5,r17
+ 800075c:	80069280 	call	8006928 <__adddf3>
+ 8000760:	1009883a 	mov	r4,r2
+ 8000764:	180b883a 	mov	r5,r3
+ 8000768:	2005883a 	mov	r2,r4
+ 800076c:	2807883a 	mov	r3,r5
+ 8000770:	000d883a 	mov	r6,zero
+ 8000774:	01d00634 	movhi	r7,16408
+ 8000778:	1009883a 	mov	r4,r2
+ 800077c:	180b883a 	mov	r5,r3
+ 8000780:	8007dfc0 	call	8007dfc <__muldf3>
+ 8000784:	1009883a 	mov	r4,r2
+ 8000788:	180b883a 	mov	r5,r3
+ 800078c:	2005883a 	mov	r2,r4
+ 8000790:	2807883a 	mov	r3,r5
+ 8000794:	1009883a 	mov	r4,r2
+ 8000798:	180b883a 	mov	r5,r3
+ 800079c:	80091500 	call	8009150 <__truncdfsf2>
+ 80007a0:	1007883a 	mov	r3,r2
+ 80007a4:	e0fff715 	stw	r3,-36(fp)
 			if (t1 < 0){ continue; }
- 8000794:	000b883a 	mov	r5,zero
- 8000798:	e13ff717 	ldw	r4,-36(fp)
- 800079c:	8005e280 	call	8005e28 <__lesf2>
- 80007a0:	10009916 	blt	r2,zero,8000a08 <ai_player+0x79c>
+ 80007a8:	000b883a 	mov	r5,zero
+ 80007ac:	e13ff717 	ldw	r4,-36(fp)
+ 80007b0:	8005e280 	call	8005e28 <__lesf2>
+ 80007b4:	10009916 	blt	r2,zero,8000a1c <ai_player+0x7b0>
 			float delta1 = t1 * (vx_lookup[i][j]-p1vx) - dx_offset;
- 80007a4:	04020074 	movhi	r16,2049
- 80007a8:	841a3e04 	addi	r16,r16,26872
- 80007ac:	e0bfde17 	ldw	r2,-136(fp)
- 80007b0:	01400244 	movi	r5,9
- 80007b4:	1009883a 	mov	r4,r2
- 80007b8:	800543c0 	call	800543c <__mulsi3>
- 80007bc:	1007883a 	mov	r3,r2
- 80007c0:	e0bfdf17 	ldw	r2,-132(fp)
- 80007c4:	1885883a 	add	r2,r3,r2
- 80007c8:	1085883a 	add	r2,r2,r2
- 80007cc:	1085883a 	add	r2,r2,r2
- 80007d0:	8085883a 	add	r2,r16,r2
- 80007d4:	10c00017 	ldw	r3,0(r2)
- 80007d8:	e0bfe217 	ldw	r2,-120(fp)
- 80007dc:	1885c83a 	sub	r2,r3,r2
- 80007e0:	1009883a 	mov	r4,r2
- 80007e4:	80068040 	call	8006804 <__floatsisf>
- 80007e8:	1007883a 	mov	r3,r2
- 80007ec:	e17ff717 	ldw	r5,-36(fp)
- 80007f0:	1809883a 	mov	r4,r3
- 80007f4:	8005ef00 	call	8005ef0 <__mulsf3>
- 80007f8:	1007883a 	mov	r3,r2
- 80007fc:	1821883a 	mov	r16,r3
- 8000800:	e13ff217 	ldw	r4,-56(fp)
- 8000804:	80068040 	call	8006804 <__floatsisf>
- 8000808:	1007883a 	mov	r3,r2
- 800080c:	180b883a 	mov	r5,r3
- 8000810:	8009883a 	mov	r4,r16
- 8000814:	80063200 	call	8006320 <__subsf3>
- 8000818:	1007883a 	mov	r3,r2
- 800081c:	e0fff815 	stw	r3,-32(fp)
+ 80007b8:	04020074 	movhi	r16,2049
+ 80007bc:	841a3e04 	addi	r16,r16,26872
+ 80007c0:	e0bfde17 	ldw	r2,-136(fp)
+ 80007c4:	01400244 	movi	r5,9
+ 80007c8:	1009883a 	mov	r4,r2
+ 80007cc:	800543c0 	call	800543c <__mulsi3>
+ 80007d0:	1007883a 	mov	r3,r2
+ 80007d4:	e0bfdf17 	ldw	r2,-132(fp)
+ 80007d8:	1885883a 	add	r2,r3,r2
+ 80007dc:	1085883a 	add	r2,r2,r2
+ 80007e0:	1085883a 	add	r2,r2,r2
+ 80007e4:	8085883a 	add	r2,r16,r2
+ 80007e8:	10c00017 	ldw	r3,0(r2)
+ 80007ec:	e0bfe217 	ldw	r2,-120(fp)
+ 80007f0:	1885c83a 	sub	r2,r3,r2
+ 80007f4:	1009883a 	mov	r4,r2
+ 80007f8:	80068040 	call	8006804 <__floatsisf>
+ 80007fc:	1007883a 	mov	r3,r2
+ 8000800:	e17ff717 	ldw	r5,-36(fp)
+ 8000804:	1809883a 	mov	r4,r3
+ 8000808:	8005ef00 	call	8005ef0 <__mulsf3>
+ 800080c:	1007883a 	mov	r3,r2
+ 8000810:	1821883a 	mov	r16,r3
+ 8000814:	e13ff217 	ldw	r4,-56(fp)
+ 8000818:	80068040 	call	8006804 <__floatsisf>
+ 800081c:	1007883a 	mov	r3,r2
+ 8000820:	180b883a 	mov	r5,r3
+ 8000824:	8009883a 	mov	r4,r16
+ 8000828:	80063200 	call	8006320 <__subsf3>
+ 800082c:	1007883a 	mov	r3,r2
+ 8000830:	e0fff815 	stw	r3,-32(fp)
 
 			float t2 = (-b-sqrt((float)det)) * 6;
- 8000820:	e0bff417 	ldw	r2,-48(fp)
- 8000824:	0085c83a 	sub	r2,zero,r2
- 8000828:	1009883a 	mov	r4,r2
- 800082c:	8008f640 	call	8008f64 <__floatsidf>
- 8000830:	1021883a 	mov	r16,r2
- 8000834:	1823883a 	mov	r17,r3
- 8000838:	e13ff617 	ldw	r4,-40(fp)
- 800083c:	80068040 	call	8006804 <__floatsisf>
- 8000840:	1007883a 	mov	r3,r2
- 8000844:	1809883a 	mov	r4,r3
- 8000848:	80090400 	call	8009040 <__extendsfdf2>
- 800084c:	100b883a 	mov	r5,r2
- 8000850:	180d883a 	mov	r6,r3
- 8000854:	2809883a 	mov	r4,r5
- 8000858:	300b883a 	mov	r5,r6
- 800085c:	80039d00 	call	80039d0 <sqrt>
- 8000860:	1009883a 	mov	r4,r2
- 8000864:	180b883a 	mov	r5,r3
- 8000868:	200d883a 	mov	r6,r4
- 800086c:	280f883a 	mov	r7,r5
- 8000870:	8009883a 	mov	r4,r16
- 8000874:	880b883a 	mov	r5,r17
- 8000878:	80086680 	call	8008668 <__subdf3>
- 800087c:	1009883a 	mov	r4,r2
- 8000880:	180b883a 	mov	r5,r3
- 8000884:	2005883a 	mov	r2,r4
- 8000888:	2807883a 	mov	r3,r5
- 800088c:	000d883a 	mov	r6,zero
- 8000890:	01d00634 	movhi	r7,16408
- 8000894:	1009883a 	mov	r4,r2
- 8000898:	180b883a 	mov	r5,r3
- 800089c:	8007dfc0 	call	8007dfc <__muldf3>
- 80008a0:	1009883a 	mov	r4,r2
- 80008a4:	180b883a 	mov	r5,r3
- 80008a8:	2005883a 	mov	r2,r4
- 80008ac:	2807883a 	mov	r3,r5
- 80008b0:	1009883a 	mov	r4,r2
- 80008b4:	180b883a 	mov	r5,r3
- 80008b8:	80091500 	call	8009150 <__truncdfsf2>
- 80008bc:	1007883a 	mov	r3,r2
- 80008c0:	e0fff915 	stw	r3,-28(fp)
+ 8000834:	e0bff417 	ldw	r2,-48(fp)
+ 8000838:	0085c83a 	sub	r2,zero,r2
+ 800083c:	1009883a 	mov	r4,r2
+ 8000840:	8008f640 	call	8008f64 <__floatsidf>
+ 8000844:	1021883a 	mov	r16,r2
+ 8000848:	1823883a 	mov	r17,r3
+ 800084c:	e13ff617 	ldw	r4,-40(fp)
+ 8000850:	80068040 	call	8006804 <__floatsisf>
+ 8000854:	1007883a 	mov	r3,r2
+ 8000858:	1809883a 	mov	r4,r3
+ 800085c:	80090400 	call	8009040 <__extendsfdf2>
+ 8000860:	100b883a 	mov	r5,r2
+ 8000864:	180d883a 	mov	r6,r3
+ 8000868:	2809883a 	mov	r4,r5
+ 800086c:	300b883a 	mov	r5,r6
+ 8000870:	80039d00 	call	80039d0 <sqrt>
+ 8000874:	1009883a 	mov	r4,r2
+ 8000878:	180b883a 	mov	r5,r3
+ 800087c:	200d883a 	mov	r6,r4
+ 8000880:	280f883a 	mov	r7,r5
+ 8000884:	8009883a 	mov	r4,r16
+ 8000888:	880b883a 	mov	r5,r17
+ 800088c:	80086680 	call	8008668 <__subdf3>
+ 8000890:	1009883a 	mov	r4,r2
+ 8000894:	180b883a 	mov	r5,r3
+ 8000898:	2005883a 	mov	r2,r4
+ 800089c:	2807883a 	mov	r3,r5
+ 80008a0:	000d883a 	mov	r6,zero
+ 80008a4:	01d00634 	movhi	r7,16408
+ 80008a8:	1009883a 	mov	r4,r2
+ 80008ac:	180b883a 	mov	r5,r3
+ 80008b0:	8007dfc0 	call	8007dfc <__muldf3>
+ 80008b4:	1009883a 	mov	r4,r2
+ 80008b8:	180b883a 	mov	r5,r3
+ 80008bc:	2005883a 	mov	r2,r4
+ 80008c0:	2807883a 	mov	r3,r5
+ 80008c4:	1009883a 	mov	r4,r2
+ 80008c8:	180b883a 	mov	r5,r3
+ 80008cc:	80091500 	call	8009150 <__truncdfsf2>
+ 80008d0:	1007883a 	mov	r3,r2
+ 80008d4:	e0fff915 	stw	r3,-28(fp)
 			float delta2 = (t2>0)? t2 * (vx_lookup[i][j]-p1vx) - dx_offset : delta1;
- 80008c4:	000b883a 	mov	r5,zero
- 80008c8:	e13ff917 	ldw	r4,-28(fp)
- 80008cc:	8005d6c0 	call	8005d6c <__gesf2>
- 80008d0:	0080200e 	bge	zero,r2,8000954 <ai_player+0x6e8>
- 80008d4:	04020074 	movhi	r16,2049
- 80008d8:	841a3e04 	addi	r16,r16,26872
- 80008dc:	e0bfde17 	ldw	r2,-136(fp)
- 80008e0:	01400244 	movi	r5,9
- 80008e4:	1009883a 	mov	r4,r2
- 80008e8:	800543c0 	call	800543c <__mulsi3>
- 80008ec:	1007883a 	mov	r3,r2
- 80008f0:	e0bfdf17 	ldw	r2,-132(fp)
- 80008f4:	1885883a 	add	r2,r3,r2
- 80008f8:	1085883a 	add	r2,r2,r2
- 80008fc:	1085883a 	add	r2,r2,r2
- 8000900:	8085883a 	add	r2,r16,r2
- 8000904:	10c00017 	ldw	r3,0(r2)
- 8000908:	e0bfe217 	ldw	r2,-120(fp)
- 800090c:	1885c83a 	sub	r2,r3,r2
- 8000910:	1009883a 	mov	r4,r2
- 8000914:	80068040 	call	8006804 <__floatsisf>
- 8000918:	1007883a 	mov	r3,r2
- 800091c:	e17ff917 	ldw	r5,-28(fp)
- 8000920:	1809883a 	mov	r4,r3
- 8000924:	8005ef00 	call	8005ef0 <__mulsf3>
- 8000928:	1007883a 	mov	r3,r2
- 800092c:	1821883a 	mov	r16,r3
- 8000930:	e13ff217 	ldw	r4,-56(fp)
- 8000934:	80068040 	call	8006804 <__floatsisf>
- 8000938:	1007883a 	mov	r3,r2
- 800093c:	180b883a 	mov	r5,r3
- 8000940:	8009883a 	mov	r4,r16
- 8000944:	80063200 	call	8006320 <__subsf3>
- 8000948:	1007883a 	mov	r3,r2
- 800094c:	1805883a 	mov	r2,r3
- 8000950:	00000106 	br	8000958 <ai_player+0x6ec>
- 8000954:	e0bff817 	ldw	r2,-32(fp)
- 8000958:	e0bffa15 	stw	r2,-24(fp)
+ 80008d8:	000b883a 	mov	r5,zero
+ 80008dc:	e13ff917 	ldw	r4,-28(fp)
+ 80008e0:	8005d6c0 	call	8005d6c <__gesf2>
+ 80008e4:	0080200e 	bge	zero,r2,8000968 <ai_player+0x6fc>
+ 80008e8:	04020074 	movhi	r16,2049
+ 80008ec:	841a3e04 	addi	r16,r16,26872
+ 80008f0:	e0bfde17 	ldw	r2,-136(fp)
+ 80008f4:	01400244 	movi	r5,9
+ 80008f8:	1009883a 	mov	r4,r2
+ 80008fc:	800543c0 	call	800543c <__mulsi3>
+ 8000900:	1007883a 	mov	r3,r2
+ 8000904:	e0bfdf17 	ldw	r2,-132(fp)
+ 8000908:	1885883a 	add	r2,r3,r2
+ 800090c:	1085883a 	add	r2,r2,r2
+ 8000910:	1085883a 	add	r2,r2,r2
+ 8000914:	8085883a 	add	r2,r16,r2
+ 8000918:	10c00017 	ldw	r3,0(r2)
+ 800091c:	e0bfe217 	ldw	r2,-120(fp)
+ 8000920:	1885c83a 	sub	r2,r3,r2
+ 8000924:	1009883a 	mov	r4,r2
+ 8000928:	80068040 	call	8006804 <__floatsisf>
+ 800092c:	1007883a 	mov	r3,r2
+ 8000930:	e17ff917 	ldw	r5,-28(fp)
+ 8000934:	1809883a 	mov	r4,r3
+ 8000938:	8005ef00 	call	8005ef0 <__mulsf3>
+ 800093c:	1007883a 	mov	r3,r2
+ 8000940:	1821883a 	mov	r16,r3
+ 8000944:	e13ff217 	ldw	r4,-56(fp)
+ 8000948:	80068040 	call	8006804 <__floatsisf>
+ 800094c:	1007883a 	mov	r3,r2
+ 8000950:	180b883a 	mov	r5,r3
+ 8000954:	8009883a 	mov	r4,r16
+ 8000958:	80063200 	call	8006320 <__subsf3>
+ 800095c:	1007883a 	mov	r3,r2
+ 8000960:	1805883a 	mov	r2,r3
+ 8000964:	00000106 	br	800096c <ai_player+0x700>
+ 8000968:	e0bff817 	ldw	r2,-32(fp)
+ 800096c:	e0bffa15 	stw	r2,-24(fp)
 
 			float delta0 = (fabs(delta1)<fabs(delta2)) ? delta1 : delta2;
- 800095c:	e0fff817 	ldw	r3,-32(fp)
- 8000960:	00a00034 	movhi	r2,32768
- 8000964:	10bfffc4 	addi	r2,r2,-1
- 8000968:	1888703a 	and	r4,r3,r2
- 800096c:	e0fffa17 	ldw	r3,-24(fp)
- 8000970:	00a00034 	movhi	r2,32768
- 8000974:	10bfffc4 	addi	r2,r2,-1
- 8000978:	1884703a 	and	r2,r3,r2
- 800097c:	100b883a 	mov	r5,r2
- 8000980:	8005e280 	call	8005e28 <__lesf2>
- 8000984:	1000020e 	bge	r2,zero,8000990 <ai_player+0x724>
- 8000988:	e0bff817 	ldw	r2,-32(fp)
- 800098c:	00000106 	br	8000994 <ai_player+0x728>
- 8000990:	e0bffa17 	ldw	r2,-24(fp)
- 8000994:	e0bffb15 	stw	r2,-20(fp)
+ 8000970:	e0fff817 	ldw	r3,-32(fp)
+ 8000974:	00a00034 	movhi	r2,32768
+ 8000978:	10bfffc4 	addi	r2,r2,-1
+ 800097c:	1888703a 	and	r4,r3,r2
+ 8000980:	e0fffa17 	ldw	r3,-24(fp)
+ 8000984:	00a00034 	movhi	r2,32768
+ 8000988:	10bfffc4 	addi	r2,r2,-1
+ 800098c:	1884703a 	and	r2,r3,r2
+ 8000990:	100b883a 	mov	r5,r2
+ 8000994:	8005e280 	call	8005e28 <__lesf2>
+ 8000998:	1000020e 	bge	r2,zero,80009a4 <ai_player+0x738>
+ 800099c:	e0bff817 	ldw	r2,-32(fp)
+ 80009a0:	00000106 	br	80009a8 <ai_player+0x73c>
+ 80009a4:	e0bffa17 	ldw	r2,-24(fp)
+ 80009a8:	e0bffb15 	stw	r2,-20(fp)
 
 			if (fabs(delta0) < delta){
- 8000998:	e0fffb17 	ldw	r3,-20(fp)
- 800099c:	00a00034 	movhi	r2,32768
- 80009a0:	10bfffc4 	addi	r2,r2,-1
- 80009a4:	1884703a 	and	r2,r3,r2
- 80009a8:	e17fda17 	ldw	r5,-152(fp)
- 80009ac:	1009883a 	mov	r4,r2
- 80009b0:	8005e280 	call	8005e28 <__lesf2>
- 80009b4:	1000150e 	bge	r2,zero,8000a0c <ai_player+0x7a0>
+ 80009ac:	e0fffb17 	ldw	r3,-20(fp)
+ 80009b0:	00a00034 	movhi	r2,32768
+ 80009b4:	10bfffc4 	addi	r2,r2,-1
+ 80009b8:	1884703a 	and	r2,r3,r2
+ 80009bc:	e17fda17 	ldw	r5,-152(fp)
+ 80009c0:	1009883a 	mov	r4,r2
+ 80009c4:	8005e280 	call	8005e28 <__lesf2>
+ 80009c8:	1000150e 	bge	r2,zero,8000a20 <ai_player+0x7b4>
 				delta = fabs(delta0);
- 80009b8:	e0fffb17 	ldw	r3,-20(fp)
- 80009bc:	00a00034 	movhi	r2,32768
- 80009c0:	10bfffc4 	addi	r2,r2,-1
- 80009c4:	1884703a 	and	r2,r3,r2
- 80009c8:	e0bfda15 	stw	r2,-152(fp)
+ 80009cc:	e0fffb17 	ldw	r3,-20(fp)
+ 80009d0:	00a00034 	movhi	r2,32768
+ 80009d4:	10bfffc4 	addi	r2,r2,-1
+ 80009d8:	1884703a 	and	r2,r3,r2
+ 80009dc:	e0bfda15 	stw	r2,-152(fp)
 				delta_sgn = delta0;
- 80009cc:	e0bffb17 	ldw	r2,-20(fp)
- 80009d0:	e0bfdb15 	stw	r2,-148(fp)
+ 80009e0:	e0bffb17 	ldw	r2,-20(fp)
+ 80009e4:	e0bfdb15 	stw	r2,-148(fp)
 				power_tgt = i;
- 80009d4:	e0bfde17 	ldw	r2,-136(fp)
- 80009d8:	e0bfdc15 	stw	r2,-144(fp)
+ 80009e8:	e0bfde17 	ldw	r2,-136(fp)
+ 80009ec:	e0bfdc15 	stw	r2,-144(fp)
 				angle_tgt = j;
- 80009dc:	e0bfdf17 	ldw	r2,-132(fp)
- 80009e0:	e0bfdd15 	stw	r2,-140(fp)
- 80009e4:	00000906 	br	8000a0c <ai_player+0x7a0>
+ 80009f0:	e0bfdf17 	ldw	r2,-132(fp)
+ 80009f4:	e0bfdd15 	stw	r2,-140(fp)
+ 80009f8:	00000906 	br	8000a20 <ai_player+0x7b4>
 		if (delta < tol){ break; }
 
 		for (int j = 0; j < 9; j++){
 			if (delta < tol){ break; }
 
 			if ( (dx > 20) && (j < 3) ){ continue; }
- 80009e8:	0001883a 	nop
- 80009ec:	00000706 	br	8000a0c <ai_player+0x7a0>
+ 80009fc:	0001883a 	nop
+ 8000a00:	00000706 	br	8000a20 <ai_player+0x7b4>
 			else if ( (dx < 20) && (j > 3) ) { continue; }
- 80009f0:	0001883a 	nop
- 80009f4:	00000506 	br	8000a0c <ai_player+0x7a0>
+ 8000a04:	0001883a 	nop
+ 8000a08:	00000506 	br	8000a20 <ai_player+0x7b4>
 			else if ( (abs(dx) <= tol) && (j != 3) ) { continue; }
- 80009f8:	0001883a 	nop
- 80009fc:	00000306 	br	8000a0c <ai_player+0x7a0>
+ 8000a0c:	0001883a 	nop
+ 8000a10:	00000306 	br	8000a20 <ai_player+0x7b4>
 			// implied a = 1/12 = 1/2 * gravity, where gravity = 1/6
 			int b = (p1vy - vy_lookup[i][j]);
 			int c = -dy;
 
 			int det = b*b-c/3;
 			if (det <= 0){ continue; }
- 8000a00:	0001883a 	nop
- 8000a04:	00000106 	br	8000a0c <ai_player+0x7a0>
+ 8000a14:	0001883a 	nop
+ 8000a18:	00000106 	br	8000a20 <ai_player+0x7b4>
 
 			float t1 = (-b+sqrt((float)det)) * 6;
 			if (t1 < 0){ continue; }
- 8000a08:	0001883a 	nop
+ 8000a1c:	0001883a 	nop
 	int angle_tgt = 0;
 
 	for (int i = 0; i < 6; i++){
 		if (delta < tol){ break; }
 
 		for (int j = 0; j < 9; j++){
- 8000a0c:	e0bfdf17 	ldw	r2,-132(fp)
- 8000a10:	10800044 	addi	r2,r2,1
- 8000a14:	e0bfdf15 	stw	r2,-132(fp)
- 8000a18:	e0bfdf17 	ldw	r2,-132(fp)
- 8000a1c:	10800250 	cmplti	r2,r2,9
- 8000a20:	103ef51e 	bne	r2,zero,80005f8 <__alt_data_end+0xfc0005f8>
- 8000a24:	00000106 	br	8000a2c <ai_player+0x7c0>
+ 8000a20:	e0bfdf17 	ldw	r2,-132(fp)
+ 8000a24:	10800044 	addi	r2,r2,1
+ 8000a28:	e0bfdf15 	stw	r2,-132(fp)
+ 8000a2c:	e0bfdf17 	ldw	r2,-132(fp)
+ 8000a30:	10800250 	cmplti	r2,r2,9
+ 8000a34:	103ef51e 	bne	r2,zero,800060c <__alt_data_end+0xfc00060c>
+ 8000a38:	00000106 	br	8000a40 <ai_player+0x7d4>
 			if (delta < tol){ break; }
- 8000a28:	0001883a 	nop
+ 8000a3c:	0001883a 	nop
 	float delta = 100;			// shot accuracy metric
 	float delta_sgn = 0;		// shot accuracy metric (signed)
 	int power_tgt = 0;
 	int angle_tgt = 0;
 
 	for (int i = 0; i < 6; i++){
- 8000a2c:	e0bfde17 	ldw	r2,-136(fp)
- 8000a30:	10800044 	addi	r2,r2,1
- 8000a34:	e0bfde15 	stw	r2,-136(fp)
- 8000a38:	e0bfde17 	ldw	r2,-136(fp)
- 8000a3c:	10800190 	cmplti	r2,r2,6
- 8000a40:	103ee61e 	bne	r2,zero,80005dc <__alt_data_end+0xfc0005dc>
- 8000a44:	00000106 	br	8000a4c <ai_player+0x7e0>
+ 8000a40:	e0bfde17 	ldw	r2,-136(fp)
+ 8000a44:	10800044 	addi	r2,r2,1
+ 8000a48:	e0bfde15 	stw	r2,-136(fp)
+ 8000a4c:	e0bfde17 	ldw	r2,-136(fp)
+ 8000a50:	10800190 	cmplti	r2,r2,6
+ 8000a54:	103ee61e 	bne	r2,zero,80005f0 <__alt_data_end+0xfc0005f0>
+ 8000a58:	00000106 	br	8000a60 <ai_player+0x7f4>
 		if (delta < tol){ break; }
- 8000a48:	0001883a 	nop
+ 8000a5c:	0001883a 	nop
 			}
 		}
 	}
 
 	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta_sgn = %f\n",
 			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
- 8000a4c:	d0a00a17 	ldw	r2,-32728(gp)
- 8000a50:	1080000b 	ldhu	r2,0(r2)
-				angle_tgt = j;
-			}
-		}
-	}
-
-	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta_sgn = %f\n",
- 8000a54:	147fffcc 	andi	r17,r2,65535
- 8000a58:	8c60001c 	xori	r17,r17,32768
- 8000a5c:	8c600004 	addi	r17,r17,-32768
-			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
- 8000a60:	d0a00b17 	ldw	r2,-32724(gp)
+ 8000a60:	d0a00a17 	ldw	r2,-32728(gp)
  8000a64:	1080000b 	ldhu	r2,0(r2)
 				angle_tgt = j;
 			}
@@ -1702,41 +1699,44 @@ BYTE ai_player(BYTE key) {
 	}
 
 	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta_sgn = %f\n",
- 8000a68:	14bfffcc 	andi	r18,r2,65535
- 8000a6c:	94a0001c 	xori	r18,r18,32768
- 8000a70:	94a00004 	addi	r18,r18,-32768
- 8000a74:	d426fb17 	ldw	r16,-25620(gp)
- 8000a78:	e13fdb17 	ldw	r4,-148(fp)
- 8000a7c:	80090400 	call	8009040 <__extendsfdf2>
- 8000a80:	1009883a 	mov	r4,r2
- 8000a84:	180b883a 	mov	r5,r3
- 8000a88:	d9000215 	stw	r4,8(sp)
- 8000a8c:	d9400315 	stw	r5,12(sp)
- 8000a90:	dc000115 	stw	r16,4(sp)
- 8000a94:	e0bfdd17 	ldw	r2,-140(fp)
- 8000a98:	d8800015 	stw	r2,0(sp)
- 8000a9c:	900f883a 	mov	r7,r18
- 8000aa0:	e1bfdc17 	ldw	r6,-144(fp)
- 8000aa4:	880b883a 	mov	r5,r17
- 8000aa8:	01020074 	movhi	r4,2049
- 8000aac:	21199104 	addi	r4,r4,26180
- 8000ab0:	800939c0 	call	800939c <printf>
+ 8000a68:	147fffcc 	andi	r17,r2,65535
+ 8000a6c:	8c60001c 	xori	r17,r17,32768
+ 8000a70:	8c600004 	addi	r17,r17,-32768
+			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
+ 8000a74:	d0a00b17 	ldw	r2,-32724(gp)
+ 8000a78:	1080000b 	ldhu	r2,0(r2)
+				angle_tgt = j;
+			}
+		}
+	}
+
+	printf(" Power = %i(%i), Angle = %i(%i), Cooldown = %i, Delta_sgn = %f\n",
+ 8000a7c:	14bfffcc 	andi	r18,r2,65535
+ 8000a80:	94a0001c 	xori	r18,r18,32768
+ 8000a84:	94a00004 	addi	r18,r18,-32768
+ 8000a88:	d426fb17 	ldw	r16,-25620(gp)
+ 8000a8c:	e13fdb17 	ldw	r4,-148(fp)
+ 8000a90:	80090400 	call	8009040 <__extendsfdf2>
+ 8000a94:	1009883a 	mov	r4,r2
+ 8000a98:	180b883a 	mov	r5,r3
+ 8000a9c:	d9000215 	stw	r4,8(sp)
+ 8000aa0:	d9400315 	stw	r5,12(sp)
+ 8000aa4:	dc000115 	stw	r16,4(sp)
+ 8000aa8:	e0bfdd17 	ldw	r2,-140(fp)
+ 8000aac:	d8800015 	stw	r2,0(sp)
+ 8000ab0:	900f883a 	mov	r7,r18
+ 8000ab4:	e1bfdc17 	ldw	r6,-144(fp)
+ 8000ab8:	880b883a 	mov	r5,r17
+ 8000abc:	01020074 	movhi	r4,2049
+ 8000ac0:	21199104 	addi	r4,r4,26180
+ 8000ac4:	800939c0 	call	800939c <printf>
 			*p2_pow, power_tgt, *p2_ang, angle_tgt, cooldown, delta_sgn);
 	printf("      p1vy = %i, p2vy = %i   ", p1vy, p2vy);
- 8000ab4:	e1bfe717 	ldw	r6,-100(fp)
- 8000ab8:	e17fe317 	ldw	r5,-116(fp)
- 8000abc:	01020074 	movhi	r4,2049
- 8000ac0:	2119a104 	addi	r4,r4,26244
- 8000ac4:	800939c0 	call	800939c <printf>
-
-	if (*aimbot_on){
- 8000ac8:	d0a00c17 	ldw	r2,-32720(gp)
- 8000acc:	10800017 	ldw	r2,0(r2)
- 8000ad0:	10000226 	beq	r2,zero,8000adc <ai_player+0x870>
-		return key;
- 8000ad4:	e0bffc03 	ldbu	r2,-16(fp)
- 8000ad8:	00004906 	br	8000c00 <ai_player+0x994>
-	}
+ 8000ac8:	e1bfe717 	ldw	r6,-100(fp)
+ 8000acc:	e17fe317 	ldw	r5,-116(fp)
+ 8000ad0:	01020074 	movhi	r4,2049
+ 8000ad4:	2119a104 	addi	r4,r4,26244
+ 8000ad8:	800939c0 	call	800939c <printf>
 
 	if (delta < tol){ // have targeting solution, start aiming
  8000adc:	d0a00d17 	ldw	r2,-32716(gp)
