@@ -17,7 +17,7 @@ module terrain		(	input  logic				clk, we, reset,
 		logic [9:0] height;
 		assign terrain_height = height;
 		
-		parameter [9:0] default_height = 310;
+		parameter [9:0] default_height = 290;
 		parameter [9:0] floor = 479;
 		parameter [9:0] Ncolumns = 640;
 		int idx;
@@ -94,7 +94,7 @@ module terrain		(	input  logic				clk, we, reset,
 					// -10'd53, rng[9:3], noise[9:7]  --  flatter
 					// -10'd58, rng[9:3], noise[9:6]  --  exaggerated
 					noise <= {noise[9],noise[9:1]} + {{2{noise[9]}},noise[9:2]} 
-								+ {{3{noise[9]}},noise[9:3]} + {3'd0,rng[9:3]} - 10'd58;
+								+ {{3{noise[9]}},noise[9:3]} + {3'd0,rng[9:3]} - 10'd59;
 					
 					height <= height + {{6{noise[9]}},noise[9:6]};
 					for (idx = 0; idx <=floor; idx++)
