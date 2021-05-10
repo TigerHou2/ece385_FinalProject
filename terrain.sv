@@ -122,4 +122,15 @@ module terrain		(	input  logic				clk, we, reset,
 		end
 							
 endmodule
+
+
+module terrain_merger	(	input		logic [479:0]	T1, T2,
+									output	logic	[479:0]	Tout	);
+							
+		always_comb
+		begin
+			Tout = T1 & T2;
+		end
+					
+endmodule
 							

@@ -132,7 +132,7 @@ logic Reset_h, vssig, blank, sync, VGA_Clk;
 	assign VGA_G = Green[7:4];
 	
 	// Terrain data assignments
-	logic [479:0]	T1O, T2O, terrain_out;
+	logic [479:0]	T1O, T2O, Tmerged, terrain_out;
 	logic [9:0]		terrain_addr;
 	logic [9:0]		terrain_height;
 	logic [17:0]	addrTerrain;
@@ -239,9 +239,11 @@ color_mapper CMAP		(	.clk(CLOCK_50),
 								.blank, .Red, .Green, .Blue  );
 
 terrain TERRAIN		(	.clk(CLOCK_50), .we((~B1D)&(~B2D)&blank), .reset(Reset_h), 
-								.DrawX(drawxsig), .DrawY(drawysig), .terrain_in(T1O&T2O), 
+								.DrawX(drawxsig), .DrawY(drawysig), .terrain_in(Tmerged), 
 								.read_addr(drawxsig), .write_addr(terrain_addr), .rngSeed(SW), 
 								.terrain_out, .terrain_height, .addrTerrain, .drawTerrain);
+								
+terrain_merger MERGER(	.T1(T1O), .T2(T2O), .Tout(Tmerged)	);
 
 background BACKGROUND(	.mapSelect(SW[9]), .DrawX(drawxsig), .DrawY(drawysig), .drawBG, .addrBG);
 
