@@ -20,7 +20,8 @@ their opponent.
 Characters are spawned onto pseudo-randomly generated, deformable terrain,
 and players control the movement, power, and angle of their characters'
 projectiles. Health is deducted when a player is hit either by direct impact
-or a nearby explosion. Self damage is not implemented. An AI can be toggled for P2 to allow for either a single player or two players.
+or a nearby explosion. Self damage is not implemented. An AI can be toggled 
+for P2 to allow for either a single player or two players.
 
 
 =========================
