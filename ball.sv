@@ -23,7 +23,7 @@ module player (	input 			clk, reset, frame_clk,
 						input				Dboomed,
 						input  [9:0]	EX, EY,				// enemy position
 						output [9:0]	PX, PY, VX, VY,	// self position and velocity
-						output [9:0]	BX, BY, BVX, BVY,	// enemy bomb position and velocity
+						output [9:0]	BX, BY, BVX, BVY,	// self bomb position and velocity
 						output [31:0]	aim,
 						output			boomed,
 						output [9:0]	HP, HPP,
