@@ -5,7 +5,7 @@ course at the University of Illinois at Urbana-Champaign. This file contains
 a brief description of the project and instructions on how to run the project
 on the DE10-Lite FPGA.
 
-[![<img src="FinalProject_files/gameplay_screenshot.png" width="600">]](https://youtu.be/jKR__l8tKLg)
+[<img src="FinalProject_files/gameplay_screenshot.png" width="600">](https://youtu.be/jKR__l8tKLg)
 
 
 ### Description
