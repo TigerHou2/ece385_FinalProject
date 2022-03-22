@@ -1,4 +1,4 @@
-## SUMMARY
+### Summary
 
 This is the root directory of my final project for the ECE 385 Spring 2021
 course at the University of Illinois at Urbana-Champaign. This file contains
@@ -6,7 +6,7 @@ a brief description of the project and instructions on how to run the project
 on the DE10-Lite FPGA.
 
 
-## DESCRIPTION 
+### Description
 
 This project is a TF2 (Team Fortress 2) themed 2D artillery game inspired by
 Worm Clan Wars / Tank Wars. The game features two opposing characters who
@@ -20,7 +20,7 @@ or a nearby explosion. Self damage is not implemented. An AI can be toggled
 for P2 to allow for either a single player or two players.
 
 
-## SETUP
+### Setup
 
 1. You will need the following components:
     - DE10-LITE FPGA with USB blaster cable;
@@ -43,7 +43,7 @@ Note: I used a shield specifically provided for the ECE 385 course designed by
 Professor Zuofu Cheng.
 
 
-## GAMEPLAY
+### Gameplay
 
 - The two characters can jump, move left/right, aim, and shoot. 
 
@@ -73,6 +73,6 @@ the new terrain.
 background to change. There are two background options.
 
 
-## KNOWN ISSUES
+### Known Issues
 
 - Seed 0 generates a patterned terrain with repeating hills.
